@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BaliRetreatDetails } from "@/components/bali-retreat-details";
-import villaBathroom from "@/assets/villa-bathroom.webp.asset.json";
-import villaDiningPavilion from "@/assets/villa-dining-pavilion.jpeg.asset.json";
-import villaExterior from "@/assets/villa-exterior.webp.asset.json";
-import villaLounge from "@/assets/villa-lounge.webp.asset.json";
-import villaAfterDark from "@/assets/villa-after-dark.jpeg.asset.json";
-import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg.asset.json";
-import villaSunsetPool from "@/assets/villa-sunset-pool.webp.asset.json";
+import villaBathroom from "@/assets/villa-bathroom.webp";
+import villaDiningPavilion from "@/assets/villa-dining-pavilion.jpeg";
+import villaExterior from "@/assets/villa-exterior.webp";
+import villaLounge from "@/assets/villa-lounge.webp";
+import villaAfterDark from "@/assets/villa-after-dark.jpeg";
+import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
+import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
 import { scheduleBlocks, scheduleDays, scheduleTimes } from "@/lib/bali-schedule";
 import { ScheduleGrid } from "@/components/schedule-grid";
 
@@ -118,7 +118,7 @@ function BaliRetreat() {
       {/* Hero image */}
       <section className="mx-auto max-w-[1360px] px-6 pb-14">
         <img
-          src={villaAfterDark.url}
+          src={villaAfterDark}
           alt="The villa at night, warm light spilling over a sunken seating courtyard and the lit pool"
           width={1264}
           height={843}
@@ -145,9 +145,9 @@ function BaliRetreat() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {villaShots.map((shot) => (
-            <figure key={shot.src.asset_id}>
+            <figure key={shot.src}>
               <img
-                src={shot.src.url}
+                src={shot.src}
                 alt={shot.alt}
                 width={1360}
                 height={907}

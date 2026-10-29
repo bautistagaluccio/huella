@@ -2,12 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
 import { SkiAgendaCards } from "@/components/ski-agenda";
 import { SkiTripDetails } from "@/components/ski-trip-details";
-import lodgeDining from "@/assets/lodge-dining.jpg.asset.json";
-import lodgeLounge from "@/assets/lodge-lounge.jpg.asset.json";
-import lodgePool from "@/assets/lodge-pool.jpg.asset.json";
-import lodgeRoom from "@/assets/lodge-room.jpg.asset.json";
-import lodgeSnowTerrace from "@/assets/lodge-snow-terrace.jpg.asset.json";
-import lodgeTerrace from "@/assets/lodge-terrace.jpg.asset.json";
+import lodgeDining from "@/assets/lodge-dining.jpg";
+import lodgeLounge from "@/assets/lodge-lounge.jpg";
+import lodgePool from "@/assets/lodge-pool.jpg";
+import lodgeRoom from "@/assets/lodge-room.jpg";
+import lodgeSnowTerrace from "@/assets/lodge-snow-terrace.jpg";
+import lodgeTerrace from "@/assets/lodge-terrace.jpg";
 
 export const Route = createFileRoute("/trips/ski-gudauri")({
   head: () => ({
@@ -150,9 +150,9 @@ function SkiGudauri() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {lodgeShots.map((shot) => (
-            <figure key={shot.src.asset_id}>
+            <figure key={shot.src}>
               <img
-                src={shot.src.url}
+                src={shot.src}
                 alt={shot.alt}
                 width={1024}
                 height={683}

@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { Maximize2 } from "lucide-react";
-import pisteMap from "@/assets/gudauri-piste-map.png.asset.json";
+import pisteMap from "@/assets/gudauri-piste-map.webp";
 import {
   Dialog,
   DialogContent,
@@ -156,7 +156,7 @@ export function SkiTripDetails() {
             <Dialog>
               <DialogTrigger className="group mt-9 flex w-full flex-col items-start gap-5 rounded-[14px] bg-sand p-5 text-left ring-1 ring-ink/5 transition-colors hover:ring-clay/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay sm:flex-row sm:items-center sm:p-6">
                 <img
-                  src={pisteMap.url}
+                  src={pisteMap}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
@@ -184,13 +184,13 @@ export function SkiTripDetails() {
                 </DialogHeader>
                 <div className="max-h-[68vh] overflow-y-auto">
                   <img
-                    src={pisteMap.url}
+                    src={pisteMap}
                     alt="Piste map of the Gudauri ski resort showing lifts, runs of every level, facilities and the legend"
                     className="w-full rounded-[10px] outline-1 -outline-offset-1 outline-ink/10"
                   />
                 </div>
                 <a
-                  href={pisteMap.url}
+                  href={pisteMap}
                   target="_blank"
                   rel="noreferrer"
                   className="justify-self-start text-[11px] tracking-[0.2em] text-clay uppercase transition-colors hover:text-ink"

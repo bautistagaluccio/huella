@@ -1,29 +1,46 @@
-# Welcome to your Lovable project
+# Huella
 
-This project was built with [Lovable](https://lovable.dev).
+Website for [huellaretreat.com](https://huellaretreat.com) — kitesurf, surf, golf, ski and yoga trips for private groups, arranged from Dubai.
 
-## Build with Lovable
+Originally built with Lovable; now maintained in this repo and deployed on Vercel.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## Stack
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- TanStack Start (React 19, SSR) + TypeScript
+- Tailwind CSS v4 + shadcn/ui components
+- Supabase (enquiries table, admin auth) — currently the Lovable Cloud project `dtlqqsqnsaovisucqfup`
+- Vitest for tests
 
-## Development
+## Local development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires Node.js 22+ and npm.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+npm install
+cp .env.example .env   # then fill in the Supabase values
+npm run dev            # http://localhost:8080
 ```
 
-## Built with
+Other scripts: `npm test`, `npm run build`, `npm run lint`, `npm run format`.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Environment variables
+
+| Name | Used by |
+| --- | --- |
+| `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_SUPABASE_PROJECT_ID` | Browser client (inlined at build time) |
+| `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_PROJECT_ID` | Server-side rendering |
+
+The publishable key is safe to expose; data access is enforced by Supabase row-level security. Never commit `.env`.
+
+## Deployment
+
+`vite.config.ts` builds for Vercel (`nitro: { preset: "vercel" }`), producing `.vercel/output`. Import the repo in Vercel, keep the default build settings, and add the environment variables above.
+
+## Project layout
+
+- `src/routes/` — pages (file-based routing): home, `/sports/$sport`, trip detail pages, `/admin-huella`
+- `src/components/` — page sections; `src/components/ui/` is shadcn/ui
+- `src/lib/` — trip schedules and departure data (covered by tests in `src/test/`)
+- `src/assets/` — photography
+- `drizzle/` — database schema and SQL migrations
+- `roadmap.md` — change log of content/design decisions

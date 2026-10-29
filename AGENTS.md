@@ -1,14 +1,5 @@
-<!-- LOVABLE:BEGIN -->
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
-<!-- LOVABLE:END -->
-
+- Hosted on Vercel (nitro `vercel` preset in vite.config.ts); this repo, not Lovable, is the source of truth — why: the project was migrated off Lovable.
+- Images live in src/assets and are imported as files — why: Lovable's `.asset.json` pointers only resolve on Lovable hosting.
 - Admin area is a single client-only route (/admin-huella) using the browser client; access is enforced by RLS via has_role(admin) on user_roles — why: no server functions needed, DB is the security boundary.
 - Sport availability pages use one dynamic /sports/$sport route, while individual scheduled experiences keep dedicated detail routes — why: sport listings stay consistent without duplicating page structure.
 - Featured departures render from browser-safe structured calendar data sorted by departure month — why: chronology is explicit and testable without coupling tests to presentation.

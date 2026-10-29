@@ -9,7 +9,7 @@ import golfImg from "@/assets/golf.jpg";
 import skiImg from "@/assets/ski.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
-import villaAfterDark from "@/assets/villa-after-dark.jpeg.asset.json";
+import villaAfterDark from "@/assets/villa-after-dark.jpeg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,7 +48,7 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
 
 const departureImages = {
   ski: skiGudauriImg,
-  bali: villaAfterDark.url,
+  bali: villaAfterDark,
 };
 
 function Index() {
