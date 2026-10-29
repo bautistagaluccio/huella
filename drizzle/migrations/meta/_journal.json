@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791298440448,
+      "tag": "0000_create_enquiries",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791298542943,
+      "tag": "0001_admin_roles_and_case_status",
+      "breakpoints": true
+    }
+  ]
+}
