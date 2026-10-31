@@ -1,5 +1,17 @@
 export const departures = [
   {
+    id: "ski-gudauri-feb-10",
+    month: 2,
+    monthName: "February",
+    days: "10–14",
+    discipline: "Ski",
+    title: "Caucasus Powder Days",
+    description: "Five days on quiet slopes in Gudauri — flights from Dubai included.",
+    detail: "From AED 10,000",
+    image: "ski",
+    to: "/trips/ski-gudauri-feb-10",
+  },
+  {
     id: "ski-gudauri",
     month: 2,
     monthName: "February",
@@ -26,5 +38,5 @@ export const departures = [
 ] as const;
 
 export function getDeparturesByDate() {
-  return [...departures].sort((a, b) => a.month - b.month);
+  return [...departures].sort((a, b) => a.month - b.month || Number(a.days.split("–")[0]) - Number(b.days.split("–")[0]));
 }

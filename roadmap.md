@@ -1,4 +1,10 @@
 # Roadmap
+- [x] Restyle February 17–21 inclusions and optional activities as photo-led editorial; preserve wording and February 10–14
+- [x] Replace February 17–21 detail tabs with six section buttons beside the facts box and move The lodge below; preserve February 10–14
+- [x] Keep Main to the facts box and The lodge to its heading, intro and six photos; place Agenda immediately after The lodge
+- [x] Add seven tabs below the main photo on February 10–14 only; preserve the original trip
+- [x] Include Agenda as an eighth tab, preserving the existing agenda
+- [x] Add a separate February 10–14 ski trip, list it chronologically, and preserve February 17–21
 - [x] Remove the "Discipline 01" and "Discipline 02" labels from the two large sport tiles
 - [x] Remove the Kitesurf tile description line, so no sport tile carries a description
 - [x] Remove the short description lines under the "Next experience" subtitles on the Ski and Retreats tiles

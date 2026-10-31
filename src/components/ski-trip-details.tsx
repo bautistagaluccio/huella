@@ -1,5 +1,9 @@
 import { useState, type ReactNode } from "react";
-import { Maximize2 } from "lucide-react";
+import { Maximize2, Plane, KeyRound, Utensils, MountainSnow } from "lucide-react";
+import afternoonSki from "@/assets/ski-afternoon-activity.jpg";
+import nightSki from "@/assets/ski-night-activity.jpg";
+import wineTasting from "@/assets/ski-wine-activity.jpg";
+import lodgePool from "@/assets/lodge-pool.jpg.asset.json";
 import pisteMap from "@/assets/gudauri-piste-map.png.asset.json";
 import {
   Dialog,
@@ -58,12 +62,20 @@ const optional = [
   },
 ];
 
+const inclusionIcons = [Plane, KeyRound, Utensils, MountainSnow];
+const activityPhotos = [
+  { src: afternoonSki, alt: "Skiers enjoying a snowy mountain slope in daylight" },
+  { src: lodgePool.url, alt: "Gudauri Lodge's heated outdoor pool surrounded by snow" },
+  { src: nightSki, alt: "Skiers on a floodlit slope at twilight" },
+  { src: wineTasting, alt: "Wine glasses shared around a tasting table" },
+];
+
 type DetailItem = { title: string; description: string };
 
 const sections: {
   value: string;
   label: string;
-  heading: string;
+  heading: ReactNode;
   intro: ReactNode;
   items: DetailItem[];
   note?: string;
@@ -71,7 +83,7 @@ const sections: {
   {
     value: "resort",
     label: "The resort",
-    heading: "One lodge, above the valley",
+    heading: <>The <span className="text-clay italic">slopes</span>, right at your door</>,
     intro: (
       <>
         A <strong className="font-semibold text-ink">ski-in, ski-out</strong> lodge above the valley —
@@ -83,7 +95,7 @@ const sections: {
   {
     value: "included",
     label: "What’s included",
-    heading: "What the trip covers",
+    heading: <>We’ve got it <span className="text-clay italic">covered</span></>,
     intro: "The essentials are arranged with the trip, so the only thing left to decide is how much you ski.",
     items: included,
     note: "Anything beyond the above — extras and personal requests — is confirmed in your tailored proposal.",
@@ -91,7 +103,7 @@ const sections: {
   {
     value: "optional",
     label: "Optional activities",
-    heading: "For the days you want more",
+    heading: <>For the days you want <span className="text-clay italic">more</span></>,
     intro: "Nothing here is compulsory. These are there for whoever wants them.",
     items: optional,
   },
@@ -103,12 +115,12 @@ const indicatorPositions: Record<string, string> = {
   optional: "translate-x-[200%]",
 };
 
-export function SkiTripDetails() {
+export function SkiTripDetails({ section, photoEditorial = false }: { section?: "resort" | "included" | "optional"; photoEditorial?: boolean }) {
   const [selected, setSelected] = useState("resort");
 
   return (
-    <Tabs value={selected} onValueChange={setSelected} className="min-w-0">
-      <div className="overflow-x-auto">
+    <Tabs value={section ?? selected} onValueChange={setSelected} className="min-w-0">
+      {!section && <div className="overflow-x-auto">
         <div className="relative min-w-[520px] border-b border-ink/15">
           <TabsList
             aria-label="Trip details"
@@ -131,8 +143,8 @@ export function SkiTripDetails() {
             }`}
           />
         </div>
-      </div>
-      {sections.map((section) => (
+      </div>}
+      {sections.filter((item) => !section || item.value === section).map((section) => (
         <TabsContent
           key={section.value}
           value={section.value}
@@ -140,7 +152,38 @@ export function SkiTripDetails() {
         >
           <h2 className="font-display text-[28px] leading-tight font-medium">{section.heading}</h2>
           <p className="mt-3 max-w-[60ch] text-[14px] leading-relaxed text-ink/65">{section.intro}</p>
-          {section.items.length > 0 && (
+          {photoEditorial && section.value === "included" && (
+            <div className="mt-9 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {section.items.map((item, index) => {
+                const ItemIcon = inclusionIcons[index];
+                return (
+                  <div key={item.title} className="min-w-0">
+                    {ItemIcon && <ItemIcon aria-hidden="true" className="mb-5 size-8 text-clay" strokeWidth={1.5} />}
+                    <h3 className="font-display text-[23px] leading-tight font-medium">{item.title}</h3>
+                    <p className="mt-3 text-[14px] leading-relaxed text-ink/70">{item.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {photoEditorial && section.value === "optional" && (
+            <div className="mt-9 grid grid-cols-1 gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
+              {section.items.map((item, index) => {
+                const photo = activityPhotos[index];
+                return (
+                  <figure key={item.title} className="min-w-0">
+                    {photo && <img src={photo.src} alt={photo.alt} loading="lazy" width={1024} height={768}
+                      className="aspect-[4/3] w-full rounded-lg object-cover" />}
+                    <figcaption className="mt-5">
+                      <h3 className="font-display text-[23px] leading-tight font-medium">{item.title}</h3>
+                      <p className="mt-3 text-[14px] leading-relaxed text-ink/70">{item.description}</p>
+                    </figcaption>
+                  </figure>
+                );
+              })}
+            </div>
+          )}
+          {!photoEditorial && section.items.length > 0 && (
             <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2">
               {section.items.map((item) => (
                 <div key={item.title} className="border-t border-ink/10 pt-4">

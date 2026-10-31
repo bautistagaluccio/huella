@@ -270,8 +270,8 @@ function BaliRetreat() {
       {/* Footer */}
       <footer className="border-t border-ink/10">
         <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-4 px-6 py-10 text-[12px] tracking-[0.14em] text-ink/50 uppercase sm:flex-row">
-          <span className="font-display font-medium">Huella — Dubai Sports Trips Atelier</span>
-          <span>hello@huella.travel · Dubai, UAE</span>
+          <span className="font-display font-medium">Huella — Dubai Experience Studio</span>
+          <span>contact@huellaretreat.com</span>
         </div>
       </footer>
     </div>

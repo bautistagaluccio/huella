@@ -135,7 +135,7 @@ function Index() {
                 Ski
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                Next experience · Gudauri · Feb 17–21
+                 Next experience · Gudauri · Feb 10–14
               </p>
             </div>
           </Link>
@@ -424,8 +424,8 @@ function Index() {
       {/* Footer */}
       <footer className="border-t border-ink/10">
         <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-4 px-6 py-10 text-[12px] uppercase tracking-[0.14em] text-ink/50 sm:flex-row">
-          <span className="font-display font-medium">Huella — Dubai Sports Trips Atelier</span>
-          <span>hello@huella.travel · Dubai, UAE</span>
+          <span className="font-display font-medium">Huella — Dubai Experience Studio</span>
+          <span>contact@huellaretreat.com</span>
         </div>
       </footer>
     </div>
