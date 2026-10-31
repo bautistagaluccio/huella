@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Add partner restaurant logos (N., ours., KYND, LOFT) to the Bali Food section; move the inside-and-out wellness idea into "Around the table"
 - [x] Fold "Around the table" into the Bali nutrition section as its fifth point; drop the three meal items
 - [x] Reframe the Bali Food section around nutrition (unprocessed, local partners, made to measure, no waste)
 - [x] Give the Bali page the ski page's section buttons (villa, experience, daily practice, optional activities, food, what to pack, weekly rhythm) and add What to pack
