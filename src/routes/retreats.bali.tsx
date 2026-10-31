@@ -292,7 +292,7 @@ function BaliRetreat() {
             <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">
               Pack light, we'll handle the <span className="text-clay italic">rest</span>
             </h2>
-            <p className="mt-4 max-w-[40ch] text-[15px] leading-relaxed text-ink/65">
+            <p className="mt-4 text-[15px] leading-relaxed text-ink/65">
               A short list — mats, towels and everything for the practice are at the villa.
             </p>
           </div>
