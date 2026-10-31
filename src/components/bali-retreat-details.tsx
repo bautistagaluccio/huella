@@ -37,7 +37,7 @@ const food = [
 ];
 
 // Logos come on white or tinted squares; multiply blends them into the cream page.
-const partnerRestaurants = [
+export const partnerRestaurants = [
   { src: partnerN, name: "N.", className: "h-16" },
   { src: partnerOurs, name: "ours.", className: "h-10" },
   { src: partnerKynd, name: "KYND", className: "h-9" },

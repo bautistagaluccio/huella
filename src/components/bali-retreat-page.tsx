@@ -54,7 +54,7 @@ const retreatButtons = [
   { id: "packing", label: "What to pack", icon: Backpack },
 ];
 
-const packingList = [
+export const packingList = [
   { title: "Sport clothes & swimwear" },
   {
     title: "My documents (Passport, VISA)",
@@ -64,40 +64,66 @@ const packingList = [
   { title: "My good energy" },
 ];
 
+export const villaShots = [
+  {
+    src: villaExterior,
+    alt: "Contemporary two-story villa with curved rooflines and floor-to-ceiling glass beside an organic-form pool",
+    caption: "The house, pool and lawn",
+  },
+  {
+    src: villaLounge,
+    alt: "Open-air living lounge with white sofas and woven pendant lights, opening onto the pool deck",
+    caption: "The open-air lounge",
+  },
+  {
+    src: villaPoolDeckLawn,
+    alt: "Sunlit lawn beside the pool with yoga mats laid in an arc and cushioned loungers under umbrellas",
+    caption: "Pool deck & lawn",
+  },
+  {
+    src: villaSunsetPool,
+    alt: "Freeform pool reflecting a sunset over the villa garden",
+    caption: "The pool at sunset",
+  },
+  {
+    src: villaDiningPavilion,
+    alt: "Open-air pavilion at night with yoga mats and bolsters beside a long timber dining table",
+    caption: "Dinner in the pavilion",
+  },
+  {
+    src: villaBathroom,
+    alt: "Bathroom with a freestanding soaking tub, timber vanity and backlit mirror",
+    caption: "Room bathroom",
+  },
+];
+
+// Packing titles render as text, with an optional word linked (the VISA site).
+export function PackingTitle({ item }: { item: (typeof packingList)[number] }) {
+  if (!("link" in item)) return <>{item.title}</>;
+  const { link } = item;
+  return (
+    <>
+      {item.title.split(link.word).map((part, index) => (
+        <Fragment key={index}>
+          {index > 0 && (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
+            >
+              {link.word}
+            </a>
+          )}
+          {part}
+        </Fragment>
+      ))}
+    </>
+  );
+}
+
 export function BaliRetreatPage({ month, days }: BaliDates) {
   const shortDates = `${month.slice(0, 3)} ${days}`;
-  const villaShots = [
-    {
-      src: villaExterior,
-      alt: "Contemporary two-story villa with curved rooflines and floor-to-ceiling glass beside an organic-form pool",
-      caption: "The house, pool and lawn",
-    },
-    {
-      src: villaLounge,
-      alt: "Open-air living lounge with white sofas and woven pendant lights, opening onto the pool deck",
-      caption: "The open-air lounge",
-    },
-    {
-      src: villaPoolDeckLawn,
-      alt: "Sunlit lawn beside the pool with yoga mats laid in an arc and cushioned loungers under umbrellas",
-      caption: "Pool deck & lawn",
-    },
-    {
-      src: villaSunsetPool,
-      alt: "Freeform pool reflecting a sunset over the villa garden",
-      caption: "The pool at sunset",
-    },
-    {
-      src: villaDiningPavilion,
-      alt: "Open-air pavilion at night with yoga mats and bolsters beside a long timber dining table",
-      caption: "Dinner in the pavilion",
-    },
-    {
-      src: villaBathroom,
-      alt: "Bathroom with a freestanding soaking tub, timber vanity and backlit mirror",
-      caption: "Room bathroom",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-cream text-ink">
@@ -306,28 +332,12 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
             <div className="-rotate-[0.5deg] rounded-md bg-white/60 px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
               <p className="mb-2 text-[11px] tracking-[0.25em] text-ink/50 uppercase">Bali · {shortDates}</p>
               <ul className="grid grid-cols-1 sm:grid-cols-3">
-                {packingList.map(({ title, link }) => (
-                  <li key={title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0 sm:border-b-0 sm:border-l sm:px-6 sm:py-2 sm:first:border-l-0 sm:first:pl-0">
+                {packingList.map((item) => (
+                  <li key={item.title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0 sm:border-b-0 sm:border-l sm:px-6 sm:py-2 sm:first:border-l-0 sm:first:pl-0">
                     <label className="flex cursor-pointer items-start gap-4">
                       <input type="checkbox" className="mt-1.5 size-4 shrink-0 accent-clay" />
                       <span className="font-display text-[20px] leading-snug">
-                        {link
-                          ? title.split(link.word).map((part, index) => (
-                              <Fragment key={index}>
-                                {index > 0 && (
-                                  <a
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-                                  >
-                                    {link.word}
-                                  </a>
-                                )}
-                                {part}
-                              </Fragment>
-                            ))
-                          : title}
+                        <PackingTitle item={item} />
                       </span>
                     </label>
                   </li>
