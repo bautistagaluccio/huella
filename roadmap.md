@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Make the Bali closing band ink (like the facts bar) instead of clay
 - [x] Apply the May redesign to the March Bali page too; swap the green What to pack band for sand
 - [x] Test a redesigned May Bali page (full-bleed hero, facts bar, sticky section nav, ink/sand/sage/clay bands); March unchanged
 - [x] Add a second Bali Body & Breath retreat on May 1–9 at /retreats/bali-may, sharing the March page

@@ -103,8 +103,8 @@ export function PackingTitle({ item }: { item: (typeof packingList)[number] }) {
 }
 
 // The Bali retreat page, shared by every departure: an immersive editorial layout —
-// full-bleed hero, facts bar, sticky section nav and alternating cream, ink, sand
-// and clay bands.
+// full-bleed hero, facts bar, sticky section nav and alternating cream, ink and sand
+// bands.
 
 const navItems = [
   { id: "villa", label: "The villa" },
@@ -494,15 +494,15 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
         />
       </section>
 
-      {/* Closing call to action — clay band */}
-      <section className="bg-clay text-cream">
+      {/* Closing call to action — ink band, echoing the facts bar */}
+      <section className="bg-ink text-cream">
         <div className="mx-auto flex max-w-[1360px] flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
-            <Eyebrow tone="text-cream/80" rule="bg-cream/50">Bali · {shortDates}</Eyebrow>
+            <Eyebrow tone="text-cream/70" rule="bg-cream/40">Bali · {shortDates}</Eyebrow>
             <p className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] leading-none font-medium">
-              Bali Body & <span className="italic">Breath</span>
+              Bali Body & <span className="text-sand italic">Breath</span>
             </p>
-            <p className="mt-5 max-w-[48ch] text-[14px] leading-relaxed text-cream/80">
+            <p className="mt-5 max-w-[48ch] text-[14px] leading-relaxed text-cream/70">
               Every trip is quoted by hand. Send a note and a trip designer will share the full
               itinerary and a tailored proposal.
             </p>
@@ -510,7 +510,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           <Link
             to="/"
             hash="enquire"
-            className="self-start rounded-full bg-cream px-7 py-3.5 text-[13px] tracking-[0.14em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream md:self-auto"
+            className="self-start rounded-full bg-clay px-7 py-3.5 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-cream hover:text-ink md:self-auto"
           >
             Request the itinerary
           </Link>
