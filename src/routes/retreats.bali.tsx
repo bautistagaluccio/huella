@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Backpack, CalendarDays, House, Leaf, PersonStanding, Sparkles, UtensilsCrossed } from "lucide-react";
 import { BaliRetreatDetails, baliSections } from "@/components/bali-retreat-details";
@@ -56,7 +57,8 @@ const packingList = [
   { title: "Sport clothes & swimwear" },
   {
     title: "My documents (Passport, VISA)",
-    link: { label: "Check if I need a VISA", href: "https://evisa.imigrasi.go.id/" },
+    // The word VISA links to Indonesia's official e-visa site.
+    link: { word: "VISA", href: "https://evisa.imigrasi.go.id/" },
   },
   { title: "My good energy" },
 ];
@@ -306,18 +308,26 @@ function BaliRetreat() {
                   <li key={title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0 sm:border-b-0 sm:border-l sm:px-6 sm:py-2 sm:first:border-l-0 sm:first:pl-0">
                     <label className="flex cursor-pointer items-start gap-4">
                       <input type="checkbox" className="mt-1.5 size-4 shrink-0 accent-clay" />
-                      <span className="font-display text-[20px] leading-snug">{title}</span>
+                      <span className="font-display text-[20px] leading-snug">
+                        {link
+                          ? title.split(link.word).map((part, index) => (
+                              <Fragment key={index}>
+                                {index > 0 && (
+                                  <a
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
+                                  >
+                                    {link.word}
+                                  </a>
+                                )}
+                                {part}
+                              </Fragment>
+                            ))
+                          : title}
+                      </span>
                     </label>
-                    {link && (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-1 ml-8 inline-block text-[13px] text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-                      >
-                        {link.label}
-                      </a>
-                    )}
                   </li>
                 ))}
               </ul>
