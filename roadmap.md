@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Keep the shared-meals items as "Around the table" under the Bali nutrition section
 - [x] Reframe the Bali Food section around nutrition (unprocessed, local partners, made to measure, no waste)
 - [x] Give the Bali page the ski page's section buttons (villa, experience, daily practice, optional activities, food, what to pack, weekly rhythm) and add What to pack
 - [x] Start "Practise, eat and rest…" on its own line in the villa intro
