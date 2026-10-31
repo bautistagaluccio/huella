@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { BaliRetreatPage, baliRetreatHead } from "@/components/bali-retreat-page";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-// A second run of the March retreat: same villa, programme and price.
-const dates = { month: "May", days: "1–9" } as const;
-
+// The May 1–9 departure was withdrawn; March 6–14 is the remaining Bali retreat.
+// This keeps links already shared to the old address pointing at the right page.
 export const Route = createFileRoute("/retreats/bali-may")({
-  head: () => baliRetreatHead(dates),
-  component: () => <BaliRetreatPage {...dates} />,
+  beforeLoad: () => {
+    throw redirect({ to: "/retreats/bali", code: 301 });
+  },
+  component: () => null,
 });

@@ -23,18 +23,6 @@ export const departures = [
     image: "bali",
     to: "/retreats/bali",
   },
-  {
-    id: "bali-may",
-    month: 5,
-    monthName: "May",
-    days: "1–9",
-    discipline: "Wellness",
-    title: "Bali Body & Breath",
-    description: "Daily yoga, breathwork, meditation and pilates amid the rice terraces.",
-    detail: "From AED 15,000",
-    image: "bali",
-    to: "/retreats/bali-may",
-  },
 ] as const;
 
 export function getDeparturesByDate() {

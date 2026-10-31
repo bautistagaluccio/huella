@@ -11,7 +11,7 @@ import { BaliDayTimeline } from "@/components/bali-day-timeline";
 import { baliSections, partnerRestaurants } from "@/lib/bali-retreat-content";
 
 // Each Bali departure has its own route; only the dates differ between them.
-export type BaliDates = { month: "March" | "May"; days: string };
+export type BaliDates = { month: string; days: string };
 
 export function baliRetreatHead({ month, days }: BaliDates) {
   const shortDates = `${month.slice(0, 3)} ${days}`;
