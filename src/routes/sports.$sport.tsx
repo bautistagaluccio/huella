@@ -89,6 +89,7 @@ function SportExperiences() {
 
   const hasBaliRetreat = sportSlug === "yoga";
   const hasSkiTrip = sportSlug === "ski";
+  const skiDepartures = getDeparturesByDate().filter((departure) => departure.discipline === "Ski");
 
   return (
     <div className="min-h-screen bg-cream text-ink">
@@ -138,7 +139,11 @@ function SportExperiences() {
                 </h2>
               </div>
               <p className="text-[12px] uppercase tracking-[0.16em] text-ink/50">
-                {hasSkiTrip ? "2 experiences" : hasBaliRetreat ? "1 experience" : "No scheduled dates"}
+                {hasSkiTrip
+                  ? `${skiDepartures.length} ${skiDepartures.length === 1 ? "experience" : "experiences"}`
+                  : hasBaliRetreat
+                    ? "1 experience"
+                    : "No scheduled dates"}
               </p>
             </div>
 
@@ -169,7 +174,7 @@ function SportExperiences() {
                 </div>
               </Link>
             ) : hasSkiTrip ? (
-              getDeparturesByDate().filter((departure) => departure.discipline === "Ski").map((departure) => (
+              skiDepartures.map((departure) => (
               <Link
                 key={departure.id}
                 to={departure.to}

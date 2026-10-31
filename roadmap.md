@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Remove the February 10–14 ski trip; its address redirects to February 17–21
 - [x] Restyle February 17–21 inclusions and optional activities as photo-led editorial; preserve wording and February 10–14
 - [x] Replace February 17–21 detail tabs with six section buttons beside the facts box and move The lodge below; preserve February 10–14
 - [x] Keep Main to the facts box and The lodge to its heading, intro and six photos; place Agenda immediately after The lodge

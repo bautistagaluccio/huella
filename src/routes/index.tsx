@@ -135,7 +135,7 @@ function Index() {
                 Ski
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                 Next experience · Gudauri · Feb 10–14
+                 Next experience · Gudauri · Feb 17–21
               </p>
             </div>
           </Link>
