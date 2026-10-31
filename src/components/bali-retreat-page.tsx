@@ -200,7 +200,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           height={843}
           className="absolute inset-0 -z-10 h-full w-full object-cover"
         />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/80 via-ink/35 to-ink/0" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-ink/5" />
         <div className="mx-auto w-full max-w-[1360px] px-6 pt-40 pb-14">
           <div className="animate-rise">
             <Eyebrow tone="text-cream" rule="bg-cream/60">Bali · Wellness Retreat · {shortDates}</Eyebrow>
@@ -222,23 +222,23 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Facts bar */}
-      <section className="bg-ink/80 text-cream">
+      <section className="bg-ink text-cream">
         <div className="mx-auto max-w-[1360px] px-6 py-10">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-7 md:grid-cols-3 lg:grid-cols-5">
             {facts.map((fact) => (
               <div key={fact.label} className="border-l border-cream/15 pl-4">
-                <dt className="text-[11px] tracking-[0.25em] text-cream/75 uppercase">{fact.label}</dt>
+                <dt className="text-[11px] tracking-[0.25em] text-cream/55 uppercase">{fact.label}</dt>
                 <dd className="mt-2 font-display text-[1.35rem] leading-tight font-medium">{fact.value}</dd>
               </div>
             ))}
           </dl>
           <div className="mt-9 flex flex-col gap-6 border-t border-cream/15 pt-7 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-[11px] tracking-[0.25em] text-cream/75 uppercase">Discipline</p>
+              <p className="text-[11px] tracking-[0.25em] text-cream/55 uppercase">Discipline</p>
               <p className="mt-2 text-[14px] text-cream/85">Stretching · Pilates · Yoga · Breathing · Sound healing</p>
             </div>
             <div className="flex flex-col gap-4 md:max-w-[520px] md:flex-row md:items-center md:gap-8">
-              <p className="text-[13px] leading-relaxed text-cream/80">
+              <p className="text-[13px] leading-relaxed text-cream/65">
                 Every trip is quoted by hand. Send a note and a trip designer will share the full
                 itinerary and a tailored proposal.
               </p>
@@ -339,19 +339,19 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Experience — ink band */}
-      <section id="bali-experience" tabIndex={-1} className="scroll-mt-16 bg-ink/80 text-cream">
+      <section id="bali-experience" tabIndex={-1} className="scroll-mt-16 bg-ink text-cream">
         <div className="mx-auto max-w-[1360px] px-6 py-24">
-          <Eyebrow tone="text-cream/80" rule="bg-cream/40">{experience.label}</Eyebrow>
+          <Eyebrow tone="text-cream/70" rule="bg-cream/40">{experience.label}</Eyebrow>
           <h2 className="mt-6 max-w-[22ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05] font-medium text-balance">
             {experience.heading}
           </h2>
-          <p className="mt-5 max-w-[60ch] text-[16px] leading-relaxed text-cream/80">{experience.intro}</p>
+          <p className="mt-5 max-w-[60ch] text-[16px] leading-relaxed text-cream/70">{experience.intro}</p>
           <ol className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3">
             {experience.items.map((item, index) => (
               <li key={item.title} className="border-t border-cream/20 pt-6">
                 <span className="font-display text-[34px] text-sand italic">{String(index + 1).padStart(2, "0")}</span>
                 <h3 className="mt-3 font-display text-[26px] font-medium">{item.title}</h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-pretty text-cream/80">{item.description}</p>
+                <p className="mt-3 text-[14px] leading-relaxed text-pretty text-cream/70">{item.description}</p>
               </li>
             ))}
           </ol>
@@ -383,7 +383,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Optional activities — sand cards */}
-      <section id="bali-optional" tabIndex={-1} className="scroll-mt-16 bg-sand/35">
+      <section id="bali-optional" tabIndex={-1} className="scroll-mt-16 bg-sand/60">
         <div className="mx-auto max-w-[1360px] px-6 py-24">
           <Eyebrow>{optional.label}</Eyebrow>
           <h2 className="mt-6 max-w-[22ch] font-display text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.05] font-medium text-balance">
@@ -434,7 +434,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* What to pack */}
-      <section id="bali-packing" tabIndex={-1} className="scroll-mt-16 bg-sand/35">
+      <section id="bali-packing" tabIndex={-1} className="scroll-mt-16 bg-sand/60">
         <div className="mx-auto max-w-[1360px] px-6 py-24">
           <Eyebrow>What to pack</Eyebrow>
           <h2 className="mt-6 font-display text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.05] font-medium">
@@ -476,14 +476,14 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Closing call to action — ink band, echoing the facts bar */}
-      <section className="bg-ink/80 text-cream">
+      <section className="bg-ink text-cream">
         <div className="mx-auto flex max-w-[1360px] flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
-            <Eyebrow tone="text-cream/80" rule="bg-cream/40">Bali · {shortDates}</Eyebrow>
+            <Eyebrow tone="text-cream/70" rule="bg-cream/40">Bali · {shortDates}</Eyebrow>
             <p className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] leading-none font-medium">
               Bali Body & <span className="text-sand italic">Breath</span>
             </p>
-            <p className="mt-5 max-w-[48ch] text-[14px] leading-relaxed text-cream/80">
+            <p className="mt-5 max-w-[48ch] text-[14px] leading-relaxed text-cream/70">
               Every trip is quoted by hand. Send a note and a trip designer will share the full
               itinerary and a tailored proposal.
             </p>
