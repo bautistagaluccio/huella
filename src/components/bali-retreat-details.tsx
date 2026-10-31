@@ -31,8 +31,8 @@ const experience = [
 // Wellness inside & out: sport looks after the outside; connection and nutrition the inside.
 const food = [
   { title: "Unprocessed, always", description: "Whole, fresh ingredients with nothing ultra-processed — food that supports the work you do on the mat." },
-  { title: "Prepared daily by local partners", description: "Our partner restaurant cooks for the group every day, working with local producers wherever we can." },
   { title: "Made to measure", description: "Meals shaped around you — dietary needs, allergies and preferences are planned in before you arrive." },
+  { title: "Prepared daily by local partners", description: "Our partner restaurant cooks for the group every day, working with local producers wherever we can." },
   { title: "No waste", description: "Portions planned to avoid waste and packaging kept to a minimum, as part of our commitment to the island that hosts us." },
 ];
 
