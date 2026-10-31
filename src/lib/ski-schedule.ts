@@ -22,8 +22,10 @@ export const skiTimes = [
 ] as const;
 
 const breakfast = { start: 5, end: 7, lines: ["Breakfast"], tone: "sage" as const };
+// The first half hour of each full ski day's morning session goes to stretching.
+const stretching = { start: 8, end: 9, lines: ["Stretching and mobility"], tone: "mist" as const };
 const skiDay = {
-  start: 8,
+  start: 9,
   end: 17,
   lines: ["Ski"],
   tone: "blush" as const,
@@ -58,6 +60,7 @@ export const skiBlocks: ScheduleBlock[] = [
 
   // Day 2
   { day: 2, ...breakfast },
+  { day: 2, ...stretching },
   { day: 2, ...skiDay },
   { day: 2, ...freeLunch },
   { day: 2, ...skiOptional },
@@ -68,6 +71,7 @@ export const skiBlocks: ScheduleBlock[] = [
 
   // Day 3
   { day: 3, ...breakfast },
+  { day: 3, ...stretching },
   { day: 3, ...skiDay },
   { day: 3, ...freeLunch },
   { day: 3, ...skiOptional },
@@ -77,6 +81,7 @@ export const skiBlocks: ScheduleBlock[] = [
 
   // Day 4
   { day: 4, ...breakfast },
+  { day: 4, ...stretching },
   { day: 4, ...skiDay },
   { day: 4, ...freeLunch },
   { day: 4, ...skiOptional },

@@ -28,10 +28,11 @@ describe("Owner's ski agenda image", () => {
     ]);
   });
 
-  it.each([2, 3, 4])("keeps day %i breakfast and separates skiing from afternoon optional activities", (n) => {
-    expect(entries(n).slice(0, 5)).toEqual([
+  it.each([2, 3, 4])("keeps day %i breakfast, opens with stretching and separates skiing from afternoon optional activities", (n) => {
+    expect(entries(n).slice(0, 6)).toEqual([
       { lines: ["Breakfast"], time: "8.30 am – 9.30 am" },
-      { lines: ["Ski"], time: "10 am – 2.30 pm" },
+      { lines: ["Stretching and mobility"], time: "10 am – 10.30 am" },
+      { lines: ["Ski"], time: "10.30 am – 2.30 pm" },
       { lines: ["Free lunch"], time: "" },
       { lines: ["Up to you!", "Afternoon ski / spa session"], time: "2.30 pm – 5 pm" },
       { lines: ["Free time"], time: "5 pm – 7.30 pm" },
@@ -61,6 +62,10 @@ describe("Owner's ski agenda image", () => {
       { lines: ["Breakfast"], time: "9 am – 10.30 am" },
       { lines: ["Departure", "Flight back", "Arrival"], time: "11 am – 9.30 pm" },
     ]);
+  });
+
+  it("adds stretching on Thursday to Saturday only, not on Wednesday arrival day", () => {
+    expect(skiBlocks.filter((block) => block.lines[0] === "Stretching and mobility").map((block) => block.day)).toEqual([2, 3, 4]);
   });
 
   it("adds Free lunch between the two ski entries on the three full ski days", () => {

@@ -1,4 +1,4 @@
-import { Coffee, Plane, Snowflake, Utensils, Moon, Sparkles, Clock, type LucideIcon } from "lucide-react";
+import { Coffee, Plane, Snowflake, Utensils, Moon, PersonStanding, Sparkles, Clock, type LucideIcon } from "lucide-react";
 import { skiAgendaTimeRange, skiBlocks, skiDays } from "@/lib/ski-schedule";
 import type { BlockTone, ScheduleBlock } from "@/lib/schedule";
 
@@ -12,6 +12,7 @@ const tones: Record<BlockTone, string> = {
 
 function activityIcon(block: ScheduleBlock): LucideIcon {
   const activity = block.lines[0]?.toLowerCase() ?? "";
+  if (activity.includes("stretching")) return PersonStanding;
   if (activity.includes("ski")) return Snowflake;
   if (activity.includes("breakfast")) return Coffee;
   if (activity.includes("lunch") || activity.includes("dinner")) return Utensils;
