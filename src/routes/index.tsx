@@ -1,5 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { Menu } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
 import { getDeparturesByDate } from "@/lib/departures";
 
@@ -46,6 +53,15 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
   );
 }
 
+// Every section of the homepage, in page order, for the header's Sections menu.
+const homeSections = [
+  { href: "#top", label: "Welcome" },
+  { href: "#disciplines", label: "Trips" },
+  { href: "#atelier", label: "How it works" },
+  { href: "#departures", label: "Departures" },
+  { href: "#enquire", label: "Request info" },
+];
+
 const departureImages = {
   ski: skiGudauriImg,
   bali: villaAfterDark,
@@ -59,34 +75,49 @@ function Index() {
   return (
     <div className="min-h-screen bg-cream text-ink">
       {/* Header */}
-      <header className="mx-auto flex max-w-[1360px] items-center justify-between px-6 py-6">
-        <a href="/" className="flex items-center gap-3">
+      {/* Menu icon left, logo centred, enquiry right */}
+      <header className="mx-auto grid max-w-[1360px] grid-cols-[1fr_auto_1fr] items-center gap-2 px-5 py-6 sm:gap-3 sm:px-6">
+        <div className="justify-self-start">
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              aria-label="Sections"
+              className="-ml-2 flex size-10 items-center justify-center rounded-full text-ink transition-colors outline-none hover:bg-sand hover:text-clay focus-visible:ring-2 focus-visible:ring-clay/40 data-[state=open]:bg-sand data-[state=open]:text-clay"
+            >
+              <Menu aria-hidden="true" className="size-5" strokeWidth={1.75} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              sideOffset={10}
+              // Let the chosen section's link scroll the page instead of refocusing the button.
+              onCloseAutoFocus={(event) => event.preventDefault()}
+              className="w-64 rounded-[14px] border-ink/10 bg-cream p-2 text-ink shadow-lg">
+              {homeSections.map((section, index) => (
+                <DropdownMenuItem key={section.href} asChild className="cursor-pointer rounded-[10px] px-3 py-2.5 focus:bg-sand focus:text-ink">
+                  <a href={section.href} className="flex items-baseline gap-3">
+                    <span className="w-5 text-[11px] text-clay">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="font-display text-[17px]">{section.label}</span>
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <a href="/" className="flex items-center gap-2 sm:gap-3">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-clay" />
-          <span className="font-display text-[15px] font-medium uppercase tracking-[0.3em]">
+          <span className="font-display text-[15px] font-medium uppercase tracking-[0.2em] sm:tracking-[0.3em]">
             Huella
           </span>
         </a>
-        <nav className="hidden items-center gap-9 text-[13px] uppercase tracking-[0.14em] text-ink/70 md:flex">
-          <a href="#disciplines" className="transition-colors hover:text-clay">
-            Trips
-          </a>
-          <a href="#atelier" className="transition-colors hover:text-clay">
-            The Atelier
-          </a>
-          <a href="#departures" className="transition-colors hover:text-clay">
-            Departures
-          </a>
-        </nav>
         <a
           href="#enquire"
-          className="rounded-full bg-ink px-5 py-2.5 text-[13px] uppercase tracking-[0.14em] text-cream transition-colors hover:bg-clay"
+          className="justify-self-end rounded-full bg-ink px-3 py-2.5 text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-cream sm:px-5 sm:text-[13px] sm:tracking-[0.14em] transition-colors hover:bg-clay"
         >
           Request Info
         </a>
       </header>
 
       {/* Hero */}
-      <section className="mx-auto max-w-[1360px] px-6 pt-6 pb-16">
+      <section id="top" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pt-6 pb-16">
         <div className="animate-rise">
           <Eyebrow>Dubai · By invitation</Eyebrow>
         </div>
