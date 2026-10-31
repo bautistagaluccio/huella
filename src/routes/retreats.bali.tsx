@@ -286,8 +286,8 @@ function BaliRetreat() {
 
       {/* What to pack */}
       <section id="bali-packing" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
-        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12">
-          <div className="md:col-span-5">
+        <div>
+          <div>
             <Eyebrow>What to pack</Eyebrow>
             <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">
               Pack light, we'll handle the <span className="text-clay italic">rest</span>
@@ -298,7 +298,7 @@ function BaliRetreat() {
           </div>
 
           {/* A packing note visitors can tick off; ticks are not saved. */}
-          <div className="md:col-span-6 md:col-start-7">
+          <div className="mt-9 max-w-[560px]">
             <div className="-rotate-1 rounded-md bg-white/60 px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
               <p className="mb-2 text-[11px] tracking-[0.25em] text-ink/50 uppercase">Bali · Mar 6–14</p>
               <ul>
