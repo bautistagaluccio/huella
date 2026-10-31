@@ -139,7 +139,7 @@ function BaliRetreat() {
           className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
           style={{ animationDelay: "0.15s" }}
         >
-          Eight rooms, one pool, and pavilions that open straight onto the lawn. Practise, eat and
+          Eight rooms, two pools, and pavilions that open straight onto the lawn. Practise, eat and
           rest here for the whole week.
         </p>
 
