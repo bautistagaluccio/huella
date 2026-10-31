@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Soften the Bali section bands (ink to 80%, sand to 35%, lighter hero shade) and keep text readable
 - [x] Replace the Bali weekly rhythm grid with an interactive day picker and timeline (both departures)
 - [x] Make the Bali closing band ink (like the facts bar) instead of clay
 - [x] Apply the May redesign to the March Bali page too; swap the green What to pack band for sand
