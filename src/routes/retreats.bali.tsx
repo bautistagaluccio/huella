@@ -53,7 +53,7 @@ const retreatButtons = [
 ];
 
 const packingList = [
-  { title: "Light clothes & swimwear" },
+  { title: "Sport clothes & swimwear" },
   {
     title: "My documents (Passport, VISA)",
     link: { label: "Check if I need a VISA", href: "https://evisa.imigrasi.go.id/" },
