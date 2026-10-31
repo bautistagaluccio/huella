@@ -298,14 +298,14 @@ function BaliRetreat() {
           </div>
 
           {/* A packing note visitors can tick off; ticks are not saved. */}
-          <div className="mt-9 max-w-[560px]">
-            <div className="-rotate-1 rounded-md bg-white/60 px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
+          <div className="mt-9">
+            <div className="-rotate-[0.5deg] rounded-md bg-white/60 px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
               <p className="mb-2 text-[11px] tracking-[0.25em] text-ink/50 uppercase">Bali · Mar 6–14</p>
-              <ul>
+              <ul className="grid grid-cols-1 sm:grid-cols-3">
                 {packingList.map(({ title, link }) => (
-                  <li key={title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0">
-                    <label className="flex cursor-pointer items-center gap-4">
-                      <input type="checkbox" className="size-4 shrink-0 accent-clay" />
+                  <li key={title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0 sm:border-b-0 sm:border-l sm:px-6 sm:py-2 sm:first:border-l-0 sm:first:pl-0">
+                    <label className="flex cursor-pointer items-start gap-4">
+                      <input type="checkbox" className="mt-1.5 size-4 shrink-0 accent-clay" />
                       <span className="font-display text-[20px] leading-snug">{title}</span>
                     </label>
                     {link && (

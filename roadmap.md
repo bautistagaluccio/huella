@@ -1,5 +1,5 @@
 # Roadmap
-- [x] Redesign Bali What to pack: heading and intro above, a tickable packing note below
+- [x] Redesign Bali What to pack: heading and intro above, a tickable packing note below with the three items side by side
 - [x] Add nutrition to the Bali Wellness description
 - [x] Rename the Bali Experience heading to "What you take home with you"
 - [x] Rename the Bali "Food" section and button to "Nutrition"
