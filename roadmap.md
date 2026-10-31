@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Rename the Bali Experience heading to "What you take home with you"
 - [x] Rename the Bali "Food" section and button to "Nutrition"
 - [x] Make the inside-and-out wellness text the Food intro and remove the "Around the table" point
 - [x] Add partner restaurant logos (N., ours., KYND, LOFT) to the Bali Food section; move the inside-and-out wellness idea into "Around the table"

@@ -45,7 +45,7 @@ const partnerRestaurants = [
 ];
 
 export const baliSections = [
-  { value: "experience", label: "Experience", heading: "What you take with you", intro: "A little more balance. A deeper connection to yourself. A circle of new connections.", items: experience },
+  { value: "experience", label: "Experience", heading: "What you take home with you", intro: "A little more balance. A deeper connection to yourself. A circle of new connections.", items: experience },
   { value: "daily", label: "Daily practice", heading: "Movement, breath & stillness", intro: "The core practices that shape the retreat’s rhythm.", items: dailyPractice },
   { value: "optional", label: "Optional activities", heading: "Follow your curiosity", intro: "Additional experiences to choose from, with room to enjoy your own pace.", items: optionalActivities },
   { value: "food", label: "Nutrition", heading: "Nourished from the inside", intro: "Wellness inside and out: movement looks after the outside, while connection and nutrition look after the inside. Shared meals are a chance to slow down and connect.", items: food },
