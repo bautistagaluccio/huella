@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Redesign the ski trip page in the Bali layout (hero, facts bar, sticky nav, bands, packing note, agenda day picker); share the trip building blocks
 - [x] Remove the May 1–9 Bali retreat; its address redirects to March 6–14
 - [x] Homepage header: three-line menu at top left listing every section, Huella centred, Request Info right
 - [x] Replace the Bali weekly rhythm grid with an interactive day picker and timeline (both departures)

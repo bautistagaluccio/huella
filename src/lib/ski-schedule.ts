@@ -1,7 +1,7 @@
 // Day-by-day agenda for the Caucasus Powder Days ski trip — transcribed from the
 // owner's spreadsheet. Day 0 = Tuesday night departure from Dubai,
 // days 1–5 = Wednesday to Sunday on the mountain and the journey home.
-import { type BlockTone, type ScheduleBlock, type ScheduleDay } from "@/lib/schedule";
+import { type BlockTone, type ScheduleBlock, type ScheduleDay, type TimelineEntry, type TimelineKind } from "@/lib/schedule";
 
 export const skiDays: ScheduleDay[] = [
   { name: "Tuesday", dayLabel: "Departure" },
@@ -23,7 +23,7 @@ export const skiTimes = [
 
 const breakfast = { start: 5, end: 7, lines: ["Breakfast"], tone: "sage" as const };
 // The first half hour of each full ski day's morning session goes to stretching.
-const stretching = { start: 8, end: 9, lines: ["Stretching and mobility"], tone: "mist" as const };
+const stretching = { start: 8, end: 9, lines: ["Stretching and mobility"], tone: "blush" as const };
 const skiDay = {
   start: 9,
   end: 17,
@@ -92,3 +92,27 @@ export const skiBlocks: ScheduleBlock[] = [
   { day: 5, start: 6, end: 9, lines: ["Breakfast"], tone: "sage" },
   { day: 5, start: 10, end: 31, lines: ["Departure", "Flight back", "Arrival"], tone: "gray" },
 ];
+
+const skiKindByTone: Record<BlockTone, TimelineKind> = {
+  blush: "practice",
+  sage: "meal",
+  mist: "optional",
+  clay: "other",
+  gray: "other",
+};
+
+// One day of the ski agenda as a timeline, in the sheet's order. Sleep shares the
+// sheet's "optional" colour but is rest, so it reads as travel and free time.
+export function getSkiDayTimeline(day: number): TimelineEntry[] {
+  return skiBlocks
+    .filter((block) => block.day === day)
+    .map((block) => {
+      const [title = "", ...details] = block.lines;
+      return {
+        time: skiAgendaTimeRange(block) ?? "",
+        title,
+        details,
+        kind: title === "Sleep" ? "other" : skiKindByTone[block.tone],
+      };
+    });
+}

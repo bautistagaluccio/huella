@@ -1,4 +1,3 @@
-import { Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import villaAfterDark from "@/assets/villa-after-dark.jpeg";
 import villaBathroom from "@/assets/villa-bathroom.webp";
@@ -7,7 +6,9 @@ import villaExterior from "@/assets/villa-exterior.webp";
 import villaLounge from "@/assets/villa-lounge.webp";
 import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
 import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
-import { BaliDayTimeline } from "@/components/bali-day-timeline";
+import { DayTimeline } from "@/components/day-timeline";
+import { Eyebrow, PackingNote, SectionNav, type PackingItem } from "@/components/trip-layout";
+import { getDayTimeline, scheduleDays } from "@/lib/bali-schedule";
 import { baliSections, partnerRestaurants } from "@/lib/bali-retreat-content";
 
 // Each Bali departure has its own route; only the dates differ between them.
@@ -33,7 +34,7 @@ export function baliRetreatHead({ month, days }: BaliDates) {
   };
 }
 
-export const packingList = [
+export const packingList: PackingItem[] = [
   { title: "Sport clothes & swimwear" },
   {
     title: "My documents (Passport, VISA)",
@@ -76,30 +77,6 @@ export const villaShots = [
   },
 ];
 
-// Packing titles render as text, with an optional word linked (the VISA site).
-export function PackingTitle({ item }: { item: (typeof packingList)[number] }) {
-  if (!("link" in item)) return <>{item.title}</>;
-  const { link } = item;
-  return (
-    <>
-      {item.title.split(link.word).map((part, index) => (
-        <Fragment key={index}>
-          {index > 0 && (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-            >
-              {link.word}
-            </a>
-          )}
-          {part}
-        </Fragment>
-      ))}
-    </>
-  );
-}
 
 // The Bali retreat page, shared by every departure: an immersive editorial layout —
 // full-bleed hero, facts bar, sticky section nav and alternating cream, ink and sand
@@ -119,47 +96,8 @@ function section(value: (typeof baliSections)[number]["value"]) {
   return baliSections.find((item) => item.value === value)!;
 }
 
-function Eyebrow({ children, tone = "text-clay", rule = "bg-clay/40" }: { children: React.ReactNode; tone?: string; rule?: string }) {
-  return (
-    <div className={`flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase ${tone}`}>
-      <span className={`inline-block h-px w-10 ${rule}`} />
-      {children}
-    </div>
-  );
-}
-
-// Highlights the nav link of the section currently in view.
-function useActiveSection(ids: string[]) {
-  const [active, setActive] = useState(ids[0]);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
-        if (visible[0]) setActive(visible[0].target.id.replace("bali-", ""));
-      },
-      { rootMargin: "-30% 0px -60% 0px" },
-    );
-    ids.forEach((id) => {
-      const element = document.getElementById(`bali-${id}`);
-      if (element) observer.observe(element);
-    });
-    return () => observer.disconnect();
-  }, [ids]);
-  return active;
-}
-
-const navIds = navItems.map((item) => item.id);
-
 export function BaliRetreatPage({ month, days }: BaliDates) {
   const shortDates = `${month.slice(0, 3)} ${days}`;
-  const active = useActiveSection(navIds);
-  const navRef = useRef<HTMLDivElement>(null);
-  // Keep the highlighted link visible when the nav scrolls sideways on phones.
-  useEffect(() => {
-    const nav = navRef.current;
-    const link = nav?.querySelector<HTMLElement>(`a[href="#bali-${active}"]`);
-    if (nav && link) nav.scrollTo({ left: link.offsetLeft - 24, behavior: "smooth" });
-  }, [active]);
   const experience = section("experience");
   const daily = section("daily");
   const optional = section("optional");
@@ -255,25 +193,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Sticky section nav */}
-      <nav aria-label="Retreat sections" className="sticky top-0 z-20 border-b border-ink/10 bg-cream/90 backdrop-blur">
-        <div ref={navRef} className="relative mx-auto max-w-[1360px] overflow-x-auto px-6">
-          <ul className="flex w-max min-w-full gap-7">
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#bali-${item.id}`}
-                  aria-current={active === item.id ? "true" : undefined}
-                  className={`block border-b-2 py-4 text-[12px] tracking-[0.16em] whitespace-nowrap uppercase transition-colors ${
-                    active === item.id ? "border-clay text-clay" : "border-transparent text-ink/55 hover:text-clay"
-                  }`}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+      <SectionNav items={navItems} prefix="bali" label="Retreat sections" />
 
       {/* Statement */}
       <section className="mx-auto max-w-[1360px] px-6 py-24 text-center">
@@ -443,22 +363,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           <p className="mt-5 text-[15px] leading-relaxed text-ink/65">
             A short list — mats, towels and everything for the practice are at the villa.
           </p>
-          {/* A packing note visitors can tick off; ticks are not saved. */}
-          <div className="mt-10 -rotate-[0.5deg] rounded-md bg-cream px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
-            <p className="mb-2 text-[11px] tracking-[0.25em] text-ink/50 uppercase">Bali · {shortDates}</p>
-            <ul className="grid grid-cols-1 sm:grid-cols-3">
-              {packingList.map((item) => (
-                <li key={item.title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0 sm:border-b-0 sm:border-l sm:px-6 sm:py-2 sm:first:border-l-0 sm:first:pl-0">
-                  <label className="flex cursor-pointer items-start gap-4">
-                    <input type="checkbox" className="mt-1.5 size-4 shrink-0 accent-clay" />
-                    <span className="font-display text-[20px] leading-snug">
-                      <PackingTitle item={item} />
-                    </span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <PackingNote label={`Bali · ${shortDates}`} items={packingList} />
         </div>
       </section>
 
@@ -472,7 +377,19 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           Arrive on Saturday and settle in — mornings of movement, afternoons for adventure or
           stillness, evenings together around the table.
         </p>
-        <BaliDayTimeline />
+        <DayTimeline
+          days={scheduleDays}
+          entriesFor={getDayTimeline}
+          legend={[
+            { kind: "practice", label: "Movement & mindfulness" },
+            { kind: "meal", label: "Around the table" },
+            { kind: "optional", label: "Optional experiences" },
+          ]}
+          // Open on Sunday, the first full retreat day.
+          initialDay={1}
+          fallbackLabel="Arrival"
+          timeZoneLabel="Bali time"
+        />
       </section>
 
       {/* Closing call to action — ink band, echoing the facts bar */}

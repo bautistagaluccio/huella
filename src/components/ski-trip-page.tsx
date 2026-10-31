@@ -1,17 +1,15 @@
 import { Link } from "@tanstack/react-router";
+import { BadgeCheck, Icon, KeyRound, Maximize2, MountainSnow, Plane, Sparkles, Utensils, type IconNode, type LucideProps } from "lucide-react";
+import pisteMap from "@/assets/gudauri-piste-map.webp";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
-import { SkiAgendaCards } from "@/components/ski-agenda";
-import { SkiTripDetails } from "@/components/ski-trip-details";
-import lodgeDining from "@/assets/lodge-dining.jpg";
-import lodgeLounge from "@/assets/lodge-lounge.jpg";
-import lodgePool from "@/assets/lodge-pool.jpg";
-import lodgeRoom from "@/assets/lodge-room.jpg";
-import lodgeSnowTerrace from "@/assets/lodge-snow-terrace.jpg";
-import lodgeTerrace from "@/assets/lodge-terrace.jpg";
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { KeyRound, MountainSnow, BadgeCheck, Sparkles, Backpack, Snowflake, IdCard, CalendarDays, Icon, type IconNode, type LucideProps } from "lucide-react";
+import { DayTimeline } from "@/components/day-timeline";
+import { Eyebrow, PackingNote, SectionNav } from "@/components/trip-layout";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { getSkiDayTimeline, skiDays } from "@/lib/ski-schedule";
+import { audience, included, includedNote, lodgeShots, optionalActivities, skiPackingList } from "@/lib/ski-trip-content";
+
+// The ski trip page, in the same editorial layout as the Bali retreat: full-bleed hero,
+// facts bar, sticky section nav and alternating cream, ink and sand bands.
 
 const fourPeopleNode: IconNode = [
   ["circle", { cx: "9", cy: "6", r: "2", key: "head-left" }],
@@ -46,69 +44,86 @@ function GeorgiaFlag({ className }: { className?: string }) {
   );
 }
 
-const skiTabs = [
-  { value: "main", label: "Main" },
-  { value: "lodge", label: "The lodge", icon: KeyRound },
-  { value: "agenda", label: "Agenda" },
-  { value: "resort", label: "The ski resort", icon: MountainSnow },
-  { value: "included", label: "What's included", icon: BadgeCheck },
-  { value: "optional", label: "Optional activities", icon: Sparkles },
-  { value: "packing", label: "What to take", icon: Backpack },
-  { value: "audience", label: "Is this for me?", icon: FourPeopleIcon },
+const navItems = [
+  { id: "lodge", label: "The lodge" },
+  { id: "resort", label: "The ski resort" },
+  { id: "included", label: "What's included" },
+  { id: "optional", label: "Optional activities" },
+  { id: "packing", label: "What to pack" },
+  { id: "audience", label: "Is this for me?" },
+  { id: "agenda", label: "Agenda" },
 ];
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+const inclusionIcons = [Plane, KeyRound, Utensils, MountainSnow];
+const audienceIcons = [FourPeopleIcon, MountainSnow, Sparkles];
+
+const headingClass = "mt-6 font-display text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.05] font-medium text-balance";
+
+function PisteMap() {
   return (
-    <div className="flex items-center gap-4 text-[11px] tracking-[0.3em] text-clay uppercase">
-      <span className="inline-block h-px w-10 bg-clay/40" />
-      {children}
-    </div>
+    <Dialog>
+      <DialogTrigger className="group mt-10 flex w-full flex-col items-start gap-5 rounded-[14px] bg-cream/10 p-5 text-left ring-1 ring-cream/15 transition-colors hover:ring-sand/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:flex-row sm:items-center sm:p-6">
+        <img
+          src={pisteMap}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="h-40 w-full max-w-[220px] shrink-0 rounded-[10px] bg-cream object-contain p-2"
+        />
+        <span className="min-w-0">
+          <span className="block font-display text-[22px] font-medium">The piste map</span>
+          <span className="mt-2 block max-w-[52ch] text-[14px] leading-relaxed text-pretty text-cream/75">
+            The whole mountain in one page — every lift, run and facility at Gudauri.
+          </span>
+          <span className="mt-3 inline-flex items-center gap-2 text-[11px] tracking-[0.2em] text-sand uppercase">
+            <Maximize2 className="h-3.5 w-3.5" />
+            Click to open
+          </span>
+        </span>
+      </DialogTrigger>
+      <DialogContent className="max-w-[min(1040px,94vw)] border-none bg-cream p-5 sm:p-7">
+        <DialogHeader className="text-left">
+          <DialogTitle className="font-display text-[22px] font-medium">Gudauri piste map</DialogTitle>
+          <DialogDescription className="text-[13px] leading-relaxed text-ink/60">
+            Every lift, run and facility on the mountain, in one page.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="max-h-[68vh] overflow-y-auto">
+          <img
+            src={pisteMap}
+            alt="Piste map of the Gudauri ski resort showing lifts, runs of every level, facilities and the legend"
+            className="w-full rounded-[10px] outline-1 -outline-offset-1 outline-ink/10"
+          />
+        </div>
+        <a
+          href={pisteMap}
+          target="_blank"
+          rel="noreferrer"
+          className="justify-self-start text-[11px] tracking-[0.2em] text-clay uppercase transition-colors hover:text-ink"
+        >
+          Open full size
+        </a>
+      </DialogContent>
+    </Dialog>
   );
 }
 
-export function SkiTripPage({ days = "17–21", expandedMenu = false }: { days?: "10–14" | "17–21"; expandedMenu?: boolean }) {
-  const [activeTab, setActiveTab] = useState("main");
-  const tripTabs = skiTabs.map((tab) =>
-    !expandedMenu && tab.value === "packing" ? { ...tab, label: "What to pack" } : tab,
-  );
-  const lodgeShots: {
-    src: typeof lodgeSnowTerrace;
-    alt: string;
-    caption: string;
-    position?: string;
-  }[] = [
+export function SkiTripPage({ days = "17–21" }: { days?: string }) {
+  const [leadShot, ...otherShots] = lodgeShots;
+
+  const facts = [
+    { label: "Dates", value: <>February {days}</> },
     {
-      src: lodgeLounge,
-      alt: "Lounge with a suspended fireplace and panoramic windows onto snowy mountains",
-      caption: "The lounge",
+      label: "Location",
+      value: (
+        <span className="flex items-center gap-2.5">
+          <GeorgiaFlag className="h-[1.05rem] w-[1.6rem] shrink-0 rounded-[3px] ring-1 ring-cream/20" />
+          Gudauri, Georgia
+        </span>
+      ),
     },
-    {
-      src: lodgeSnowTerrace,
-      alt: "Snow-covered terrace with dark framed lounge chairs and low tables, snow-laden evergreens and a panorama of snow-capped ridges under a bright blue sky",
-      caption: "The lodge",
-      // Portrait source: favour the lower half so the wide crop shows the seating, not just sky.
-      position: "center 60%",
-    },
-    {
-      src: lodgeTerrace,
-      alt: "Upper terrace with timber tables and chairs lined with white sheepskin throws, overlooking snowy peaks",
-      caption: "The upper terrace",
-    },
-    {
-      src: lodgePool,
-      alt: "Heated outdoor pool steaming in deep snow under a clear blue sky",
-      caption: "The pool, in snow",
-    },
-    {
-      src: lodgeDining,
-      alt: "Outdoor dining terrace set for lunch with a snow-covered mountain view",
-      caption: "Lunch on the terrace",
-    },
-    {
-      src: lodgeRoom,
-      alt: "Contemporary bedroom with a low timber bed, circular armchair and large windows",
-      caption: "The rooms",
-    },
+    { label: "Flights", value: <>Included</> },
+    { label: "Price", value: <>From AED 10,000</> },
   ];
 
   return (
@@ -117,9 +132,7 @@ export function SkiTripPage({ days = "17–21", expandedMenu = false }: { days?:
       <header className="mx-auto flex max-w-[1360px] items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-3">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-clay" />
-          <span className="font-display text-[15px] font-medium tracking-[0.3em] uppercase">
-            Huella
-          </span>
+          <span className="font-display text-[15px] font-medium tracking-[0.3em] uppercase">Huella</span>
         </Link>
         <Link
           to="/"
@@ -130,311 +143,283 @@ export function SkiTripPage({ days = "17–21", expandedMenu = false }: { days?:
         </Link>
       </header>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-[1360px] px-6 pt-6 pb-14">
-        <div className="animate-rise">
-          <Eyebrow>Gudauri · Ski · Feb {days}</Eyebrow>
-        </div>
-        <h1
-          className="animate-rise mt-6 max-w-[16ch] font-display text-[clamp(2.4rem,6vw,4.6rem)] leading-[1] font-medium text-balance"
-          style={{ animationDelay: "0.1s" }}
-        >
-          Caucasus Powder <span className="text-clay italic">Days</span>
-        </h1>
-        <p
-          className="animate-rise mt-6 max-w-[56ch] text-[15px] leading-relaxed text-pretty text-ink/70"
-          style={{ animationDelay: "0.2s" }}
-        >
-          Five days on quiet mountain slopes in Gudauri — flights from Dubai included, with
-          every transfer and detail settled before you land.
-        </p>
-      </section>
-
-      {/* Hero image */}
-      <section className="mx-auto max-w-[1360px] px-6 pb-14">
+      {/* Full-bleed hero */}
+      <section className="relative isolate flex min-h-[560px] items-end overflow-hidden md:h-[82vh]">
         <img
           src={skiGudauriImg}
           alt="Snow-covered Caucasus slopes above Gudauri at sunrise"
           width={1120}
           height={768}
-          className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5"
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-ink/5" />
+        <div className="mx-auto w-full max-w-[1360px] px-6 pt-40 pb-14">
+          <div className="animate-rise">
+            <Eyebrow tone="text-cream" rule="bg-cream/60">Gudauri · Ski · Feb {days}</Eyebrow>
+          </div>
+          <h1
+            className="animate-rise mt-6 max-w-[14ch] font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] font-medium text-cream text-balance"
+            style={{ animationDelay: "0.1s" }}
+          >
+            Caucasus Powder <span className="text-sand italic">Days</span>
+          </h1>
+          <p
+            className="animate-rise mt-7 max-w-[52ch] text-[16px] leading-relaxed text-pretty text-cream/85"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Five days on quiet mountain slopes in Gudauri — flights from Dubai included, with every
+            transfer and detail settled before you land.
+          </p>
+        </div>
+      </section>
+
+      {/* Facts bar */}
+      <section className="bg-ink text-cream">
+        <div className="mx-auto max-w-[1360px] px-6 py-10">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 lg:grid-cols-4">
+            {facts.map((fact) => (
+              <div key={fact.label} className="border-l border-cream/15 pl-4">
+                <dt className="text-[11px] tracking-[0.25em] text-cream/55 uppercase">{fact.label}</dt>
+                <dd className="mt-2 font-display text-[1.35rem] leading-tight font-medium">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-9 flex flex-col gap-6 border-t border-cream/15 pt-7 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-[60ch] text-[13px] leading-relaxed text-cream/65">
+              Every trip is quoted by hand. Send a note and a trip designer will share the full itinerary
+              and a tailored proposal.
+            </p>
+            <Link
+              to="/"
+              hash="enquire"
+              className="shrink-0 self-start rounded-full bg-clay px-6 py-3 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-cream hover:text-ink md:self-auto"
+            >
+              Request the itinerary
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <SectionNav items={navItems} prefix="ski" label="Trip sections" />
+
+      {/* Statement */}
+      <section className="mx-auto max-w-[1360px] px-6 py-24 text-center">
+        <Eyebrow tone="text-clay justify-center">The trip</Eyebrow>
+        <h2 className="mx-auto mt-7 max-w-[20ch] font-display text-[clamp(2rem,5vw,3.8rem)] leading-[1.05] font-medium text-balance">
+          The lodge, the table and the <span className="text-clay italic">hours between</span>
+        </h2>
+        <p className="mx-auto mt-6 max-w-[52ch] text-[15px] leading-relaxed text-pretty text-ink/65">
+          Three looks at the same week: where you’ll be staying, what the trip covers, and what you can
+          add on when you feel like it.
+        </p>
+      </section>
+
+      {/* The lodge */}
+      <section id="ski-lodge" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 pb-24">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
+              <Eyebrow>The lodge</Eyebrow>
+              <h2 className={headingClass}>
+                Gudauri Lodge, where the week <span className="text-clay italic">unfolds</span>
+              </h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-pretty text-ink/70">
+                A modern lodge above the valley — a heated pool in the snow, a terrace for long lunches and
+                a lounge that fills after the last run.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-8">
+            {leadShot && (
+              <figure className="sm:col-span-2">
+                <img
+                  src={leadShot.src}
+                  alt={leadShot.alt}
+                  width={1024}
+                  height={683}
+                  loading="lazy"
+                  style={leadShot.position ? { objectPosition: leadShot.position } : undefined}
+                  className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5"
+                />
+                <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{leadShot.caption}</figcaption>
+              </figure>
+            )}
+            {otherShots.map((shot, index) => {
+              // An odd photo out closes the mosaic full width instead of sitting alone.
+              const wide = otherShots.length % 2 === 1 && index === otherShots.length - 1;
+              return (
+                <figure key={shot.src} className={wide ? "sm:col-span-2" : undefined}>
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={1024}
+                    height={683}
+                    loading="lazy"
+                    style={shot.position ? { objectPosition: shot.position } : undefined}
+                    className={`${wide ? "aspect-[16/9]" : "aspect-[4/3]"} w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]`}
+                  />
+                  <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{shot.caption}</figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* The resort — ink band */}
+      <section id="ski-resort" tabIndex={-1} className="scroll-mt-16 bg-ink text-cream">
+        <div className="mx-auto max-w-[1360px] px-6 py-24">
+          <Eyebrow tone="text-cream/70" rule="bg-cream/40">The ski resort</Eyebrow>
+          <h2 className={`${headingClass} max-w-[22ch]`}>
+            The <span className="text-sand italic">slopes</span>, right at your door
+          </h2>
+          <p className="mt-5 max-w-[60ch] text-[16px] leading-relaxed text-cream/75">
+            A <strong className="font-semibold text-cream">ski-in, ski-out</strong> lodge above the valley — the
+            week happens here, with the lounge, the terraces and the pool all facing the mountains.
+          </p>
+          <PisteMap />
+        </div>
+      </section>
+
+      {/* What's included */}
+      <section id="ski-included" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-24">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
+              <Eyebrow>What’s included</Eyebrow>
+              <h2 className={headingClass}>
+                We’ve got it <span className="text-clay italic">covered</span>
+              </h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-ink/65">
+                The essentials are arranged with the trip, so the only thing left to decide is how much you ski.
+              </p>
+            </div>
+          </div>
+          <div className="lg:col-span-8">
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+              {included.map((item, index) => {
+                const ItemIcon = inclusionIcons[index] ?? BadgeCheck;
+                return (
+                  <li key={item.title} className="border-t border-clay/40 pt-6">
+                    <ItemIcon aria-hidden="true" className="size-7 text-clay" strokeWidth={1.5} />
+                    <h3 className="mt-4 font-display text-[24px] leading-tight font-medium">{item.title}</h3>
+                    <p className="mt-3 text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-10 border-t border-ink/10 pt-5 text-[13px] leading-relaxed text-ink/55">{includedNote}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Optional activities */}
+      <section id="ski-optional" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 pb-24">
+        <Eyebrow>Optional activities</Eyebrow>
+        <h2 className={`${headingClass} max-w-[22ch]`}>
+          For the days you want <span className="text-clay italic">more</span>
+        </h2>
+        <p className="mt-5 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">
+          Nothing here is compulsory. These are there for whoever wants them.
+        </p>
+        <ul className="mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {optionalActivities.map((item) => (
+            <li key={item.title} className="min-w-0">
+              <img
+                src={item.photo.src}
+                alt={item.photo.alt}
+                loading="lazy"
+                width={1024}
+                height={768}
+                className="aspect-[4/5] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5"
+              />
+              <h3 className="mt-5 font-display text-[23px] leading-tight font-medium">{item.title}</h3>
+              <p className="mt-3 text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* What to pack */}
+      <section id="ski-packing" tabIndex={-1} className="scroll-mt-16 bg-sand/60">
+        <div className="mx-auto max-w-[1360px] px-6 py-24">
+          <Eyebrow>What to pack</Eyebrow>
+          <h2 className={headingClass}>
+            Pack light, we'll handle the <span className="text-clay italic">rest</span>
+          </h2>
+          <PackingNote label={`Gudauri · Feb ${days}`} items={skiPackingList} />
+        </div>
+      </section>
+
+      {/* Is this for me? — ink band */}
+      <section id="ski-audience" tabIndex={-1} className="scroll-mt-16 bg-ink text-cream">
+        <div className="mx-auto max-w-[1360px] px-6 py-24">
+          <Eyebrow tone="text-cream/70" rule="bg-cream/40">Is this for me?</Eyebrow>
+          <h2 className={`${headingClass} max-w-[22ch]`}>
+            Skier or not, you're <span className="text-sand italic">in</span>
+          </h2>
+          <ol className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3">
+            {audience.map((item, index) => {
+              const ItemIcon = audienceIcons[index] ?? Sparkles;
+              return (
+                <li key={item.title} className="border-t border-cream/20 pt-6">
+                  <ItemIcon aria-hidden="true" className="size-8 text-sand" strokeWidth={1.5} />
+                  <h3 className="mt-4 font-display text-[26px] font-medium">{item.title}</h3>
+                  <p className="mt-3 text-[14px] leading-relaxed text-pretty text-cream/70">{item.description}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      {/* Agenda */}
+      <section id="ski-agenda" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-24">
+        <Eyebrow>The agenda</Eyebrow>
+        <h2 className={`${headingClass} max-w-[24ch]`}>
+          Five days, hour by <span className="text-clay italic">hour</span>
+        </h2>
+        <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70">
+          Leave Dubai late Tuesday night, wake up in Gudauri on Wednesday, and spend three full days on
+          the slopes before the flight home on Sunday.
+        </p>
+        <DayTimeline
+          days={skiDays}
+          entriesFor={getSkiDayTimeline}
+          legend={[
+            { kind: "practice", label: "On the slopes" },
+            { kind: "meal", label: "Around the table" },
+            { kind: "optional", label: "Optional" },
+            { kind: "other", label: "Travel & free time" },
+          ]}
+          // Open on Thursday, the first full ski day.
+          initialDay={2}
+          fallbackLabel=""
         />
       </section>
 
-      {expandedMenu && (
-        <section className="mx-auto max-w-[1360px] px-6 pb-10">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <div className="overflow-x-auto border-b border-ink/15">
-              <TabsList aria-label="Ski experience" className="flex h-auto w-max min-w-full justify-between gap-3 rounded-none bg-transparent p-0">
-                {tripTabs.map((tab) => (
-                  <TabsTrigger key={tab.value} value={tab.value}
-                    onFocus={(event) => event.currentTarget.scrollIntoView({ block: "nearest", inline: "nearest" })}
-                    className="min-h-14 shrink-0 rounded-none border-b-2 border-transparent px-4 py-4 text-[13px] text-ink/60 data-[state=active]:border-clay data-[state=active]:bg-transparent data-[state=active]:text-clay data-[state=active]:shadow-none">
-                    {tab.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </div>
-            {tripTabs.map((tab) => (
-              <TabsContent key={tab.value} value={tab.value} className="m-0">
-                {(tab.value === "resort" || tab.value === "included" || tab.value === "optional") && <SkiTripDetails section={tab.value} />}
-                {(tab.value === "packing" || tab.value === "audience") && (
-                  <div className="min-h-[240px] pt-9">
-                    <h2 className="font-display text-[28px] font-medium">{tab.label}</h2>
-                    <p className="mt-3 text-[14px] text-ink/65">Details coming soon.</p>
-                  </div>
-                )}
-              </TabsContent>
-            ))}
-          </Tabs>
-        </section>
-      )}
-
-      {expandedMenu && <section hidden={activeTab !== "lodge"} className="mx-auto max-w-[1360px] px-6 pb-14">
-        <Eyebrow>The lodge</Eyebrow>
-        <h2
-          className="animate-rise mt-6 max-w-[22ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
-          style={{ animationDelay: "0.1s" }}
-        >
-          Gudauri Lodge, where the week <span className="text-clay italic">unfolds</span>
-        </h2>
-        <p
-          className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
-          style={{ animationDelay: "0.15s" }}
-        >
-          A modern lodge above the valley — a heated pool in the snow, a terrace for long lunches
-          and a lounge that fills after the last run.
-        </p>
-
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {lodgeShots.map((shot) => (
-            <figure key={shot.src}>
-              <img
-                src={shot.src}
-                alt={shot.alt}
-                width={1024}
-                height={683}
-                loading="lazy"
-                style={shot.position ? { objectPosition: shot.position } : undefined}
-                className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]"
-              />
-              <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">
-                {shot.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>}
-
-      {/* Trip details */}
-      <section hidden={expandedMenu && activeTab !== "main"} className="mx-auto max-w-[1360px] px-6 pb-14">
-        <div className={`grid grid-cols-1 gap-10 md:grid-cols-12 ${expandedMenu ? "items-start" : ""}`}>
-          {expandedMenu && (
-            <div className="min-w-0 md:col-span-7 md:pr-8">
-              <Eyebrow>The experience</Eyebrow>
-              <h2 className="mt-6 max-w-[22ch] font-display text-[36px] leading-tight font-medium">
-                Five days in the <span className="text-clay italic">Caucasus</span>
-              </h2>
-              <p className="mt-5 max-w-[60ch] text-[15px] leading-relaxed text-pretty text-ink/70">
-                A ski escape from Dubai to Gudauri, where days on the mountain flow into shared
-                dinners and time to unwind. Stay at Gudauri Lodge, a ski-in, ski-out base with
-                a heated pool, mountain-facing terraces and a lounge to return to after the last run.
-              </p>
-              <p className="mt-4 max-w-[60ch] text-[15px] leading-relaxed text-pretty text-ink/70">
-                Flights, transfers within Georgia, ski passes and rental are arranged for you.
-                Follow the group’s rhythm on the slopes, then choose an afternoon of skiing or
-                a pause at the spa — with night ski and Georgian wine tasting in the mix.
-              </p>
-            </div>
-          )}
-          {!expandedMenu && <div className="min-w-0 md:col-span-7">
-            <Eyebrow>The trip</Eyebrow>
-            <h2
-              className="animate-rise mt-6 max-w-[24ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
-              style={{ animationDelay: "0.1s" }}
-            >
-              The lodge, the table and the <span className="text-clay italic">hours between</span>
-            </h2>
-            <p
-              className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
-              style={{ animationDelay: "0.15s" }}
-            >
-              Three looks at the same week: where you’ll be staying, what the trip covers, and what
-              you can add on when you feel like it.
+      {/* Closing call to action — ink band, echoing the facts bar */}
+      <section className="bg-ink text-cream">
+        <div className="mx-auto flex max-w-[1360px] flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Eyebrow tone="text-cream/70" rule="bg-cream/40">Gudauri · Feb {days}</Eyebrow>
+            <p className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] leading-none font-medium">
+              Caucasus Powder <span className="text-sand italic">Days</span>
             </p>
-            <nav aria-label="Trip sections" className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {tripTabs.filter((tab) => tab.value !== "main" && tab.value !== "agenda").map((tab) => (
-                <Button key={tab.value} variant="outline" asChild className="h-auto min-h-24 whitespace-normal border-ink/15 bg-sand/50 px-3 py-5 text-center text-[13px] text-ink shadow-none hover:bg-sand hover:text-clay">
-                  <a href={`#ski-${tab.value}`} className="flex flex-col gap-3">
-                    {tab.label}
-                    {tab.icon && <tab.icon aria-hidden="true" className="size-5 text-clay" />}
-                  </a>
-                </Button>
-              ))}
-              <Button variant="outline" asChild className="col-span-2 h-auto min-h-16 whitespace-normal border-ink/15 bg-sand/50 px-3 py-4 text-center text-[13px] text-ink shadow-none hover:bg-sand hover:text-clay sm:col-span-3">
-                <a href="#ski-agenda" className="flex items-center justify-center gap-3">
-                  Agenda
-                  <CalendarDays aria-hidden="true" className="size-5 text-clay" />
-                </a>
-              </Button>
-            </nav>
-          </div>}
-
-          {/* Facts panel */}
-          <div className="min-w-0 md:col-span-5">
-            <div className={`rounded-[14px] bg-sand p-6 ring-1 ring-ink/5 lg:p-8 ${expandedMenu ? "" : "flex h-full flex-col"}`}>
-              <dl className="grid grid-cols-1 gap-5">
-                <div>
-                  <dt className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Dates</dt>
-                  <dd className="mt-1 font-display text-[1.3rem] font-medium">February {days}</dd>
-                </div>
-                <div>
-                  <dt className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Location</dt>
-                  <dd className="mt-1 flex items-center gap-2.5 font-display text-[1.3rem] font-medium">
-                    <GeorgiaFlag className="h-[1.05rem] w-[1.6rem] shrink-0 rounded-[3px] ring-1 ring-ink/10" />
-                    Gudauri, Georgia
-                  </dd>
-                </div>
-                <div className="grid grid-cols-2 gap-5">
-                  <div>
-                    <dt className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Flights</dt>
-                    <dd className="mt-1 font-display text-[1.3rem] font-medium">Included</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Price</dt>
-                    <dd className="mt-1 font-display text-[1.3rem] font-medium">From AED 10,000</dd>
-                  </div>
-                </div>
-              </dl>
-              <p className="mt-6 text-[13px] leading-relaxed text-ink/60">
-                Every trip is quoted by hand. Send a note and a trip designer will share the full
-                itinerary and a tailored proposal.
-              </p>
-              <Link
-                to="/"
-                hash="enquire"
-                className={`inline-block rounded-full bg-clay px-6 py-3 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-ink ${expandedMenu ? "mt-6" : "mt-auto"}`}
-              >
-                Request the itinerary
-              </Link>
-            </div>
+            <p className="mt-5 max-w-[48ch] text-[14px] leading-relaxed text-cream/70">
+              Every trip is quoted by hand. Send a note and a trip designer will share the full itinerary
+              and a tailored proposal.
+            </p>
           </div>
+          <Link
+            to="/"
+            hash="enquire"
+            className="self-start rounded-full bg-clay px-7 py-3.5 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-cream hover:text-ink md:self-auto"
+          >
+            Request the itinerary
+          </Link>
         </div>
       </section>
-
-      {!expandedMenu && <>
-        <section id="ski-lodge" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14" tabIndex={-1}>
-          <Eyebrow>The lodge</Eyebrow>
-          <h2 className="mt-6 max-w-[22ch] font-display text-[36px] leading-tight font-medium">
-            Gudauri Lodge, where the week <span className="text-clay italic">unfolds</span>
-          </h2>
-          <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70">
-            A modern lodge above the valley — a heated pool in the snow, a terrace for long lunches
-            and a lounge that fills after the last run.
-          </p>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {lodgeShots.map((shot) => (
-              <figure key={shot.src}>
-                <img src={shot.src} alt={shot.alt} width={1024} height={683} loading="lazy"
-                  style={shot.position ? { objectPosition: shot.position } : undefined}
-                  className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]" />
-                <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{shot.caption}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-        {(["resort", "included", "optional"] as const).map((section) => (
-          <section key={section} id={`ski-${section}`} tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
-            <Eyebrow>{tripTabs.find((tab) => tab.value === section)?.label}</Eyebrow>
-            <SkiTripDetails section={section} photoEditorial />
-          </section>
-        ))}
-        {tripTabs.filter((tab) => tab.value === "packing" || tab.value === "audience").map((tab) => (
-          <section key={tab.value} id={`ski-${tab.value}`} tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
-            <Eyebrow>{tab.label}</Eyebrow>
-            <h2 className="mt-6 font-display text-[28px] font-medium">
-              {tab.value === "packing" ? (
-                <>Pack light, we'll handle the <span className="text-clay italic">rest</span></>
-              ) : (
-                <>Skier or not, you're <span className="text-clay italic">in</span></>
-              )}
-            </h2>
-            {tab.value === "packing" ? (
-              <div className="mt-9 grid grid-cols-1 gap-8 sm:grid-cols-3">
-                {[
-                  { title: 'My winter clothes', icon: Snowflake },
-                  { title: 'My documents (Passport, VISA)', icon: IdCard, link: { label: 'Check if I need a VISA', href: 'https://www.evisa.gov.ge/GeoVisa/' } },
-                  { title: 'My good energy', icon: Sparkles },
-                ].map(({ title, icon: ItemIcon, link }) => (
-                  <div key={title} className="min-w-0">
-                    <ItemIcon aria-hidden="true" className="mb-5 size-8 text-clay" strokeWidth={1.5} />
-                    <h3 className="font-display text-[23px] leading-tight font-medium">{title}</h3>
-                    {link && (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-3 inline-block text-[14px] text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-                      >
-                        {link.label}
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-9 grid grid-cols-1 gap-8 sm:grid-cols-3">
-                {[
-                  { title: 'A trip for everyone', icon: FourPeopleIcon, description: 'First time on snow or seasoned skier — the week is shaped so everyone finds their pace and their people.' },
-                  { title: 'Lessons for every level', icon: MountainSnow, description: 'Want to learn or improve your skiing? We arrange lessons with local instructors, from your very first run to refining your technique.' },
-                  { title: 'Beyond the slopes', icon: Sparkles, description: "Don't feel like skiing? Spa afternoons, wine tasting and evenings out keep the week just as full away from the slopes." },
-                ].map(({ title, icon: ItemIcon, description }) => (
-                  <div key={title} className="min-w-0">
-                    <ItemIcon aria-hidden="true" className="mb-5 size-8 text-clay" strokeWidth={1.5} />
-                    <h3 className="font-display text-[23px] leading-tight font-medium">{title}</h3>
-                    <p className="mt-3 text-[14px] leading-relaxed text-ink/70">{description}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        ))}
-      </>}
-
-      {/* Agenda */}
-      <section id="ski-agenda" tabIndex={-1} hidden={expandedMenu && activeTab !== "agenda"} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
-        <Eyebrow>The agenda</Eyebrow>
-        <h2
-          className="animate-rise mt-6 max-w-[24ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
-          style={{ animationDelay: "0.1s" }}
-        >
-          Five days, hour by <span className="text-clay italic">hour</span>
-        </h2>
-        <p
-          className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
-          style={{ animationDelay: "0.15s" }}
-        >
-          Leave Dubai late Tuesday night, wake up in Gudauri on Wednesday, and spend three full
-          days on the slopes before the flight home on Sunday.
-        </p>
-
-        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink/10 pt-4 text-[10px] text-ink/65">
-          {[
-            { label: "On the slopes", color: "bg-blush" },
-            { label: "Around the table", color: "bg-sage" },
-            { label: "Optional", color: "bg-mist" },
-            { label: "Travel & free time", color: "bg-sand" },
-          ].map((item) => (
-            <span key={item.label} className="inline-flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${item.color}`} />
-              {item.label}
-            </span>
-          ))}
-        </div>
-
-        <SkiAgendaCards />
-      </section>
-
 
       {/* Footer */}
       <footer className="border-t border-ink/10">

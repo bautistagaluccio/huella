@@ -17,3 +17,13 @@ export interface ScheduleDay {
   name: string;
   dayLabel: string | null;
 }
+
+/** How a timeline entry is marked: movement, meals, optional extras, or travel and rest. */
+export type TimelineKind = "practice" | "meal" | "optional" | "other";
+
+export interface TimelineEntry {
+  time: string;
+  title: string;
+  details: string[];
+  kind: TimelineKind;
+}

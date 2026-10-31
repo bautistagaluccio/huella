@@ -1,7 +1,7 @@
 // Weekly rhythm for the Bali Body & Breath retreat — as provided by the host.
 // Day 0 = arrival Saturday, days 1–5 = full retreat days (Day 1–Day 5),
 // day 6 = departure Friday (Day 6).
-import { type ScheduleBlock, type ScheduleDay } from "@/lib/schedule";
+import { type ScheduleBlock, type ScheduleDay, type TimelineEntry, type TimelineKind } from "@/lib/schedule";
 
 export const scheduleDays: ScheduleDay[] = [
   { name: "Saturday", dayLabel: null },
@@ -102,15 +102,6 @@ export const scheduleBlocks: ScheduleBlock[] = [
   { day: 4, start: 25, end: 27, lines: ["Special Dinner", "by the host", "& night out"], tone: "sage" },
   { day: 5, start: 25, end: 27, lines: ["Free Night"], tone: "gray" },
 ];
-
-export type TimelineKind = "practice" | "meal" | "optional" | "other";
-
-export interface TimelineEntry {
-  time: string;
-  title: string;
-  details: string[];
-  kind: TimelineKind;
-}
 
 const kindByTone: Record<ScheduleBlock["tone"], TimelineKind> = {
   blush: "practice",

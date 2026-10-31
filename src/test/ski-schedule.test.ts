@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { skiAgendaTimeRange, skiBlocks, skiDays, skiTimes } from "@/lib/ski-schedule";
+import { getSkiDayTimeline, skiAgendaTimeRange, skiBlocks, skiDays, skiTimes } from "@/lib/ski-schedule";
 
 const day = (n: number) => skiBlocks.filter((block) => block.day === n);
 const entries = (n: number) => day(n).map((block) => ({
@@ -88,5 +88,17 @@ describe("Owner's ski agenda image", () => {
         expect(block.start).toBeGreaterThanOrEqual(blocks[index]?.end ?? 0);
       });
     }
+  });
+
+  it("shows every agenda entry, with its time, in the day picker", () => {
+    const total = skiDays.reduce((sum, _day, index) => sum + getSkiDayTimeline(index).length, 0);
+    expect(total).toBe(skiBlocks.length);
+    expect(getSkiDayTimeline(2).map(({ time, title, kind }) => ({ time, title, kind })).slice(0, 4)).toEqual([
+      { time: "8.30 am – 9.30 am", title: "Breakfast", kind: "meal" },
+      { time: "10 am – 10.30 am", title: "Stretching and mobility", kind: "practice" },
+      { time: "10.30 am – 2.30 pm", title: "Ski", kind: "practice" },
+      { time: "", title: "Free lunch", kind: "meal" },
+    ]);
+    expect(getSkiDayTimeline(1).find((entry) => entry.title === "Sleep")?.kind).toBe("other");
   });
 });
