@@ -1,4 +1,6 @@
 # Roadmap
+- [x] Give the Bali page the ski page's section buttons (villa, experience, daily practice, optional activities, food, what to pack, weekly rhythm) and add What to pack
+- [x] Start "Practise, eat and rest…" on its own line in the villa intro
 - [x] Say the Bali villa has two pools, not one
 - [x] Open Thursday–Saturday ski mornings with "Stretching and mobility" 10–10.30 am; ski now 10.30 am – 2.30 pm
 - [x] Remove the February 10–14 ski trip; its address redirects to February 17–21

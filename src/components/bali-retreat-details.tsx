@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 const dailyPractice = [
   { title: "Stretching", description: "Gentle, guided stretches to release tension, improve mobility and reconnect with your body." },
   { title: "Pilates", description: "Mat-based movement focused on core strength, posture and control, balancing strength with flexibility." },
@@ -32,51 +29,32 @@ const food = [
   { title: "A farewell table", description: "A farewell lunch closes the experience with one more shared meal and time to reflect on the retreat." },
 ];
 
-const sections = [
+export const baliSections = [
   { value: "experience", label: "Experience", heading: "What you take with you", intro: "A little more balance. A deeper connection to yourself. A circle of new connections.", items: experience },
   { value: "daily", label: "Daily practice", heading: "Movement, breath & stillness", intro: "The core practices that shape the retreat’s rhythm.", items: dailyPractice },
   { value: "optional", label: "Optional activities", heading: "Follow your curiosity", intro: "Additional experiences to choose from, with room to enjoy your own pace.", items: optionalActivities },
   { value: "food", label: "Food", heading: "Around the table", intro: "Shared meals are part of the experience — a chance to slow down and connect.", items: food },
-];
+] as const;
 
-const indicatorPositions: Record<string, string> = {
-  experience: "translate-x-0",
-  daily: "translate-x-full",
-  optional: "translate-x-[200%]",
-  food: "translate-x-[300%]",
-};
+export type BaliSection = (typeof baliSections)[number]["value"];
 
-export function BaliRetreatDetails() {
-  const [selected, setSelected] = useState("experience");
+// Renders one retreat section; the page lays them out in order below its section buttons.
+export function BaliRetreatDetails({ section }: { section: BaliSection }) {
+  const details = baliSections.find((item) => item.value === section);
+  if (!details) return null;
 
   return (
-    <Tabs value={selected} onValueChange={setSelected} className="min-w-0">
-      <div className="retreat-calendar overflow-x-auto">
-        <div className="relative min-w-[520px] border-b border-ink/15">
-          <TabsList aria-label="Retreat details" className="grid h-auto w-full grid-cols-4 rounded-none bg-transparent p-0">
-            {sections.map((section) => (
-              <TabsTrigger key={section.value} value={section.value} className="min-h-14 rounded-none px-2 py-4 text-[12px] text-ink/55 transition-colors data-[state=active]:bg-transparent data-[state=active]:text-clay data-[state=active]:shadow-none">
-                {section.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          <span aria-hidden="true" className={`pointer-events-none absolute bottom-0 left-0 h-0.5 w-1/4 bg-clay transition-transform duration-300 motion-reduce:transition-none ${indicatorPositions[selected] ?? "translate-x-0"}`} />
-        </div>
-      </div>
-      {sections.map((section) => (
-        <TabsContent key={section.value} value={section.value} className="mt-8 min-h-[460px]">
-          <h2 className="font-display text-[28px] leading-tight font-medium">{section.heading}</h2>
-          <p className="mt-3 max-w-[60ch] text-[14px] leading-relaxed text-ink/65">{section.intro}</p>
-          <div className={`mt-8 grid gap-x-8 gap-y-7 ${section.value === "experience" || section.value === "food" ? "grid-cols-1" : "sm:grid-cols-2"}`}>
-            {section.items.map((item) => (
-              <div key={item.title} className="border-t border-ink/10 pt-4">
-                <h3 className="font-display text-[21px] font-medium">{item.title}</h3>
-                <p className="mt-2 max-w-[65ch] text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
-              </div>
-            ))}
+    <>
+      <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">{details.heading}</h2>
+      <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">{details.intro}</p>
+      <div className={`mt-8 grid gap-x-8 gap-y-7 ${section === "experience" || section === "food" ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"}`}>
+        {details.items.map((item) => (
+          <div key={item.title} className="border-t border-ink/10 pt-4">
+            <h3 className="font-display text-[21px] font-medium">{item.title}</h3>
+            <p className="mt-2 max-w-[65ch] text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
           </div>
-        </TabsContent>
-      ))}
-    </Tabs>
+        ))}
+      </div>
+    </>
   );
 }

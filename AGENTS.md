@@ -5,6 +5,6 @@
 - Featured departures render from browser-safe structured calendar data sorted by departure month then starting day — why: multiple departures in one month remain chronological and testable.
 - Ski departures use dedicated routes rendering a shared browser-safe SkiTripPage with departure-specific dates — why: replica trips retain identical content without duplicated presentation.
 - Experimental ski navigation is opt-in per departure through SkiTripPage; focused tabs reuse SkiTripDetails section content — why: experiments do not alter other departures or duplicate trip facts.
-- Bali detail tabs and experimental ski tabs reuse browser-safe detail components; the original ski departure uses six design-system anchor buttons beside its facts panel with matching sections below — why: each departure preserves its chosen navigation without duplicating trip facts.
+- The Bali retreat and the original ski departure both use design-system anchor buttons beside the facts panel with matching sections below; experimental ski tabs reuse the browser-safe detail components — why: both trip pages navigate the same way without duplicating trip facts.
 - The ski agenda renders as day cards from the existing schedule data in src/lib/ski-schedule.ts — why: the agenda content stays the single source of truth when the layout changes.
 - SkiTripDetails opts into photo-led presentation per departure while sharing the same content — why: visual experiments leave other departures unchanged.

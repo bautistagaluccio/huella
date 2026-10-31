@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BaliRetreatDetails } from "@/components/bali-retreat-details";
+import { Backpack, CalendarDays, House, IdCard, Leaf, PersonStanding, Shirt, Sparkles, UtensilsCrossed } from "lucide-react";
+import { BaliRetreatDetails, baliSections } from "@/components/bali-retreat-details";
+import { Button } from "@/components/ui/button";
 import villaBathroom from "@/assets/villa-bathroom.webp";
 import villaDiningPavilion from "@/assets/villa-dining-pavilion.jpeg";
 import villaExterior from "@/assets/villa-exterior.webp";
@@ -41,6 +43,24 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+const retreatButtons = [
+  { id: "villa", label: "The villa", icon: House },
+  { id: "experience", label: "Experience", icon: Leaf },
+  { id: "daily", label: "Daily practice", icon: PersonStanding },
+  { id: "optional", label: "Optional activities", icon: Sparkles },
+  { id: "food", label: "Food", icon: UtensilsCrossed },
+  { id: "packing", label: "What to pack", icon: Backpack },
+];
+
+const packingList = [
+  { title: "Light clothes & swimwear", icon: Shirt },
+  {
+    title: "My documents (Passport, VISA)",
+    icon: IdCard,
+    link: { label: "Check if I need a VISA", href: "https://evisa.imigrasi.go.id/" },
+  },
+  { title: "My good energy", icon: Sparkles },
+];
 
 function BaliRetreat() {
   const villaShots = [
@@ -126,52 +146,45 @@ function BaliRetreat() {
         />
       </section>
 
-      {/* The villa */}
-      <section className="mx-auto max-w-[1360px] px-6 pb-14">
-        <Eyebrow>The villa</Eyebrow>
-        <h2
-          className="animate-rise mt-6 max-w-[22ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
-          style={{ animationDelay: "0.1s" }}
-        >
-          Uluwatu Villa — the house you <span className="text-clay italic">stay in</span>
-        </h2>
-        <p
-          className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
-          style={{ animationDelay: "0.15s" }}
-        >
-          Eight rooms, two pools, and pavilions that open straight onto the lawn. Practise, eat and
-          rest here for the whole week.
-        </p>
-
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {villaShots.map((shot) => (
-            <figure key={shot.src}>
-              <img
-                src={shot.src}
-                alt={shot.alt}
-                width={1360}
-                height={907}
-                loading="lazy"
-                className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]"
-              />
-              <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">
-                {shot.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      {/* Details */}
+      {/* Trip details */}
       <section className="mx-auto max-w-[1360px] px-6 pb-14">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="min-w-0 md:col-span-7">
-            <BaliRetreatDetails />
+            <Eyebrow>The retreat</Eyebrow>
+            <h2
+              className="animate-rise mt-6 max-w-[24ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
+              style={{ animationDelay: "0.1s" }}
+            >
+              The villa, the practice and the <span className="text-clay italic">time between</span>
+            </h2>
+            <p
+              className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
+              style={{ animationDelay: "0.15s" }}
+            >
+              Where you’ll stay, how the days unfold, what you can add and what to bring — each a
+              tap away.
+            </p>
+            <nav aria-label="Retreat sections" className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {retreatButtons.map((button) => (
+                <Button key={button.id} variant="outline" asChild className="h-auto min-h-24 whitespace-normal border-ink/15 bg-sand/50 px-3 py-5 text-center text-[13px] text-ink shadow-none hover:bg-sand hover:text-clay">
+                  <a href={`#bali-${button.id}`} className="flex flex-col gap-3">
+                    {button.label}
+                    <button.icon aria-hidden="true" className="size-5 text-clay" />
+                  </a>
+                </Button>
+              ))}
+              <Button variant="outline" asChild className="col-span-2 h-auto min-h-16 whitespace-normal border-ink/15 bg-sand/50 px-3 py-4 text-center text-[13px] text-ink shadow-none hover:bg-sand hover:text-clay sm:col-span-3">
+                <a href="#bali-rhythm" className="flex items-center justify-center gap-3">
+                  Weekly rhythm
+                  <CalendarDays aria-hidden="true" className="size-5 text-clay" />
+                </a>
+              </Button>
+            </nav>
           </div>
 
           {/* Facts panel */}
           <div className="min-w-0 md:col-span-5">
-            <div className="rounded-[14px] bg-sand p-6 ring-1 ring-ink/5 lg:p-8">
+            <div className="flex h-full flex-col rounded-[14px] bg-sand p-6 ring-1 ring-ink/5 lg:p-8">
               <dl className="grid grid-cols-1 gap-5">
                 <div>
                   <dt className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Dates</dt>
@@ -212,14 +225,14 @@ function BaliRetreat() {
                   </dd>
                 </div>
               </dl>
-              <p className="mt-6 text-[13px] leading-relaxed text-ink/60">
+              <p className="mt-6 mb-6 text-[13px] leading-relaxed text-ink/60">
                 Every trip is quoted by hand. Send a note and a trip designer will share the full
                 itinerary and a tailored proposal.
               </p>
               <Link
                 to="/"
                 hash="enquire"
-                className="mt-6 inline-block rounded-full bg-clay px-6 py-3 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-ink"
+                className="mt-auto inline-block rounded-full bg-clay px-6 py-3 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-ink"
               >
                 Request the itinerary
               </Link>
@@ -228,8 +241,78 @@ function BaliRetreat() {
         </div>
       </section>
 
+      {/* The villa */}
+      <section id="bali-villa" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
+        <Eyebrow>The villa</Eyebrow>
+        <h2
+          className="animate-rise mt-6 max-w-[22ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
+          style={{ animationDelay: "0.1s" }}
+        >
+          Uluwatu Villa — the house you <span className="text-clay italic">stay in</span>
+        </h2>
+        <p
+          className="animate-rise mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70"
+          style={{ animationDelay: "0.15s" }}
+        >
+          Eight rooms, two pools, and pavilions that open straight onto the lawn.
+          <br />
+          Practise, eat and rest here for the whole week.
+        </p>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {villaShots.map((shot) => (
+            <figure key={shot.src}>
+              <img
+                src={shot.src}
+                alt={shot.alt}
+                width={1360}
+                height={907}
+                loading="lazy"
+                className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]"
+              />
+              <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">
+                {shot.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {baliSections.map((section) => (
+        <section key={section.value} id={`bali-${section.value}`} tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
+          <Eyebrow>{section.label}</Eyebrow>
+          <BaliRetreatDetails section={section.value} />
+        </section>
+      ))}
+
+      {/* What to pack */}
+      <section id="bali-packing" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
+        <Eyebrow>What to pack</Eyebrow>
+        <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">
+          Pack light, we'll handle the <span className="text-clay italic">rest</span>
+        </h2>
+        <div className="mt-9 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          {packingList.map(({ title, icon: ItemIcon, link }) => (
+            <div key={title} className="min-w-0">
+              <ItemIcon aria-hidden="true" className="mb-5 size-8 text-clay" strokeWidth={1.5} />
+              <h3 className="font-display text-[23px] leading-tight font-medium">{title}</h3>
+              {link && (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-block text-[14px] text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
+                >
+                  {link.label}
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Weekly rhythm */}
-      <section className="mx-auto max-w-[1360px] px-6 pb-14">
+      <section id="bali-rhythm" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
         <Eyebrow>The weekly rhythm</Eyebrow>
         <h2
           className="animate-rise mt-6 max-w-[24ch] font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] font-medium text-balance"
