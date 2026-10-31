@@ -48,7 +48,7 @@ const retreatButtons = [
   { id: "experience", label: "Experience", icon: Leaf },
   { id: "daily", label: "Daily practice", icon: PersonStanding },
   { id: "optional", label: "Optional activities", icon: Sparkles },
-  { id: "food", label: "Food", icon: UtensilsCrossed },
+  { id: "food", label: "Nutrition", icon: UtensilsCrossed },
   { id: "packing", label: "What to pack", icon: Backpack },
 ];
 
