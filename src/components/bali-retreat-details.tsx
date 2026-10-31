@@ -34,7 +34,6 @@ const food = [
   { title: "Prepared daily by local partners", description: "Our partner restaurant cooks for the group every day, working with local producers wherever we can." },
   { title: "Made to measure", description: "Meals shaped around you — dietary needs, allergies and preferences are planned in before you arrive." },
   { title: "No waste", description: "Portions planned to avoid waste and packaging kept to a minimum, as part of our commitment to the island that hosts us." },
-  { title: "Around the table", description: "Wellness inside and out: movement looks after the outside, while connection and nutrition look after the inside. Shared meals are a chance to slow down and connect." },
 ];
 
 // Logos come on white or tinted squares; multiply blends them into the cream page.
@@ -49,7 +48,7 @@ export const baliSections = [
   { value: "experience", label: "Experience", heading: "What you take with you", intro: "A little more balance. A deeper connection to yourself. A circle of new connections.", items: experience },
   { value: "daily", label: "Daily practice", heading: "Movement, breath & stillness", intro: "The core practices that shape the retreat’s rhythm.", items: dailyPractice },
   { value: "optional", label: "Optional activities", heading: "Follow your curiosity", intro: "Additional experiences to choose from, with room to enjoy your own pace.", items: optionalActivities },
-  { value: "food", label: "Food", heading: "Nourished from the inside", intro: "Every meal is part of the practice.", items: food },
+  { value: "food", label: "Food", heading: "Nourished from the inside", intro: "Wellness inside and out: movement looks after the outside, while connection and nutrition look after the inside. Shared meals are a chance to slow down and connect.", items: food },
 ] as const;
 
 export type BaliSection = (typeof baliSections)[number]["value"];
