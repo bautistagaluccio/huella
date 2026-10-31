@@ -15,6 +15,7 @@ import { Route as RetreatsBaliRouteImport } from './routes/retreats.bali'
 import { Route as SportsSportRouteImport } from './routes/sports.$sport'
 import { Route as TripsSkiAzerbaijanRouteImport } from './routes/trips.ski-azerbaijan'
 import { Route as TripsSkiGudauriRouteImport } from './routes/trips.ski-gudauri'
+import { Route as TripsSkiGudauriFeb10RouteImport } from './routes/trips.ski-gudauri-feb-10'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const TripsSkiGudauriRoute = TripsSkiGudauriRouteImport.update({
   path: '/trips/ski-gudauri',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TripsSkiGudauriFeb10Route = TripsSkiGudauriFeb10RouteImport.update({
+  id: '/trips/ski-gudauri-feb-10',
+  path: '/trips/ski-gudauri-feb-10',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
+  '/trips/ski-gudauri-feb-10': typeof TripsSkiGudauriFeb10Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
+  '/trips/ski-gudauri-feb-10': typeof TripsSkiGudauriFeb10Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
+  '/trips/ski-gudauri-feb-10': typeof TripsSkiGudauriFeb10Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
+    | '/trips/ski-gudauri-feb-10'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
+    | '/trips/ski-gudauri-feb-10'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
+    | '/trips/ski-gudauri-feb-10'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   SportsSportRoute: typeof SportsSportRoute
   TripsSkiAzerbaijanRoute: typeof TripsSkiAzerbaijanRoute
   TripsSkiGudauriRoute: typeof TripsSkiGudauriRoute
+  TripsSkiGudauriFeb10Route: typeof TripsSkiGudauriFeb10Route
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsSkiGudauriRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trips/ski-gudauri-feb-10': {
+      id: '/trips/ski-gudauri-feb-10'
+      path: '/trips/ski-gudauri-feb-10'
+      fullPath: '/trips/ski-gudauri-feb-10'
+      preLoaderRoute: typeof TripsSkiGudauriFeb10RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   SportsSportRoute: SportsSportRoute,
   TripsSkiAzerbaijanRoute: TripsSkiAzerbaijanRoute,
   TripsSkiGudauriRoute: TripsSkiGudauriRoute,
+  TripsSkiGudauriFeb10Route: TripsSkiGudauriFeb10Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

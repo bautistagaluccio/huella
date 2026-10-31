@@ -2,6 +2,9 @@
 - Images live in src/assets and are imported as files — why: Lovable's `.asset.json` pointers only resolve on Lovable hosting.
 - Admin area is a single client-only route (/admin-huella) using the browser client; access is enforced by RLS via has_role(admin) on user_roles — why: no server functions needed, DB is the security boundary.
 - Sport availability pages use one dynamic /sports/$sport route, while individual scheduled experiences keep dedicated detail routes — why: sport listings stay consistent without duplicating page structure.
-- Featured departures render from browser-safe structured calendar data sorted by departure month — why: chronology is explicit and testable without coupling tests to presentation.
-- Trip detail pages (Bali retreat, ski trip) use a dedicated browser-safe component with accessible design-system tabs beside the event facts card — why: visitors can compare categories without a long stack of descriptions or losing the trip details.
+- Featured departures render from browser-safe structured calendar data sorted by departure month then starting day — why: multiple departures in one month remain chronological and testable.
+- Ski departures use dedicated routes rendering a shared browser-safe SkiTripPage with departure-specific dates — why: replica trips retain identical content without duplicated presentation.
+- Experimental ski navigation is opt-in per departure through SkiTripPage; focused tabs reuse SkiTripDetails section content — why: experiments do not alter other departures or duplicate trip facts.
+- Bali detail tabs and experimental ski tabs reuse browser-safe detail components; the original ski departure uses six design-system anchor buttons beside its facts panel with matching sections below — why: each departure preserves its chosen navigation without duplicating trip facts.
 - The ski agenda renders as day cards from the existing schedule data in src/lib/ski-schedule.ts — why: the agenda content stays the single source of truth when the layout changes.
+- SkiTripDetails opts into photo-led presentation per departure while sharing the same content — why: visual experiments leave other departures unchanged.

@@ -7,6 +7,7 @@ import skiImg from "@/assets/ski.jpg";
 import surfImg from "@/assets/surf.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
+import { getDeparturesByDate } from "@/lib/departures";
 
 const sports = {
   kitesurf: {
@@ -137,7 +138,7 @@ function SportExperiences() {
                 </h2>
               </div>
               <p className="text-[12px] uppercase tracking-[0.16em] text-ink/50">
-                {hasBaliRetreat || hasSkiTrip ? "1 experience" : "No scheduled dates"}
+                {hasSkiTrip ? "2 experiences" : hasBaliRetreat ? "1 experience" : "No scheduled dates"}
               </p>
             </div>
 
@@ -168,8 +169,10 @@ function SportExperiences() {
                 </div>
               </Link>
             ) : hasSkiTrip ? (
+              getDeparturesByDate().filter((departure) => departure.discipline === "Ski").map((departure) => (
               <Link
-                to="/trips/ski-gudauri"
+                key={departure.id}
+                to={departure.to}
                 className="mt-10 grid overflow-hidden rounded-[14px] bg-glass ring-1 ring-ink/5 transition-colors hover:ring-clay/40 md:grid-cols-12"
               >
                 <img
@@ -181,7 +184,7 @@ function SportExperiences() {
                 />
                 <div className="flex flex-col justify-center p-7 md:col-span-7 md:p-10">
                   <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
-                    Feb 17–21 · Gudauri
+                    Feb {departure.days} · Gudauri
                   </p>
                   <h3 className="mt-3 font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium">
                     Caucasus Powder Days
@@ -199,6 +202,7 @@ function SportExperiences() {
                   </div>
                 </div>
               </Link>
+              ))
             ) : (
               <div className="mt-10 border-y border-ink/10 py-16 text-center">
                 <p className="font-display text-[1.8rem] font-medium">No availability soon.</p>
@@ -220,8 +224,8 @@ function SportExperiences() {
 
       <footer className="border-t border-ink/10">
         <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-4 px-6 py-10 text-[12px] uppercase tracking-[0.14em] text-ink/50 sm:flex-row">
-          <span className="font-display font-medium">Huella — Dubai Sports Trips Atelier</span>
-          <span>hello@huella.travel · Dubai, UAE</span>
+          <span className="font-display font-medium">Huella — Dubai Experience Studio</span>
+          <span>contact@huellaretreat.com</span>
         </div>
       </footer>
     </div>
