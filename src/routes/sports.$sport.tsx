@@ -90,6 +90,7 @@ function SportExperiences() {
   const hasBaliRetreat = sportSlug === "yoga";
   const hasSkiTrip = sportSlug === "ski";
   const skiDepartures = getDeparturesByDate().filter((departure) => departure.discipline === "Ski");
+  const baliDepartures = getDeparturesByDate().filter((departure) => departure.discipline === "Wellness");
 
   return (
     <div className="min-h-screen bg-cream text-ink">
@@ -142,14 +143,16 @@ function SportExperiences() {
                 {hasSkiTrip
                   ? `${skiDepartures.length} ${skiDepartures.length === 1 ? "experience" : "experiences"}`
                   : hasBaliRetreat
-                    ? "1 experience"
+                    ? `${baliDepartures.length} ${baliDepartures.length === 1 ? "experience" : "experiences"}`
                     : "No scheduled dates"}
               </p>
             </div>
 
             {hasBaliRetreat ? (
+              baliDepartures.map((departure) => (
               <Link
-                to="/retreats/bali"
+                key={departure.id}
+                to={departure.to}
                 className="mt-10 grid overflow-hidden rounded-[14px] bg-glass ring-1 ring-ink/5 transition-colors hover:ring-clay/40 md:grid-cols-12"
               >
                 <img
@@ -160,7 +163,9 @@ function SportExperiences() {
                   className="h-full min-h-[260px] w-full object-cover md:col-span-5"
                 />
                 <div className="flex flex-col justify-center p-7 md:col-span-7 md:p-10">
-                  <p className="text-[11px] uppercase tracking-[0.25em] text-clay">Mar 6–14 · Uluwatu Villa</p>
+                  <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
+                    {departure.monthName.slice(0, 3)} {departure.days} · Uluwatu Villa
+                  </p>
                   <h3 className="mt-3 font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium">
                     Bali Body &amp; Breath
                   </h3>
@@ -173,6 +178,7 @@ function SportExperiences() {
                   </div>
                 </div>
               </Link>
+              ))
             ) : hasSkiTrip ? (
               skiDepartures.map((departure) => (
               <Link

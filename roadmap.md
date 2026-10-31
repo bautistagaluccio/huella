@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Add a second Bali Body & Breath retreat on May 1–9 at /retreats/bali-may, sharing the March page
 - [x] Redesign Bali What to pack: heading and intro above, a tickable packing note below with the three items side by side
 - [x] Add nutrition to the Bali Wellness description
 - [x] Rename the Bali Experience heading to "What you take home with you"

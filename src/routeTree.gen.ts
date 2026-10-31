@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminHuellaRouteImport } from './routes/admin-huella'
 import { Route as RetreatsBaliRouteImport } from './routes/retreats.bali'
+import { Route as RetreatsBaliMayRouteImport } from './routes/retreats.bali-may'
 import { Route as SportsSportRouteImport } from './routes/sports.$sport'
 import { Route as TripsSkiAzerbaijanRouteImport } from './routes/trips.ski-azerbaijan'
 import { Route as TripsSkiGudauriRouteImport } from './routes/trips.ski-gudauri'
@@ -30,6 +31,11 @@ const AdminHuellaRoute = AdminHuellaRouteImport.update({
 const RetreatsBaliRoute = RetreatsBaliRouteImport.update({
   id: '/retreats/bali',
   path: '/retreats/bali',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RetreatsBaliMayRoute = RetreatsBaliMayRouteImport.update({
+  id: '/retreats/bali-may',
+  path: '/retreats/bali-may',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SportsSportRoute = SportsSportRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
   '/retreats/bali': typeof RetreatsBaliRoute
+  '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
   '/retreats/bali': typeof RetreatsBaliRoute
+  '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
   '/retreats/bali': typeof RetreatsBaliRoute
+  '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
   '/trips/ski-azerbaijan': typeof TripsSkiAzerbaijanRoute
   '/trips/ski-gudauri': typeof TripsSkiGudauriRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-huella'
     | '/retreats/bali'
+    | '/retreats/bali-may'
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-huella'
     | '/retreats/bali'
+    | '/retreats/bali-may'
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-huella'
     | '/retreats/bali'
+    | '/retreats/bali-may'
     | '/sports/$sport'
     | '/trips/ski-azerbaijan'
     | '/trips/ski-gudauri'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminHuellaRoute: typeof AdminHuellaRoute
   RetreatsBaliRoute: typeof RetreatsBaliRoute
+  RetreatsBaliMayRoute: typeof RetreatsBaliMayRoute
   SportsSportRoute: typeof SportsSportRoute
   TripsSkiAzerbaijanRoute: typeof TripsSkiAzerbaijanRoute
   TripsSkiGudauriRoute: typeof TripsSkiGudauriRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/retreats/bali'
       fullPath: '/retreats/bali'
       preLoaderRoute: typeof RetreatsBaliRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/retreats/bali-may': {
+      id: '/retreats/bali-may'
+      path: '/retreats/bali-may'
+      fullPath: '/retreats/bali-may'
+      preLoaderRoute: typeof RetreatsBaliMayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sports/$sport': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminHuellaRoute: AdminHuellaRoute,
   RetreatsBaliRoute: RetreatsBaliRoute,
+  RetreatsBaliMayRoute: RetreatsBaliMayRoute,
   SportsSportRoute: SportsSportRoute,
   TripsSkiAzerbaijanRoute: TripsSkiAzerbaijanRoute,
   TripsSkiGudauriRoute: TripsSkiGudauriRoute,

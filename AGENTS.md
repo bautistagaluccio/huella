@@ -8,3 +8,4 @@
 - The Bali retreat and the original ski departure both use design-system anchor buttons beside the facts panel with matching sections below; experimental ski tabs reuse the browser-safe detail components — why: both trip pages navigate the same way without duplicating trip facts.
 - The ski agenda renders as day cards from the existing schedule data in src/lib/ski-schedule.ts — why: the agenda content stays the single source of truth when the layout changes.
 - SkiTripDetails opts into photo-led presentation per departure while sharing the same content — why: visual experiments leave other departures unchanged.
+- Bali departures (March, May) use dedicated routes rendering a shared BaliRetreatPage with departure-specific dates; listings come from src/lib/departures.ts — why: repeat retreats keep identical content without duplicated pages.
