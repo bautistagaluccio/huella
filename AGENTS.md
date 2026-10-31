@@ -9,3 +9,4 @@
 - The ski agenda renders as day cards from the existing schedule data in src/lib/ski-schedule.ts — why: the agenda content stays the single source of truth when the layout changes.
 - SkiTripDetails opts into photo-led presentation per departure while sharing the same content — why: visual experiments leave other departures unchanged.
 - Bali departures (March, May) use dedicated routes with departure-specific dates rendering one shared BaliRetreatPage (full-bleed hero, facts bar, sticky section nav, brand-palette bands); its text and partner logos live in src/lib/bali-retreat-content.ts and listings come from src/lib/departures.ts — why: every Bali departure shares one design and one source of content.
+- The Bali weekly rhythm is a day picker (BaliDayTimeline on design-system tabs) built from getDayTimeline over src/lib/bali-schedule.ts — why: the host's schedule stays the single source of truth while the layout changes.

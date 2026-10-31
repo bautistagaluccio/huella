@@ -3,6 +3,7 @@ import {
   scheduleBlocks,
   scheduleDays,
   scheduleTimes,
+  getDayTimeline,
 } from "@/lib/bali-schedule";
 
 describe("Bali weekly schedule", () => {
@@ -38,5 +39,25 @@ describe("Bali weekly schedule", () => {
       expect(block.end).toBeLessThanOrEqual(scheduleTimes.length);
       expect(block.start).toBeLessThan(block.end);
     }
+  });
+
+  it("turns Sunday into an ordered timeline with optional activities named directly", () => {
+    expect(getDayTimeline(1)).toEqual([
+      { time: "7.30 am", title: "Stretching", details: [], kind: "practice" },
+      { time: "8 am", title: "Pilates", details: [], kind: "practice" },
+      { time: "9 am", title: "Breakfast", details: [], kind: "meal" },
+      { time: "10.30 am", title: "Surf / Beach Club", details: [], kind: "optional" },
+      { time: "1 pm", title: "Lunch", details: [], kind: "meal" },
+      { time: "2.30 pm", title: "Cupping, acupuncture / massage", details: [], kind: "optional" },
+      { time: "5.30 pm", title: "Yoga", details: [], kind: "practice" },
+      { time: "6.30 pm", title: "Breathing session", details: [], kind: "practice" },
+      { time: "8 pm", title: "Welcome Dinner", details: [], kind: "meal" },
+    ]);
+  });
+
+  it("keeps every block of the week in the day timelines", () => {
+    const total = scheduleDays.reduce((sum, _day, index) => sum + getDayTimeline(index).length, 0);
+    expect(total).toBe(scheduleBlocks.length);
+    expect(getDayTimeline(4).find((entry) => entry.title === "Special Dinner")?.details).toEqual(["by the host", "& night out"]);
   });
 });

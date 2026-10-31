@@ -116,13 +116,3 @@
 @utility font-display {
   font-family: var(--font-display);
 }
-
-.retreat-calendar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--sand) var(--cream);
-}
-
-.retreat-calendar:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 6px;
-}

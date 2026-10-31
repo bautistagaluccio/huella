@@ -102,3 +102,39 @@ export const scheduleBlocks: ScheduleBlock[] = [
   { day: 4, start: 25, end: 27, lines: ["Special Dinner", "by the host", "& night out"], tone: "sage" },
   { day: 5, start: 25, end: 27, lines: ["Free Night"], tone: "gray" },
 ];
+
+export type TimelineKind = "practice" | "meal" | "optional" | "other";
+
+export interface TimelineEntry {
+  time: string;
+  title: string;
+  details: string[];
+  kind: TimelineKind;
+}
+
+const kindByTone: Record<ScheduleBlock["tone"], TimelineKind> = {
+  blush: "practice",
+  clay: "practice",
+  sage: "meal",
+  mist: "optional",
+  gray: "other",
+};
+
+// One day of the weekly rhythm as an ordered timeline. The host's sheet labels
+// optional blocks "Activity Optional", so the activity itself becomes the title.
+export function getDayTimeline(day: number): TimelineEntry[] {
+  return scheduleBlocks
+    .filter((block) => block.day === day)
+    .sort((a, b) => a.start - b.start)
+    .map((block) => {
+      const kind = kindByTone[block.tone];
+      const [first = "", ...rest] = block.lines;
+      const optionalLabel = kind === "optional" && first === "Activity Optional";
+      return {
+        time: (scheduleTimes[block.start] ?? "").replace("AM", " am").replace("PM", " pm"),
+        title: optionalLabel ? rest.join(" ") : first,
+        details: optionalLabel ? [] : rest,
+        kind,
+      };
+    });
+}

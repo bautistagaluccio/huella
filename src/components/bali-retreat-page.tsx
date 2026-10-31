@@ -7,9 +7,8 @@ import villaExterior from "@/assets/villa-exterior.webp";
 import villaLounge from "@/assets/villa-lounge.webp";
 import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
 import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
-import { ScheduleGrid } from "@/components/schedule-grid";
+import { BaliDayTimeline } from "@/components/bali-day-timeline";
 import { baliSections, partnerRestaurants } from "@/lib/bali-retreat-content";
-import { scheduleBlocks, scheduleDays, scheduleTimes } from "@/lib/bali-schedule";
 
 // Each Bali departure has its own route; only the dates differ between them.
 export type BaliDates = { month: "March" | "May"; days: string };
@@ -473,25 +472,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           Arrive on Saturday and settle in — mornings of movement, afternoons for adventure or
           stillness, evenings together around the table.
         </p>
-        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink/10 pt-4 text-[10px] text-ink/65">
-          {[
-            { label: "Movement & mindfulness", color: "bg-blush" },
-            { label: "Around the table", color: "bg-sage" },
-            { label: "Optional experiences", color: "bg-mist" },
-          ].map((item) => (
-            <span key={item.label} className="inline-flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${item.color}`} />
-              {item.label}
-            </span>
-          ))}
-        </div>
-        <ScheduleGrid
-          days={scheduleDays}
-          times={scheduleTimes}
-          blocks={scheduleBlocks}
-          cornerLabel="Bali time"
-          ariaLabel="Bali weekly schedule"
-        />
+        <BaliDayTimeline />
       </section>
 
       {/* Closing call to action — ink band, echoing the facts bar */}
