@@ -1,3 +1,4 @@
+// Text and partner logos for the Bali retreat page, shared by every departure.
 import partnerKynd from "@/assets/partner-kynd.png";
 import partnerLoft from "@/assets/partner-loft.png";
 import partnerN from "@/assets/partner-n.png";
@@ -50,38 +51,3 @@ export const baliSections = [
   { value: "optional", label: "Optional activities", heading: "Follow your curiosity", intro: "Additional experiences to choose from, with room to enjoy at your own pace.", items: optionalActivities },
   { value: "food", label: "Nutrition", heading: "Nourished from the inside", intro: "Wellness inside and out: movement looks after the outside, while connection and nutrition look after the inside. Shared meals are a chance to slow down and connect.", items: food },
 ] as const;
-
-export type BaliSection = (typeof baliSections)[number]["value"];
-
-// Renders one retreat section; the page lays them out in order below its section buttons.
-export function BaliRetreatDetails({ section }: { section: BaliSection }) {
-  const details = baliSections.find((item) => item.value === section);
-  if (!details) return null;
-
-  return (
-    <>
-      <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">{details.heading}</h2>
-      <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">{details.intro}</p>
-      <div className={`mt-8 grid gap-x-8 gap-y-7 ${section === "experience" ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"}`}>
-        {details.items.map((item) => (
-          <div key={item.title} className="border-t border-ink/10 pt-4">
-            <h3 className="font-display text-[21px] font-medium">{item.title}</h3>
-            <p className="mt-2 max-w-[65ch] text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
-          </div>
-        ))}
-      </div>
-      {section === "food" && (
-        <div className="mt-12 border-t border-ink/10 pt-6">
-          <p className="text-[11px] tracking-[0.25em] text-ink/50 uppercase">Our partner restaurants</p>
-          <ul className="mt-6 flex flex-wrap items-center gap-x-12 gap-y-6">
-            {partnerRestaurants.map((partner) => (
-              <li key={partner.name}>
-                <img src={partner.src} alt={partner.name} loading="lazy" className={`w-auto mix-blend-multiply ${partner.className}`} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </>
-  );
-}
