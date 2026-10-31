@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Backpack, CalendarDays, House, IdCard, Leaf, PersonStanding, Shirt, Sparkles, UtensilsCrossed } from "lucide-react";
+import { Backpack, CalendarDays, House, Leaf, PersonStanding, Sparkles, UtensilsCrossed } from "lucide-react";
 import { BaliRetreatDetails, baliSections } from "@/components/bali-retreat-details";
 import { Button } from "@/components/ui/button";
 import villaBathroom from "@/assets/villa-bathroom.webp";
@@ -53,13 +53,12 @@ const retreatButtons = [
 ];
 
 const packingList = [
-  { title: "Light clothes & swimwear", icon: Shirt },
+  { title: "Light clothes & swimwear" },
   {
     title: "My documents (Passport, VISA)",
-    icon: IdCard,
     link: { label: "Check if I need a VISA", href: "https://evisa.imigrasi.go.id/" },
   },
-  { title: "My good energy", icon: Sparkles },
+  { title: "My good energy" },
 ];
 
 function BaliRetreat() {
@@ -287,27 +286,43 @@ function BaliRetreat() {
 
       {/* What to pack */}
       <section id="bali-packing" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-14">
-        <Eyebrow>What to pack</Eyebrow>
-        <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">
-          Pack light, we'll handle the <span className="text-clay italic">rest</span>
-        </h2>
-        <div className="mt-9 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          {packingList.map(({ title, icon: ItemIcon, link }) => (
-            <div key={title} className="min-w-0">
-              <ItemIcon aria-hidden="true" className="mb-5 size-8 text-clay" strokeWidth={1.5} />
-              <h3 className="font-display text-[23px] leading-tight font-medium">{title}</h3>
-              {link && (
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 inline-block text-[14px] text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-                >
-                  {link.label}
-                </a>
-              )}
+        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <Eyebrow>What to pack</Eyebrow>
+            <h2 className="mt-6 font-display text-[36px] leading-tight font-medium">
+              Pack light, we'll handle the <span className="text-clay italic">rest</span>
+            </h2>
+            <p className="mt-4 max-w-[40ch] text-[15px] leading-relaxed text-ink/65">
+              A short list — everything else is taken care of.
+            </p>
+          </div>
+
+          {/* A packing note visitors can tick off; ticks are not saved. */}
+          <div className="md:col-span-6 md:col-start-7">
+            <div className="-rotate-1 rounded-md bg-white/60 px-6 py-5 ring-1 ring-ink/10 motion-reduce:rotate-0 sm:px-8 sm:py-6">
+              <p className="mb-2 text-[11px] tracking-[0.25em] text-ink/50 uppercase">Bali · Mar 6–14</p>
+              <ul>
+                {packingList.map(({ title, link }) => (
+                  <li key={title} className="border-b border-dashed border-ink/20 py-3 last:border-b-0">
+                    <label className="flex cursor-pointer items-center gap-4">
+                      <input type="checkbox" className="size-4 shrink-0 accent-clay" />
+                      <span className="font-display text-[20px] leading-snug">{title}</span>
+                    </label>
+                    {link && (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 ml-8 inline-block text-[13px] text-clay underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
