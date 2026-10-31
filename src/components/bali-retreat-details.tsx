@@ -23,7 +23,7 @@ const optionalActivities = [
 ];
 
 const experience = [
-  { title: "Wellness", description: "Make room for your wellbeing through mindful movement, breathing and restorative downtime, away from the demands of your usual routine." },
+  { title: "Wellness", description: "Make room for your wellbeing through mindful movement, breathing, nutrition and restorative downtime, away from the demands of your usual routine." },
   { title: "Introspection", description: "Step back, listen to yourself and reflect. Quiet moments between shared experiences leave space to reconnect with what matters to you." },
   { title: "Networking", description: "Connect naturally with a small circle of fellow travellers through shared practices, meals and conversations that have time to unfold." },
 ];

@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Add nutrition to the Bali Wellness description
 - [x] Rename the Bali Experience heading to "What you take home with you"
 - [x] Rename the Bali "Food" section and button to "Nutrition"
 - [x] Make the inside-and-out wellness text the Food intro and remove the "Around the table" point
