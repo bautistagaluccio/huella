@@ -147,11 +147,12 @@ function Index() {
 
       {/* Disciplines grid */}
       <section id="disciplines" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-20">
+        {/* Tiles layer photo and text absolutely, so each needs a min height on phones. */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:auto-rows-[230px]">
           <Link
             to="/sports/$sport"
             params={{ sport: "ski" }}
-            className="group relative overflow-hidden rounded-[14px] bg-sand outline-1 -outline-offset-1 outline-ink/5 md:col-span-7 md:row-span-2"
+            className="group relative min-h-[340px] overflow-hidden rounded-[14px] bg-sand outline-1 -outline-offset-1 outline-ink/5 md:min-h-0 md:col-span-7 md:row-span-2"
           >
             <img
               src={skiImg}
@@ -174,7 +175,7 @@ function Index() {
           <Link
             to="/sports/$sport"
             params={{ sport: "yoga" }}
-            className="group relative overflow-hidden rounded-[14px] bg-sand outline-1 -outline-offset-1 outline-ink/5 md:col-span-5 md:row-span-2"
+            className="group relative min-h-[340px] overflow-hidden rounded-[14px] bg-sand outline-1 -outline-offset-1 outline-ink/5 md:min-h-0 md:col-span-5 md:row-span-2"
           >
             <img
               src={yogaImg}

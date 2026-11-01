@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Fix the homepage Ski and Retreats tiles collapsing to nothing on phones
 - [x] Show the Indonesian flag beside Uluwatu Villa in the Bali facts bar
 - [x] Add a back-to-top button to the Bali and ski trip pages (appears once you scroll past the hero)
 - [x] Move the Bali retreat to May 15–21 (Saturday to Friday)
