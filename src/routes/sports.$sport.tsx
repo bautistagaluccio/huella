@@ -164,7 +164,7 @@ function SportExperiences() {
                 />
                 <div className="flex flex-col justify-center p-7 md:col-span-7 md:p-10">
                   <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
-                    {departure.monthName.slice(0, 3)} {departure.days} · Uluwatu Villa
+                    {departure.monthName.slice(0, 3)} {departure.days} · Uluwatu, Bali
                   </p>
                   <h3 className="mt-3 font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium">
                     Bali Body &amp; Breath

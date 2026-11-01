@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Show the Bali location as "Uluwatu, Bali" (facts bar and Wellness card)
 - [x] Swipe left/right on the agenda timeline to change day on phones (Bali and ski)
 - [x] Mobile pass: swipeable photo and card rows on phones, dates kept on one line, smaller facts text, stacked Wellness page header
 - [x] Slim the trip-page community teaser to a centred heading, promise and link

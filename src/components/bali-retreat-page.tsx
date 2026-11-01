@@ -121,7 +121,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       value: (
         <span className="flex items-center gap-2.5">
           <IndonesiaFlag className="h-[1.05rem] w-[1.6rem] shrink-0 rounded-[3px] ring-1 ring-cream/20" />
-          Uluwatu Villa
+          Uluwatu, Bali
         </span>
       ),
     },
