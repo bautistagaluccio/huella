@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BadgeCheck, Icon, KeyRound, Maximize2, MountainSnow, Plane, Sparkles, Utensils, type IconNode, type LucideProps } from "lucide-react";
+import { BadgeCheck, Icon, KeyRound, Maximize2, MountainSnow, Plane, Plus, Sparkles, Utensils, type IconNode, type LucideProps } from "lucide-react";
 import pisteMap from "@/assets/gudauri-piste-map.webp";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
 import { CommunityTeaser } from "@/components/community";
@@ -287,8 +287,8 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
       </section>
 
       {/* What's included */}
-      <section id="ski-included" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-24">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <section id="ski-included" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-16 md:py-24">
+        <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
               <Eyebrow>What’s included</Eyebrow>
@@ -301,7 +301,23 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
             </div>
           </div>
           <div className="lg:col-span-8">
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+            {/* Phones: a compact list, each item opens to its description (the first starts open),
+                like the Bali Experience section. */}
+            <ol className="border-b border-ink/10 md:hidden">
+              {included.map((item, index) => (
+                <li key={item.title} className="border-t border-ink/10">
+                  <details className="group" open={index === 0}>
+                    <summary className="flex cursor-pointer list-none items-center gap-4 py-4 [&::-webkit-details-marker]:hidden">
+                      <span className="font-display text-[20px] text-clay italic">{String(index + 1).padStart(2, "0")}</span>
+                      <h3 className="flex-1 font-display text-[22px] font-medium">{item.title}</h3>
+                      <Plus aria-hidden="true" className="size-5 text-clay transition-transform duration-300 group-open:rotate-45" />
+                    </summary>
+                    <p className="pb-5 text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
+                  </details>
+                </li>
+              ))}
+            </ol>
+            <ul className="hidden grid-cols-2 gap-x-8 gap-y-10 md:grid">
               {included.map((item, index) => {
                 const ItemIcon = inclusionIcons[index] ?? BadgeCheck;
                 return (
@@ -313,7 +329,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
                 );
               })}
             </ul>
-            <p className="mt-10 border-t border-ink/10 pt-5 text-[13px] leading-relaxed text-ink/55">{includedNote}</p>
+            <p className="mt-6 text-[13px] leading-relaxed text-ink/55 md:mt-10 md:border-t md:border-ink/10 md:pt-5">{includedNote}</p>
           </div>
         </div>
       </section>
