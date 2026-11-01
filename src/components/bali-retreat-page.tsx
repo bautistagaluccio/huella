@@ -78,6 +78,15 @@ export const villaShots = [
 ];
 
 
+function IndonesiaFlag({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 30 20" className={className} aria-hidden="true">
+      <rect width="30" height="20" fill="#ffffff" />
+      <rect width="30" height="10" fill="#ff0000" />
+    </svg>
+  );
+}
+
 // The Bali retreat page, shared by every departure: an immersive editorial layout —
 // full-bleed hero, facts bar, sticky section nav and alternating cream, ink and sand
 // bands.
@@ -106,7 +115,15 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
 
   const facts = [
     { label: "Dates", value: `${month} ${days.replace("–", " – ")}` },
-    { label: "Location", value: "Uluwatu Villa" },
+    {
+      label: "Location",
+      value: (
+        <span className="flex items-center gap-2.5">
+          <IndonesiaFlag className="h-[1.05rem] w-[1.6rem] shrink-0 rounded-[3px] ring-1 ring-cream/20" />
+          Uluwatu Villa
+        </span>
+      ),
+    },
     { label: "Availability", value: "8 rooms" },
     { label: "Max capacity", value: "16 people" },
     { label: "Base price", value: "From AED 15,000" },
