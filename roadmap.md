@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Rename the Retreats category to Wellness (homepage tile, sport page, enquiry form option)
 - [x] Fix the homepage Ski and Retreats tiles collapsing to nothing on phones
 - [x] Show the Indonesian flag beside Uluwatu Villa in the Bali facts bar
 - [x] Add a back-to-top button to the Bali and ski trip pages (appears once you scroll past the hero)

@@ -187,7 +187,7 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-7">
               <h3 className="mt-1 font-display text-[2rem] leading-tight font-medium text-cream">
-                Retreats
+                Wellness
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
                 Next experience · Bali · May 15–21
@@ -429,7 +429,7 @@ function Index() {
                 <option>Surf</option>
                 <option>Golf</option>
                 <option>Ski</option>
-                <option>Yoga retreat</option>
+                <option>Wellness</option>
                 <option>Bali retreat</option>
                 <option>Mixed / custom</option>
               </select>

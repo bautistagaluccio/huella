@@ -35,7 +35,7 @@ const sports = {
     description: "Mountain weeks designed around excellent snow, quiet slopes and effortless access.",
   },
   yoga: {
-    name: "Retreats",
+    name: "Wellness",
     image: yogaImg,
     imageAlt: "Yoga practice on a quiet terrace at sunset",
     description: "Restorative retreats bringing movement, breath and beautiful places together.",
