@@ -192,7 +192,7 @@ function Index() {
                 Wellness
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                Next experience · Bali · <span className="whitespace-nowrap">May 15–21</span>
+                Next experience · Bali · <span className="whitespace-nowrap">May 14–20</span>
               </p>
             </div>
           </Link>
