@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Trip pages on phones: the sticky section menu shows the current section and opens a dropdown of all sections
 - [x] Bali Daily practice on phones: tighter list with each description under its name (all five fit one screen)
 - [x] Bali Optional activities on phones: swipe through pairs of cards stacked two high
 - [x] Bali Experience on phones: compact list with bright titles that opens to each description

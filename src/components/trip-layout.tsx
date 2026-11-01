@@ -1,5 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // On phones, long lists become a sideways swipe row (the next card peeks in);
 // from the sm breakpoint up they fall back to each list's own grid.
@@ -51,9 +57,45 @@ export function SectionNav({ items, prefix, label }: { items: { id: string; labe
     if (nav && link) nav.scrollTo({ left: link.offsetLeft - 24, behavior: "smooth" });
   }, [active, prefix]);
 
+  const current = items.find((item) => item.id === active) ?? items[0];
+
   return (
     <nav aria-label={label} className="sticky top-0 z-20 border-b border-ink/10 bg-cream/90 backdrop-blur">
-      <div ref={navRef} className="relative mx-auto max-w-[1360px] overflow-x-auto px-6">
+      {/* Phones: one line showing the current section; tap it for the full list. */}
+      <div className="md:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="group flex w-full items-center justify-between px-6 py-4 text-left outline-none focus-visible:bg-sand/60">
+            <span className="text-[12px] tracking-[0.16em] uppercase">
+              <span className="text-ink/45">Section · </span>
+              <span className="text-clay">{current?.label}</span>
+            </span>
+            <ChevronDown aria-hidden="true" className="size-4 text-clay transition-transform duration-300 group-data-[state=open]:rotate-180" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="center"
+            sideOffset={6}
+            // Let the chosen section's link scroll the page instead of refocusing the button.
+            onCloseAutoFocus={(event) => event.preventDefault()}
+            className="w-[calc(100vw-1.5rem)] rounded-[14px] border-ink/10 bg-cream p-2 text-ink shadow-lg"
+          >
+            {items.map((item, index) => (
+              <DropdownMenuItem
+                key={item.id}
+                asChild
+                className={`cursor-pointer rounded-[10px] px-3 py-2.5 focus:bg-sand focus:text-ink ${item.id === active ? "bg-sand/70" : ""}`}
+              >
+                <a href={`#${prefix}-${item.id}`} className="flex items-baseline gap-3">
+                  <span className="w-5 text-[11px] text-clay">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="font-display text-[17px]">{item.label}</span>
+                </a>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Larger screens: every section in one row. */}
+      <div ref={navRef} className="relative mx-auto hidden max-w-[1360px] overflow-x-auto px-6 md:block">
         <ul className="flex w-max min-w-full gap-7">
           {items.map((item) => (
             <li key={item.id}>
