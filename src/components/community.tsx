@@ -1,4 +1,5 @@
 import { ArrowRight, BellRing, CalendarHeart, MessageCircle, Ticket, type LucideIcon } from "lucide-react";
+import { swipeItem, swipeRow } from "@/components/trip-layout";
 import { communityBenefits, communityPromise } from "@/lib/community";
 
 const icons: Record<(typeof communityBenefits)[number]["id"], LucideIcon> = {
@@ -34,11 +35,11 @@ export function CommunitySection({ cta }: { cta: React.ReactNode }) {
           <p className="mt-8 font-display text-[22px] leading-snug text-clay italic">{communityPromise}</p>
           <div className="mt-8">{cta}</div>
         </div>
-        <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-7 lg:self-center">
+        <ul className={`${swipeRow} sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:col-span-7 lg:self-center`}>
           {communityBenefits.map((benefit) => {
             const BenefitIcon = icons[benefit.id];
             return (
-              <li key={benefit.id} className="border-t border-clay/40 pt-6">
+              <li key={benefit.id} className={`${swipeItem} border-t border-clay/40 pt-6`}>
                 <BenefitIcon aria-hidden="true" className="size-7 text-clay" strokeWidth={1.5} />
                 <h3 className="mt-4 font-display text-[24px] leading-tight font-medium">{benefit.title}</h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-pretty text-ink/70">{benefit.description}</p>

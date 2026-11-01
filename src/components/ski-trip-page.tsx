@@ -4,7 +4,7 @@ import pisteMap from "@/assets/gudauri-piste-map.webp";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
 import { CommunityTeaser } from "@/components/community";
 import { DayTimeline } from "@/components/day-timeline";
-import { BackToTop, Eyebrow, PackingNote, SectionNav } from "@/components/trip-layout";
+import { BackToTop, Eyebrow, PackingNote, SectionNav, swipeItem, swipeRow } from "@/components/trip-layout";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { getSkiDayTimeline, skiDays } from "@/lib/ski-schedule";
 import { audience, included, includedNote, lodgeShots, optionalActivities, skiPackingList } from "@/lib/ski-trip-content";
@@ -156,7 +156,11 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-ink/5" />
         <div className="mx-auto w-full max-w-[1360px] px-6 pt-40 pb-14">
           <div className="animate-rise">
-            <Eyebrow tone="text-cream" rule="bg-cream/60">Gudauri · Ski · Feb {days}</Eyebrow>
+            <Eyebrow tone="text-cream" rule="bg-cream/60">
+              <span>
+                Gudauri · Ski · <span className="whitespace-nowrap">Feb {days}</span>
+              </span>
+            </Eyebrow>
           </div>
           <h1
             className="animate-rise mt-6 max-w-[14ch] font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] font-medium text-cream text-balance"
@@ -181,7 +185,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
             {facts.map((fact) => (
               <div key={fact.label} className="border-l border-cream/15 pl-4">
                 <dt className="text-[11px] tracking-[0.25em] text-cream/55 uppercase">{fact.label}</dt>
-                <dd className="mt-2 font-display text-[1.35rem] leading-tight font-medium">{fact.value}</dd>
+                <dd className="mt-2 font-display text-[1.15rem] leading-tight font-medium sm:text-[1.35rem]">{fact.value}</dd>
               </div>
             ))}
           </dl>
@@ -230,9 +234,9 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-8">
+          <div className={`${swipeRow} gap-5 sm:grid-cols-2 lg:col-span-8`}>
             {leadShot && (
-              <figure className="sm:col-span-2">
+              <figure className={`${swipeItem} sm:col-span-2`}>
                 <img
                   src={leadShot.src}
                   alt={leadShot.alt}
@@ -240,7 +244,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
                   height={683}
                   loading="lazy"
                   style={leadShot.position ? { objectPosition: leadShot.position } : undefined}
-                  className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5"
+                  className="aspect-[4/3] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 sm:aspect-[16/9]"
                 />
                 <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{leadShot.caption}</figcaption>
               </figure>
@@ -249,7 +253,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
               // An odd photo out closes the mosaic full width instead of sitting alone.
               const wide = otherShots.length % 2 === 1 && index === otherShots.length - 1;
               return (
-                <figure key={shot.src} className={wide ? "sm:col-span-2" : undefined}>
+                <figure key={shot.src} className={`${swipeItem} ${wide ? "sm:col-span-2" : ""}`}>
                   <img
                     src={shot.src}
                     alt={shot.alt}
@@ -257,7 +261,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
                     height={683}
                     loading="lazy"
                     style={shot.position ? { objectPosition: shot.position } : undefined}
-                    className={`${wide ? "aspect-[16/9]" : "aspect-[4/3]"} w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]`}
+                    className={`aspect-[4/3] ${wide ? "sm:aspect-[16/9]" : ""} w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]`}
                   />
                   <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{shot.caption}</figcaption>
                 </figure>
@@ -323,9 +327,9 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
         <p className="mt-5 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">
           Nothing here is compulsory. These are there for whoever wants them.
         </p>
-        <ul className="mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className={`mt-12 ${swipeRow} sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4`}>
           {optionalActivities.map((item) => (
-            <li key={item.title} className="min-w-0">
+            <li key={item.title} className={`${swipeItem} min-w-0`}>
               <img
                 src={item.photo.src}
                 alt={item.photo.alt}

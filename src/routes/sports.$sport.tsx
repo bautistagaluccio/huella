@@ -102,7 +102,7 @@ function SportExperiences() {
         <Link
           to="/"
           hash="disciplines"
-          className="text-[12px] uppercase tracking-[0.16em] text-ink/60 transition-colors hover:text-clay"
+          className="-my-2 py-3 text-[12px] uppercase tracking-[0.16em] text-ink/60 transition-colors hover:text-clay"
         >
           All sports
         </Link>
@@ -132,7 +132,7 @@ function SportExperiences() {
 
         <section className="border-t border-ink/10">
           <div className="mx-auto max-w-[1360px] px-6 py-16">
-            <div className="flex items-end justify-between gap-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.3em] text-clay">The calendar</p>
                 <h2 className="mt-3 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium">

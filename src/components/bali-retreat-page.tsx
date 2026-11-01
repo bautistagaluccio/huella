@@ -8,7 +8,7 @@ import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
 import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
 import { CommunityTeaser } from "@/components/community";
 import { DayTimeline } from "@/components/day-timeline";
-import { BackToTop, Eyebrow, PackingNote, SectionNav, type PackingItem } from "@/components/trip-layout";
+import { BackToTop, Eyebrow, PackingNote, SectionNav, swipeItem, swipeRow, type PackingItem } from "@/components/trip-layout";
 import { getDayTimeline, scheduleDays } from "@/lib/bali-schedule";
 import { baliSections, partnerRestaurants } from "@/lib/bali-retreat-content";
 
@@ -159,7 +159,11 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-ink/5" />
         <div className="mx-auto w-full max-w-[1360px] px-6 pt-40 pb-14">
           <div className="animate-rise">
-            <Eyebrow tone="text-cream" rule="bg-cream/60">Bali · Wellness Retreat · {shortDates}</Eyebrow>
+            <Eyebrow tone="text-cream" rule="bg-cream/60">
+              <span>
+                Bali · Wellness Retreat · <span className="whitespace-nowrap">{shortDates}</span>
+              </span>
+            </Eyebrow>
           </div>
           <h1
             className="animate-rise mt-6 max-w-[14ch] font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] font-medium text-cream text-balance"
@@ -184,7 +188,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
             {facts.map((fact) => (
               <div key={fact.label} className="border-l border-cream/15 pl-4">
                 <dt className="text-[11px] tracking-[0.25em] text-cream/55 uppercase">{fact.label}</dt>
-                <dd className="mt-2 font-display text-[1.35rem] leading-tight font-medium">{fact.value}</dd>
+                <dd className="mt-2 font-display text-[1.15rem] leading-tight font-medium sm:text-[1.35rem]">{fact.value}</dd>
               </div>
             ))}
           </dl>
@@ -241,16 +245,16 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-8">
+          <div className={`${swipeRow} gap-5 sm:grid-cols-2 lg:col-span-8`}>
             {leadShot && (
-              <figure className="sm:col-span-2">
+              <figure className={`${swipeItem} sm:col-span-2`}>
                 <img
                   src={leadShot.src}
                   alt={leadShot.alt}
                   width={1360}
                   height={907}
                   loading="lazy"
-                  className="aspect-[16/9] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5"
+                  className="aspect-[4/3] w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 sm:aspect-[16/9]"
                 />
                 <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{leadShot.caption}</figcaption>
               </figure>
@@ -259,14 +263,14 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
               // An odd photo out closes the mosaic full width instead of sitting alone.
               const wide = otherShots.length % 2 === 1 && index === otherShots.length - 1;
               return (
-              <figure key={shot.src} className={wide ? "sm:col-span-2" : undefined}>
+              <figure key={shot.src} className={`${swipeItem} ${wide ? "sm:col-span-2" : ""}`}>
                 <img
                   src={shot.src}
                   alt={shot.alt}
                   width={1360}
                   height={907}
                   loading="lazy"
-                  className={`${wide ? "aspect-[16/9]" : "aspect-[4/3]"} w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]`}
+                  className={`aspect-[4/3] ${wide ? "sm:aspect-[16/9]" : ""} w-full rounded-[14px] object-cover outline-1 -outline-offset-1 outline-ink/5 transition-transform duration-500 hover:scale-[1.01]`}
                 />
                 <figcaption className="mt-3 text-[11px] tracking-[0.2em] text-ink/50 uppercase">{shot.caption}</figcaption>
               </figure>
@@ -328,9 +332,9 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
             {optional.heading}
           </h2>
           <p className="mt-5 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">{optional.intro}</p>
-          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className={`mt-12 ${swipeRow} sm:grid-cols-2 lg:grid-cols-4`}>
             {optional.items.map((item) => (
-              <li key={item.title} className="flex flex-col rounded-[14px] bg-cream p-6 ring-1 ring-ink/5">
+              <li key={item.title} className={`${swipeItem} flex flex-col rounded-[14px] bg-cream p-6 ring-1 ring-ink/5`}>
                 <span aria-hidden="true" className="h-1.5 w-8 rounded-full bg-clay/70" />
                 <h3 className="mt-6 font-display text-[22px] leading-tight font-medium">{item.title}</h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>

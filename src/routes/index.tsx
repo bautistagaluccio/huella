@@ -169,7 +169,7 @@ function Index() {
                 Ski
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                 Next experience · Gudauri · Feb 17–21
+                Next experience · Gudauri · <span className="whitespace-nowrap">Feb 17–21</span>
               </p>
             </div>
           </Link>
@@ -192,7 +192,7 @@ function Index() {
                 Wellness
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                Next experience · Bali · May 15–21
+                Next experience · Bali · <span className="whitespace-nowrap">May 15–21</span>
               </p>
             </div>
           </Link>

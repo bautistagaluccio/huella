@@ -1,6 +1,12 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowUp } from "lucide-react";
 
+// On phones, long lists become a sideways swipe row (the next card peeks in);
+// from the sm breakpoint up they fall back to each list's own grid.
+export const swipeRow =
+  "-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden";
+export const swipeItem = "w-[82%] shrink-0 snap-start sm:w-auto";
+
 // Building blocks shared by the trip pages (Bali retreat, ski trip): section labels,
 // the sticky section nav, the tickable packing note and the back-to-top button.
 
