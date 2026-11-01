@@ -61,10 +61,11 @@ export function SectionNav({ items, prefix, label }: { items: { id: string; labe
 
   return (
     <nav aria-label={label} className="sticky top-0 z-20 border-b border-ink/10 bg-cream/90 backdrop-blur">
-      {/* Phones: one line showing the current section; tap it for the full list. */}
-      <div className="md:hidden">
+      {/* Phones, tablets and small laptops (the full row needs ~1030px): one line showing the
+          current section; tap it for the full list. */}
+      <div className="xl:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger className="group flex w-full items-center justify-between px-6 py-4 text-left outline-none focus-visible:bg-sand/60">
+          <DropdownMenuTrigger className="group mx-auto flex w-full max-w-[1360px] items-center justify-between px-6 py-4 text-left outline-none focus-visible:bg-sand/60">
             <span className="text-[12px] tracking-[0.16em] uppercase">
               <span className="text-ink/45">Section · </span>
               <span className="text-clay">{current?.label}</span>
@@ -72,11 +73,12 @@ export function SectionNav({ items, prefix, label }: { items: { id: string; labe
             <ChevronDown aria-hidden="true" className="size-4 text-clay transition-transform duration-300 group-data-[state=open]:rotate-180" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            align="center"
+            align="start"
+            alignOffset={12}
             sideOffset={6}
             // Let the chosen section's link scroll the page instead of refocusing the button.
             onCloseAutoFocus={(event) => event.preventDefault()}
-            className="w-[calc(100vw-1.5rem)] rounded-[14px] border-ink/10 bg-cream p-2 text-ink shadow-lg"
+            className="w-[min(calc(100vw-1.5rem),28rem)] rounded-[14px] border-ink/10 bg-cream p-2 text-ink shadow-lg"
           >
             {items.map((item, index) => (
               <DropdownMenuItem
@@ -94,8 +96,8 @@ export function SectionNav({ items, prefix, label }: { items: { id: string; labe
         </DropdownMenu>
       </div>
 
-      {/* Larger screens: every section in one row. */}
-      <div ref={navRef} className="relative mx-auto hidden max-w-[1360px] overflow-x-auto px-6 md:block">
+      {/* Wide screens: every section in one row. */}
+      <div ref={navRef} className="relative mx-auto hidden max-w-[1360px] overflow-x-auto px-6 xl:block">
         <ul className="flex w-max min-w-full gap-7">
           {items.map((item) => (
             <li key={item.id}>
