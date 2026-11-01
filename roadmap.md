@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Ski "Is this for me?" on phones: icon beside each point and tighter rows
 - [x] Ski What's included on phones: compact list that opens to each item, like Bali's Experience
 - [x] Use the section dropdown on every screen under 1280px wide (tablets, small laptops), the full row only where it fits
 - [x] Trip pages on phones: the sticky section menu shows the current section and opens a dropdown of all sections

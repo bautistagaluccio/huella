@@ -374,19 +374,27 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
 
       {/* Is this for me? — ink band */}
       <section id="ski-audience" tabIndex={-1} className="scroll-mt-16 bg-ink text-cream">
-        <div className="mx-auto max-w-[1360px] px-6 py-24">
+        <div className="mx-auto max-w-[1360px] px-6 py-16 md:py-24">
           <Eyebrow tone="text-cream/70" rule="bg-cream/40">Is this for me?</Eyebrow>
           <h2 className={`${headingClass} max-w-[22ch]`}>
             Skier or not, you're <span className="text-sand italic">in</span>
           </h2>
-          <ol className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3">
+          {/* Phones: icon beside each point, tighter rows; from md up, three columns. */}
+          <ol className="mt-8 grid grid-cols-1 border-b border-cream/20 md:mt-14 md:grid-cols-3 md:gap-10 md:border-b-0">
             {audience.map((item, index) => {
               const ItemIcon = audienceIcons[index] ?? Sparkles;
               return (
-                <li key={item.title} className="border-t border-cream/20 pt-6">
-                  <ItemIcon aria-hidden="true" className="size-8 text-sand" strokeWidth={1.5} />
-                  <h3 className="mt-4 font-display text-[26px] font-medium">{item.title}</h3>
-                  <p className="mt-3 text-[14px] leading-relaxed text-pretty text-cream/70">{item.description}</p>
+                <li
+                  key={item.title}
+                  className="grid grid-cols-[2.25rem_1fr] gap-x-3 border-t border-cream/20 py-4 md:block md:py-0 md:pt-6"
+                >
+                  <ItemIcon aria-hidden="true" className="mt-1 size-6 text-sand md:mt-0 md:size-8" strokeWidth={1.5} />
+                  <div>
+                    <h3 className="font-display text-[20px] leading-snug font-medium md:mt-4 md:text-[26px]">{item.title}</h3>
+                    <p className="mt-1 text-[13px] leading-snug text-pretty text-cream/70 md:mt-3 md:text-[14px] md:leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
                 </li>
               );
             })}
