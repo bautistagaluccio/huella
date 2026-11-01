@@ -60,7 +60,7 @@ export function DayTimeline({ days: scheduleDays, entriesFor, legend, initialDay
   return (
     <Tabs value={day} onValueChange={(value) => { setDirection(Number(value) - index); setDay(value); }} className="mt-8">
       <div className="flex items-center gap-3">
-        <div ref={daysRef} className="relative min-w-0 flex-1 overflow-x-auto">
+        <div ref={daysRef} className="relative min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <TabsList aria-label="Choose a day" className="flex h-auto w-max gap-2 bg-transparent p-0">
             {scheduleDays.map((d, i) => (
               <TabsTrigger
@@ -97,19 +97,25 @@ export function DayTimeline({ days: scheduleDays, entriesFor, legend, initialDay
         <TabsContent
           key={d.name}
           value={String(i)}
-          className="mt-10 touch-pan-y"
+          // Phones get a compact day (it fits an iPhone 15+ screen); the slide-in is clipped so
+          // the page never shifts sideways.
+          className="mt-5 touch-pan-y overflow-x-clip md:mt-10 md:overflow-x-visible"
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          <p className="mb-6 text-[11px] tracking-[0.2em] text-ink/40 uppercase md:hidden">Swipe to change day</p>
           <div
-            className={`grid grid-cols-1 gap-8 duration-300 motion-reduce:animate-none md:grid-cols-12 ${
+            className={`grid grid-cols-1 gap-4 duration-300 md:gap-8 motion-reduce:animate-none md:grid-cols-12 ${
               direction > 0 ? "animate-in fade-in slide-in-from-right-8" : direction < 0 ? "animate-in fade-in slide-in-from-left-8" : ""
             }`}
           >
             <div className="md:order-2 md:col-span-4 md:col-start-9">
-              <p className="font-display text-[clamp(2.2rem,4vw,3.2rem)] leading-none italic">{d.name}</p>
-              <p className="mt-3 text-[11px] tracking-[0.25em] text-clay uppercase">{d.dayLabel ?? fallbackLabel}</p>
+              <div className="flex items-end justify-between gap-3 md:block">
+                <div>
+                  <p className="font-display text-[2rem] leading-none italic md:text-[clamp(2.2rem,4vw,3.2rem)]">{d.name}</p>
+                  <p className="mt-2 text-[11px] tracking-[0.25em] text-clay uppercase md:mt-3">{d.dayLabel ?? fallbackLabel}</p>
+                </div>
+                <p className="pb-0.5 text-[10px] tracking-[0.2em] text-ink/40 uppercase md:hidden">Swipe to change day</p>
+              </div>
               <ul className="mt-8 hidden space-y-2 text-[12px] text-ink/60 md:block">
                 {legend.map((item) => (
                   <li key={item.kind} className="flex items-center gap-3">
@@ -123,25 +129,26 @@ export function DayTimeline({ days: scheduleDays, entriesFor, legend, initialDay
               )}
             </div>
             <ol className="relative md:order-1 md:col-span-7">
-              <span aria-hidden="true" className="absolute top-3 bottom-3 left-[5.25rem] w-px bg-clay/25 sm:left-[8.75rem]" />
+              <span aria-hidden="true" className="absolute top-3 bottom-3 left-[4.75rem] w-px bg-clay/25 sm:left-[8.75rem]" />
               {entriesFor(i).map((entry, n) => (
                 <li
                   key={`${n}-${entry.title}`}
-                  className="relative grid grid-cols-[4.5rem_1.5rem_1fr] items-start gap-x-1 py-3 animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none sm:grid-cols-[8rem_1.5rem_1fr]"
+                  className="relative grid grid-cols-[4rem_1.5rem_1fr] items-start gap-x-1 py-[7px] animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none sm:grid-cols-[8rem_1.5rem_1fr] md:py-3"
                   style={{ animationDelay: `${n * 60}ms`, animationFillMode: "both" }}
                 >
-                  <span className="pt-1 text-[12px] text-ink/55 sm:whitespace-nowrap">{entry.time}</span>
-                  <span className={`mt-2 size-2.5 justify-self-center rounded-full ${dots[entry.kind]}`} aria-hidden="true" />
+                  <span className="pt-0.5 text-[11px] leading-tight text-ink/55 sm:pt-1 sm:text-[12px] sm:whitespace-nowrap">{entry.time}</span>
+                  <span className={`mt-1.5 size-2.5 justify-self-center md:mt-2 rounded-full ${dots[entry.kind]}`} aria-hidden="true" />
                   <div>
-                    <p className={`font-display text-[21px] leading-snug ${entry.kind === "optional" ? "text-clay italic" : entry.kind === "other" ? "text-ink/60" : ""}`}>
+                    <p className={`font-display text-[17px] leading-snug md:text-[21px] ${entry.kind === "optional" ? "text-clay italic" : entry.kind === "other" ? "text-ink/60" : ""}`}>
                       {entry.title}
-                      {entry.kind === "optional" && <span className="sr-only"> (optional)</span>}
+                      {entry.kind === "optional" && (
+                        <span className="ml-2 align-[0.15em] font-sans text-[10px] tracking-[0.18em] text-clay/80 uppercase not-italic">
+                          Optional
+                        </span>
+                      )}
                     </p>
-                    {entry.kind === "optional" && (
-                      <p className="mt-0.5 text-[10px] tracking-[0.2em] text-clay/80 uppercase" aria-hidden="true">Optional</p>
-                    )}
                     {entry.details.length > 0 && (
-                      <p className="mt-0.5 text-[13px] text-ink/60">{entry.details.join(" ")}</p>
+                      <p className="mt-0.5 text-[12px] leading-snug text-ink/60 md:text-[13px]">{entry.details.join(" ")}</p>
                     )}
                   </div>
                 </li>

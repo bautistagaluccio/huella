@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Compact the agenda day on phones so a full day fits an iPhone 15+ screen; stop the sideways wobble when days slide in
 - [x] Show the Bali location as "Uluwatu, Bali" (facts bar and Wellness card)
 - [x] Swipe left/right on the agenda timeline to change day on phones (Bali and ski)
 - [x] Mobile pass: swipeable photo and card rows on phones, dates kept on one line, smaller facts text, stacked Wellness page header
