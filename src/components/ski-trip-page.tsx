@@ -206,7 +206,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
       <section className="mx-auto max-w-[1360px] px-6 py-24 text-center">
         <Eyebrow tone="text-clay justify-center">The trip</Eyebrow>
         <h2 className="mx-auto mt-7 max-w-[20ch] font-display text-[clamp(2rem,5vw,3.8rem)] leading-[1.05] font-medium text-balance">
-          The lodge, the table and the <span className="text-clay italic">hours between</span>
+          The lodge, the slopes and the <span className="text-clay italic">hours between</span>
         </h2>
         <p className="mx-auto mt-6 max-w-[52ch] text-[15px] leading-relaxed text-pretty text-ink/65">
           Three looks at the same week: where you’ll be staying, what the trip covers, and what you can
