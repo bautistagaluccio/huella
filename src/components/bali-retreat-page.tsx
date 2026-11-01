@@ -6,6 +6,7 @@ import villaExterior from "@/assets/villa-exterior.webp";
 import villaLounge from "@/assets/villa-lounge.webp";
 import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
 import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
+import { CommunityTeaser } from "@/components/community";
 import { DayTimeline } from "@/components/day-timeline";
 import { BackToTop, Eyebrow, PackingNote, SectionNav, type PackingItem } from "@/components/trip-layout";
 import { getDayTimeline, scheduleDays } from "@/lib/bali-schedule";
@@ -408,6 +409,8 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           timeZoneLabel="Bali time"
         />
       </section>
+
+      <CommunityTeaser tripNoun="retreat" />
 
       {/* Closing call to action — ink band, echoing the facts bar */}
       <section className="bg-ink text-cream">

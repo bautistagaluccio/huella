@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { BadgeCheck, Icon, KeyRound, Maximize2, MountainSnow, Plane, Sparkles, Utensils, type IconNode, type LucideProps } from "lucide-react";
 import pisteMap from "@/assets/gudauri-piste-map.webp";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
+import { CommunityTeaser } from "@/components/community";
 import { DayTimeline } from "@/components/day-timeline";
 import { BackToTop, Eyebrow, PackingNote, SectionNav } from "@/components/trip-layout";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -397,6 +398,8 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
           fallbackLabel=""
         />
       </section>
+
+      <CommunityTeaser tripNoun="trip" />
 
       {/* Closing call to action — ink band, echoing the facts bar */}
       <section className="bg-ink text-cream">

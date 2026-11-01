@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
 import { getDeparturesByDate } from "@/lib/departures";
+import { CommunitySection } from "@/components/community";
 
 import kitesurfImg from "@/assets/kitesurf.jpg";
 import surfImg from "@/assets/surf.jpg";
@@ -59,6 +60,7 @@ const homeSections = [
   { href: "#disciplines", label: "Trips" },
   { href: "#atelier", label: "How it works" },
   { href: "#departures", label: "Departures" },
+  { href: "#community", label: "Community" },
   { href: "#enquire", label: "Request info" },
 ];
 
@@ -359,8 +361,20 @@ function Index() {
         </div>
       </section>
 
+      {/* Community */}
+      <CommunitySection
+        cta={
+          <a
+            href="#enquire"
+            className="inline-block rounded-full bg-clay px-6 py-3 text-[13px] uppercase tracking-[0.14em] text-cream transition-colors hover:bg-ink"
+          >
+            Join your first trip
+          </a>
+        }
+      />
+
       {/* Enquiry */}
-      <section id="enquire" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pb-24">
+      <section id="enquire" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pt-20 pb-24">
         <div className="grid grid-cols-1 items-center gap-8 rounded-[14px] bg-sand p-8 ring-1 ring-ink/5 md:grid-cols-12 md:p-12">
           <div className="md:col-span-5">
             <h2 className="max-w-[18ch] font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-tight font-medium text-balance">
