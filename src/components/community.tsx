@@ -1,4 +1,4 @@
-import { BellRing, CalendarHeart, MessageCircle, Ticket, type LucideIcon } from "lucide-react";
+import { ArrowRight, BellRing, CalendarHeart, MessageCircle, Ticket, type LucideIcon } from "lucide-react";
 import { communityBenefits, communityPromise } from "@/lib/community";
 
 const icons: Record<(typeof communityBenefits)[number]["id"], LucideIcon> = {
@@ -54,35 +54,24 @@ export function CommunitySection({ cta }: { cta: React.ReactNode }) {
 /** Short community band for the trip pages, linking to the homepage section. */
 export function CommunityTeaser({ tripNoun }: { tripNoun: string }) {
   return (
-    <section className="border-t border-ink/10">
-      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center">
-        <div className="lg:col-span-5">
-          <Eyebrow>The Huella community</Eyebrow>
-          <h2 className="mt-6 font-display text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.05] font-medium text-balance">
-            Join this {tripNoun}, belong <span className="text-clay italic">forever</span>
-          </h2>
-          <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-pretty text-ink/70">{communityPromise}</p>
-          <a
-            href="/#community"
-            className="mt-6 inline-block text-[12px] tracking-[0.16em] text-clay uppercase underline decoration-clay/40 underline-offset-4 transition-colors hover:decoration-clay"
-          >
-            About the community →
-          </a>
+    <section className="bg-sand/60">
+      <div className="mx-auto flex max-w-[1360px] flex-col items-center px-6 py-24 text-center">
+        <div className="flex items-center gap-4 text-[11px] tracking-[0.3em] text-clay uppercase">
+          <span className="inline-block h-px w-10 bg-clay/40" />
+          The Huella community
+          <span className="inline-block h-px w-10 bg-clay/40" />
         </div>
-        <ul className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:col-span-7">
-          {communityBenefits.map((benefit) => {
-            const BenefitIcon = icons[benefit.id];
-            return (
-              <li key={benefit.id} className="flex items-start gap-4 rounded-[14px] bg-sand/50 p-5 ring-1 ring-ink/5">
-                <BenefitIcon aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-clay" strokeWidth={1.5} />
-                <div>
-                  <h3 className="font-display text-[20px] leading-tight font-medium">{benefit.title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-pretty text-ink/65">{benefit.description}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <h2 className="mt-7 max-w-[18ch] font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-medium text-balance">
+          Join this {tripNoun}, belong <span className="text-clay italic">forever</span>
+        </h2>
+        <p className="mt-6 font-display text-[clamp(1.1rem,2vw,1.35rem)] text-ink/70 italic">{communityPromise}</p>
+        <a
+          href="/#community"
+          className="mt-10 inline-flex items-center gap-3 rounded-full border border-clay/50 px-6 py-3 text-[12px] tracking-[0.16em] text-clay uppercase transition-colors hover:bg-clay hover:text-cream"
+        >
+          About the community
+          <ArrowRight aria-hidden="true" className="size-4" />
+        </a>
       </div>
     </section>
   );

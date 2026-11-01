@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Slim the trip-page community teaser to a centred heading, promise and link
 - [x] Add a Community section to the homepage (and menu) with a teaser on the Bali and ski pages
 - [x] Rename the Retreats category to Wellness (homepage tile, sport page, enquiry form option)
 - [x] Fix the homepage Ski and Retreats tiles collapsing to nothing on phones
