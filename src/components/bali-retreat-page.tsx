@@ -317,23 +317,23 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
       </section>
 
       {/* Daily practice — numbered rows */}
-      <section id="bali-daily" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-24">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <section id="bali-daily" tabIndex={-1} className="mx-auto max-w-[1360px] scroll-mt-16 px-6 py-16 md:py-24">
+        <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
               <Eyebrow>{daily.label}</Eyebrow>
               <h2 className="mt-6 font-display text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.05] font-medium text-balance">
                 {daily.heading}
               </h2>
-              <p className="mt-5 text-[15px] leading-relaxed text-ink/65">{daily.intro}</p>
+              <p className="mt-4 text-[15px] leading-relaxed text-ink/65 md:mt-5">{daily.intro}</p>
             </div>
           </div>
           <ol className="lg:col-span-8">
             {daily.items.map((item, index) => (
-              <li key={item.title} className="grid grid-cols-[3.5rem_1fr] gap-4 border-t border-ink/10 py-7 last:border-b sm:grid-cols-[4.5rem_14rem_1fr] sm:items-baseline">
-                <span className="font-display text-[28px] text-clay italic">{String(index + 1).padStart(2, "0")}</span>
-                <h3 className="font-display text-[24px] font-medium">{item.title}</h3>
-                <p className="col-start-2 text-[14px] leading-relaxed text-pretty text-ink/70 sm:col-start-3">{item.description}</p>
+              <li key={item.title} className="grid grid-cols-[2.25rem_1fr] items-baseline gap-x-3 gap-y-0.5 border-t border-ink/10 py-3 last:border-b sm:grid-cols-[4.5rem_14rem_1fr] sm:gap-4 sm:py-7">
+                <span className="font-display text-[20px] text-clay italic sm:text-[28px]">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="font-display text-[20px] font-medium sm:text-[24px]">{item.title}</h3>
+                <p className="col-start-2 text-[13px] leading-snug text-pretty text-ink/70 sm:col-start-3 sm:text-[14px] sm:leading-relaxed">{item.description}</p>
               </li>
             ))}
           </ol>

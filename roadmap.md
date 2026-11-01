@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Bali Daily practice on phones: tighter list with each description under its name (all five fit one screen)
 - [x] Bali Optional activities on phones: swipe through pairs of cards stacked two high
 - [x] Bali Experience on phones: compact list with bright titles that opens to each description
 - [x] Compact the agenda day on phones so a full day fits an iPhone 15+ screen; stop the sideways wobble when days slide in
