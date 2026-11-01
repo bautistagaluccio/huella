@@ -3,7 +3,7 @@ import { BadgeCheck, Icon, KeyRound, Maximize2, MountainSnow, Plane, Sparkles, U
 import pisteMap from "@/assets/gudauri-piste-map.webp";
 import skiGudauriImg from "@/assets/ski-gudauri.jpg";
 import { DayTimeline } from "@/components/day-timeline";
-import { Eyebrow, PackingNote, SectionNav } from "@/components/trip-layout";
+import { BackToTop, Eyebrow, PackingNote, SectionNav } from "@/components/trip-layout";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { getSkiDayTimeline, skiDays } from "@/lib/ski-schedule";
 import { audience, included, includedNote, lodgeShots, optionalActivities, skiPackingList } from "@/lib/ski-trip-content";
@@ -420,6 +420,8 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
           </Link>
         </div>
       </section>
+
+      <BackToTop />
 
       {/* Footer */}
       <footer className="border-t border-ink/10">

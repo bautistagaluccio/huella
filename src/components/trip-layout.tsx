@@ -1,7 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { ArrowUp } from "lucide-react";
 
 // Building blocks shared by the trip pages (Bali retreat, ski trip): section labels,
-// the sticky section nav and the tickable packing note.
+// the sticky section nav, the tickable packing note and the back-to-top button.
 
 export function Eyebrow({ children, tone = "text-clay", rule = "bg-clay/40" }: { children: React.ReactNode; tone?: string; rule?: string }) {
   return (
@@ -112,5 +113,33 @@ export function PackingNote({ label, items }: { label: string; items: PackingIte
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Floating button that appears once the hero is scrolled past and returns to the top. */
+export function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const update = () => setVisible(window.scrollY > 600);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  return (
+    <button
+      type="button"
+      aria-label="Back to top"
+      onClick={() => {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      }}
+      className={`fixed right-5 bottom-5 z-30 flex size-12 items-center justify-center rounded-full bg-ink text-cream shadow-lg ring-1 ring-cream/15 transition-all duration-300 hover:bg-clay focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay sm:right-8 sm:bottom-8 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
+      }`}
+      tabIndex={visible ? 0 : -1}
+    >
+      <ArrowUp aria-hidden="true" className="size-5" strokeWidth={1.75} />
+    </button>
   );
 }

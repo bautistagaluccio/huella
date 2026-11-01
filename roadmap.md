@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Add a back-to-top button to the Bali and ski trip pages (appears once you scroll past the hero)
 - [x] Move the Bali retreat to May 15–21 (Saturday to Friday)
 - [x] Redesign the ski trip page in the Bali layout (hero, facts bar, sticky nav, bands, packing note, agenda day picker); share the trip building blocks
 - [x] Remove the May 1–9 Bali retreat; its address redirects to March 6–14

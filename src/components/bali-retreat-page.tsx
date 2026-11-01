@@ -7,7 +7,7 @@ import villaLounge from "@/assets/villa-lounge.webp";
 import villaPoolDeckLawn from "@/assets/villa-pool-deck-lawn.jpeg";
 import villaSunsetPool from "@/assets/villa-sunset-pool.webp";
 import { DayTimeline } from "@/components/day-timeline";
-import { Eyebrow, PackingNote, SectionNav, type PackingItem } from "@/components/trip-layout";
+import { BackToTop, Eyebrow, PackingNote, SectionNav, type PackingItem } from "@/components/trip-layout";
 import { getDayTimeline, scheduleDays } from "@/lib/bali-schedule";
 import { baliSections, partnerRestaurants } from "@/lib/bali-retreat-content";
 
@@ -414,6 +414,8 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           </Link>
         </div>
       </section>
+
+      <BackToTop />
 
       {/* Footer */}
       <footer className="border-t border-ink/10">
