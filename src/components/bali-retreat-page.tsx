@@ -348,9 +348,10 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
             {optional.heading}
           </h2>
           <p className="mt-5 max-w-[60ch] text-[15px] leading-relaxed text-ink/65">{optional.intro}</p>
-          <ul className={`mt-12 ${swipeRow} sm:grid-cols-2 lg:grid-cols-4`}>
+          {/* Phones: swipe sideways through pairs of cards stacked two high; from sm up, the usual grid. */}
+          <ul className="-mx-6 mt-12 grid snap-x snap-mandatory scroll-px-6 auto-cols-[82%] grid-flow-col grid-rows-2 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:mx-0 sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:grid-rows-none sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
             {optional.items.map((item) => (
-              <li key={item.title} className={`${swipeItem} flex flex-col rounded-[14px] bg-cream p-6 ring-1 ring-ink/5`}>
+              <li key={item.title} className="flex snap-start flex-col rounded-[14px] bg-cream p-6 ring-1 ring-ink/5">
                 <span aria-hidden="true" className="h-1.5 w-8 rounded-full bg-clay/70" />
                 <h3 className="mt-6 font-display text-[22px] leading-tight font-medium">{item.title}</h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-pretty text-ink/70">{item.description}</p>
