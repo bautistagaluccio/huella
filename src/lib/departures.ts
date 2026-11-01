@@ -13,9 +13,9 @@ export const departures = [
   },
   {
     id: "bali",
-    month: 3,
-    monthName: "March",
-    days: "6–14",
+    month: 5,
+    monthName: "May",
+    days: "15–21",
     discipline: "Wellness",
     title: "Bali Body & Breath",
     description: "Daily yoga, breathwork, meditation and pilates amid the rice terraces.",

@@ -189,7 +189,7 @@ function Index() {
                 Retreats
               </h3>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cream/70">
-                Next experience · Bali · Mar 6–14
+                Next experience · Bali · May 15–21
               </p>
             </div>
           </Link>

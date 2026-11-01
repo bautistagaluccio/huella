@@ -11,7 +11,7 @@ describe("App routing", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     expect(router.matchRoutes("/trips/ski-gudauri-feb-10").at(-1)?.routeId).toBe("/trips/ski-gudauri-feb-10");
   });
-  it("routes the March Bali retreat and keeps the withdrawn May address routed so it can redirect", () => {
+  it("routes the Bali retreat and keeps the withdrawn May 1–9 address routed so it can redirect", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     expect(router.matchRoutes("/retreats/bali").at(-1)?.routeId).toBe("/retreats/bali");
     expect(router.matchRoutes("/retreats/bali-may").at(-1)?.routeId).toBe("/retreats/bali-may");

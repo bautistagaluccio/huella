@@ -5,7 +5,7 @@ describe("Departure calendar", () => {
   it("lists only real departures, ordered by departure month", () => {
     expect(getDeparturesByDate().map(({ id, month }) => ({ id, month }))).toEqual([
       { id: "ski-gudauri", month: 2 },
-      { id: "bali", month: 3 },
+      { id: "bali", month: 5 },
     ]);
   });
   it("preserves the original February 17–21 trip", () => {
