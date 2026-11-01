@@ -22,17 +22,17 @@ import villaAfterDark from "@/assets/villa-after-dark.jpeg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Huella — Sports Trips Atelier, Dubai" },
+      { title: "Huella — Dubai Experience Studio" },
       {
         name: "description",
         content:
-          "Huella composes kitesurf, surf, golf, ski and yoga trips for private groups in Dubai and beyond — sourced, scoped and handled end to end.",
+          "Huella is a Dubai experience studio creating small-group ski, wellness, kitesurf, surf and golf trips — each one sourced, scoped and handled end to end.",
       },
-      { property: "og:title", content: "Huella — Sports Trips Atelier, Dubai" },
+      { property: "og:title", content: "Huella — Dubai Experience Studio" },
       {
         property: "og:description",
         content:
-          "Kitesurf, surf, golf, ski and yoga retreats for private groups, arranged end to end from Dubai.",
+          "A Dubai experience studio: small-group ski, wellness, kitesurf, surf and golf trips, arranged end to end.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -58,7 +58,7 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
 const homeSections = [
   { href: "#top", label: "Welcome" },
   { href: "#disciplines", label: "Trips" },
-  { href: "#atelier", label: "How it works" },
+  { href: "#how-it-works", label: "How it works" },
   { href: "#departures", label: "Departures" },
   { href: "#community", label: "Community" },
   { href: "#enquire", label: "Request info" },
@@ -135,7 +135,7 @@ function Index() {
           style={{ animationDelay: "0.2s" }}
         >
           <p className="max-w-[52ch] text-[15px] leading-relaxed text-pretty text-ink/70">
-            Five disciplines, one atelier. We compose kitesurf, surf, golf, ski and yoga retreats
+            Five disciplines, one studio. We compose kitesurf, surf, golf, ski and wellness retreats
             for private groups and small circles — each one sourced, scoped and handled end to end.
           </p>
           <a
@@ -266,7 +266,7 @@ function Index() {
       </section>
 
       {/* How it works */}
-      <section id="atelier" className="scroll-mt-8 bg-ink py-20 text-cream">
+      <section id="how-it-works" className="scroll-mt-8 bg-ink py-20 text-cream">
         <div className="mx-auto max-w-[1360px] px-6">
           <Eyebrow light>How it works</Eyebrow>
           <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-3">

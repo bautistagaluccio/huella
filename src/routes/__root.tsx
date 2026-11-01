@@ -78,17 +78,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Huella — Sports Trips Atelier, Dubai" },
+      { title: "Huella — Dubai Experience Studio" },
       {
         name: "description",
         content:
-          "Huella composes kitesurf, surf, golf, ski and yoga trips for private groups in Dubai and beyond — sourced, scoped and handled end to end.",
+          "Huella is a Dubai experience studio creating small-group ski, wellness, kitesurf, surf and golf trips — each one sourced, scoped and handled end to end.",
       },
-      { property: "og:title", content: "Huella — Sports Trips Atelier, Dubai" },
+      { property: "og:title", content: "Huella — Dubai Experience Studio" },
       {
         property: "og:description",
         content:
-          "Kitesurf, surf, golf, ski and yoga retreats for private groups, arranged end to end from Dubai.",
+          "A Dubai experience studio: small-group ski, wellness, kitesurf, surf and golf trips, arranged end to end.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
