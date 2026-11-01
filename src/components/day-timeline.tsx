@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ScheduleDay, TimelineEntry, TimelineKind } from "@/lib/schedule";
@@ -24,13 +24,43 @@ interface DayTimelineProps {
 // A trip's schedule as a day picker: choose a day and its timeline slides in.
 export function DayTimeline({ days: scheduleDays, entriesFor, legend, initialDay, fallbackLabel, timeZoneLabel }: DayTimelineProps) {
   const [day, setDay] = useState(String(initialDay));
+  // Which way the last change moved, so the new day slides in from that side.
+  const [direction, setDirection] = useState(0);
   const index = Number(day);
-  const step = (delta: number) => setDay(String((index + delta + scheduleDays.length) % scheduleDays.length));
+  const step = (delta: number) => {
+    setDirection(delta);
+    setDay(String((index + delta + scheduleDays.length) % scheduleDays.length));
+  };
+
+  // On touch screens a sideways swipe over the timeline moves to the next or previous day.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    touchStart.current = touch ? { x: touch.clientX, y: touch.clientY } : null;
+  };
+  const onTouchEnd = (event: React.TouchEvent) => {
+    const start = touchStart.current;
+    const touch = event.changedTouches[0];
+    touchStart.current = null;
+    if (!start || !touch) return;
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    // Mostly horizontal and long enough, so vertical page scrolling is never mistaken for a swipe.
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  };
+
+  // Keep the chosen day's button in view when the row of days scrolls sideways on phones.
+  const daysRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const row = daysRef.current;
+    const active = row?.querySelector<HTMLElement>('[data-state="active"]');
+    if (row && active) row.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
+  }, [day]);
 
   return (
-    <Tabs value={day} onValueChange={setDay} className="mt-8">
+    <Tabs value={day} onValueChange={(value) => { setDirection(Number(value) - index); setDay(value); }} className="mt-8">
       <div className="flex items-center gap-3">
-        <div className="min-w-0 flex-1 overflow-x-auto">
+        <div ref={daysRef} className="relative min-w-0 flex-1 overflow-x-auto">
           <TabsList aria-label="Choose a day" className="flex h-auto w-max gap-2 bg-transparent p-0">
             {scheduleDays.map((d, i) => (
               <TabsTrigger
@@ -64,8 +94,19 @@ export function DayTimeline({ days: scheduleDays, entriesFor, legend, initialDay
       </div>
 
       {scheduleDays.map((d, i) => (
-        <TabsContent key={d.name} value={String(i)} className="mt-10">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
+        <TabsContent
+          key={d.name}
+          value={String(i)}
+          className="mt-10 touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <p className="mb-6 text-[11px] tracking-[0.2em] text-ink/40 uppercase md:hidden">Swipe to change day</p>
+          <div
+            className={`grid grid-cols-1 gap-8 duration-300 motion-reduce:animate-none md:grid-cols-12 ${
+              direction > 0 ? "animate-in fade-in slide-in-from-right-8" : direction < 0 ? "animate-in fade-in slide-in-from-left-8" : ""
+            }`}
+          >
             <div className="md:order-2 md:col-span-4 md:col-start-9">
               <p className="font-display text-[clamp(2.2rem,4vw,3.2rem)] leading-none italic">{d.name}</p>
               <p className="mt-3 text-[11px] tracking-[0.25em] text-clay uppercase">{d.dayLabel ?? fallbackLabel}</p>
