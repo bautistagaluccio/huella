@@ -7,13 +7,13 @@ import {
 } from "@/lib/bali-schedule";
 
 describe("Bali weekly schedule", () => {
-  it("runs from Saturday arrival to Friday departure across 7 day columns", () => {
+  it("runs from Friday arrival to Thursday departure across 7 day columns", () => {
     expect(scheduleTimes).toHaveLength(27);
     expect(scheduleDays).toHaveLength(7);
-    expect(scheduleDays[0]!.name).toBe("Saturday");
-    expect(scheduleDays[1]!.name).toBe("Sunday");
+    expect(scheduleDays[0]!.name).toBe("Friday");
+    expect(scheduleDays[1]!.name).toBe("Saturday");
     expect(scheduleDays[1]!.dayLabel).toBe("Day 1");
-    expect(scheduleDays[6]!.name).toBe("Friday");
+    expect(scheduleDays[6]!.name).toBe("Thursday");
 
     const arrival = scheduleBlocks.find((b) => b.lines.includes("Arrival"));
     expect(arrival?.day).toBe(0);
@@ -41,7 +41,7 @@ describe("Bali weekly schedule", () => {
     }
   });
 
-  it("turns Sunday into an ordered timeline with optional activities named directly", () => {
+  it("turns the first full day (Saturday) into an ordered timeline with optional activities named directly", () => {
     expect(getDayTimeline(1)).toEqual([
       { time: "7.30 am", title: "Stretching", details: [], kind: "practice" },
       { time: "8 am", title: "Pilates", details: [], kind: "practice" },

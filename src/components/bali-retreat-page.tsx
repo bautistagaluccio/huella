@@ -413,7 +413,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
           A week, hour by <span className="text-clay italic">hour</span>
         </h2>
         <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-pretty text-ink/70">
-          Arrive on Saturday and settle in — mornings of movement, afternoons for adventure or
+          Arrive on Friday and settle in — mornings of movement, afternoons for adventure or
           stillness, evenings together around the table.
         </p>
         <DayTimeline
@@ -424,7 +424,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
             { kind: "meal", label: "Around the table" },
             { kind: "optional", label: "Optional experiences" },
           ]}
-          // Open on Sunday, the first full retreat day.
+          // Open on Saturday, the first full retreat day.
           initialDay={1}
           fallbackLabel="Arrival"
           timeZoneLabel="Bali time"

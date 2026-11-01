@@ -1,16 +1,16 @@
 // Weekly rhythm for the Bali Body & Breath retreat — as provided by the host.
-// Day 0 = arrival Saturday, days 1–5 = full retreat days (Day 1–Day 5),
-// day 6 = departure Friday (Day 6).
+// Day 0 = arrival Friday 14 May, days 1–5 = full retreat days (Day 1–Day 5),
+// day 6 = departure Thursday 20 May (Day 6).
 import { type ScheduleBlock, type ScheduleDay, type TimelineEntry, type TimelineKind } from "@/lib/schedule";
 
 export const scheduleDays: ScheduleDay[] = [
-  { name: "Saturday", dayLabel: null },
-  { name: "Sunday", dayLabel: "Day 1" },
-  { name: "Monday", dayLabel: "Day 2" },
-  { name: "Tuesday", dayLabel: "Day 3" },
-  { name: "Wednesday", dayLabel: "Day 4" },
-  { name: "Thursday", dayLabel: "Day 5" },
-  { name: "Friday", dayLabel: "Day 6 · Departure" },
+  { name: "Friday", dayLabel: null },
+  { name: "Saturday", dayLabel: "Day 1" },
+  { name: "Sunday", dayLabel: "Day 2" },
+  { name: "Monday", dayLabel: "Day 3" },
+  { name: "Tuesday", dayLabel: "Day 4" },
+  { name: "Wednesday", dayLabel: "Day 5" },
+  { name: "Thursday", dayLabel: "Day 6 · Departure" },
 ];
 
 

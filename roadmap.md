@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Shift the Bali weekly rhythm to run Friday 14 (arrival) to Thursday 20 May (departure)
 - [x] Move the Bali retreat to May 14–20 (website and coach one-pagers)
 - [x] Ski "Is this for me?" on phones: icon beside each point and tighter rows
 - [x] Ski What's included on phones: compact list that opens to each item, like Bali's Experience
