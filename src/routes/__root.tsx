@@ -92,6 +92,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      // The Huella logo, shown when a page is shared (WhatsApp, iMessage, social). Absolute URL so
+      // every app can fetch it; pages that don't set their own image inherit this one.
+      { property: "og:image", content: "https://huellaretreat.com/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Huella logo" },
+      { name: "twitter:image", content: "https://huellaretreat.com/og-image.png" },
     ],
     links: [
       {

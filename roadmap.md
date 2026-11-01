@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Use the Huella logo as the link-preview (share) image on every page
 - [x] Brand audit: replace "Sports Trips Atelier" with "Dubai Experience Studio" in page titles, link previews and homepage copy
 - [x] Shift the Bali weekly rhythm to run Friday 14 (arrival) to Thursday 20 May (departure)
 - [x] Move the Bali retreat to May 14–20 (website and coach one-pagers)
