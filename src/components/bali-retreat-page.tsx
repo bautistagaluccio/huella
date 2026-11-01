@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import villaAfterDark from "@/assets/villa-after-dark.jpeg";
 import villaBathroom from "@/assets/villa-bathroom.webp";
 import villaDiningPavilion from "@/assets/villa-dining-pavilion.jpeg";
@@ -282,13 +283,28 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
 
       {/* Experience — ink band */}
       <section id="bali-experience" tabIndex={-1} className="scroll-mt-16 bg-ink text-cream">
-        <div className="mx-auto max-w-[1360px] px-6 py-24">
+        <div className="mx-auto max-w-[1360px] px-6 py-16 md:py-24">
           <Eyebrow tone="text-cream/70" rule="bg-cream/40">{experience.label}</Eyebrow>
           <h2 className="mt-6 max-w-[22ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05] font-medium text-balance">
             {experience.heading}
           </h2>
           <p className="mt-5 max-w-[60ch] text-[16px] leading-relaxed text-cream/70">{experience.intro}</p>
-          <ol className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3">
+          {/* Phones: a compact list, each point opens to its description (the first starts open). */}
+          <ol className="mt-10 border-b border-cream/20 md:hidden">
+            {experience.items.map((item, index) => (
+              <li key={item.title} className="border-t border-cream/20">
+                <details className="group" open={index === 0}>
+                  <summary className="flex cursor-pointer list-none items-center gap-4 py-4 [&::-webkit-details-marker]:hidden">
+                    <span className="font-display text-[20px] text-sand italic">{String(index + 1).padStart(2, "0")}</span>
+                    <h3 className="flex-1 font-display text-[22px] font-medium text-cream">{item.title}</h3>
+                    <Plus aria-hidden="true" className="size-5 text-sand transition-transform duration-300 group-open:rotate-45" />
+                  </summary>
+                  <p className="pb-5 text-[14px] leading-relaxed text-pretty text-cream/75">{item.description}</p>
+                </details>
+              </li>
+            ))}
+          </ol>
+          <ol className="mt-14 hidden grid-cols-3 gap-10 md:grid">
             {experience.items.map((item, index) => (
               <li key={item.title} className="border-t border-cream/20 pt-6">
                 <span className="font-display text-[34px] text-sand italic">{String(index + 1).padStart(2, "0")}</span>
