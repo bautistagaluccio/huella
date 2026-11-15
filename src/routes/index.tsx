@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getDeparturesByDate } from "@/lib/departures";
 import { CommunitySection } from "@/components/community";
-import { FoundersLine, FoundersSection } from "@/components/founders";
 import { contactLinks } from "@/lib/contact";
 
 import kitesurfImg from "@/assets/kitesurf.jpg";
@@ -61,7 +60,6 @@ const homeSections = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#departures", label: "Departures" },
   { href: "#community", label: "Community" },
-  { href: "#founders", label: "Who we are" },
   { href: "#enquire", label: "Contact us" },
 ];
 
@@ -143,9 +141,6 @@ function Index() {
           >
             Request the programme
           </a>
-        </div>
-        <div className="animate-rise" style={{ animationDelay: "0.3s" }}>
-          <FoundersLine />
         </div>
       </section>
 
@@ -374,9 +369,6 @@ function Index() {
           </a>
         }
       />
-
-      {/* Who we are */}
-      <FoundersSection />
 
       {/* Contact */}
       <section id="enquire" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pt-20 pb-24">
