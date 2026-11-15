@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { Instagram, Mail, Menu, MessageCircle } from "lucide-react";
 import {
   DropdownMenu,
@@ -7,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { supabase } from "@/integrations/supabase/client";
 import { getDeparturesByDate } from "@/lib/departures";
 import { CommunitySection } from "@/components/community";
 import { FoundersLine, FoundersSection } from "@/components/founders";
@@ -64,7 +62,7 @@ const homeSections = [
   { href: "#departures", label: "Departures" },
   { href: "#community", label: "Community" },
   { href: "#founders", label: "Who we are" },
-  { href: "#enquire", label: "Request info" },
+  { href: "#enquire", label: "Contact us" },
 ];
 
 const contactIcons = { whatsapp: MessageCircle, email: Mail, instagram: Instagram };
@@ -75,10 +73,6 @@ const departureImages = {
 };
 
 function Index() {
-  const [sent, setSent] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   return (
     <div className="min-h-screen bg-cream text-ink">
       {/* Header */}
@@ -119,7 +113,7 @@ function Index() {
           href="#enquire"
           className="justify-self-end rounded-full bg-ink px-3 py-2.5 text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-cream sm:px-5 sm:text-[13px] sm:tracking-[0.14em] transition-colors hover:bg-clay"
         >
-          Request Info
+          Contact us
         </a>
       </header>
 
@@ -384,126 +378,45 @@ function Index() {
       {/* Who we are */}
       <FoundersSection />
 
-      {/* Enquiry */}
+      {/* Contact */}
       <section id="enquire" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pt-20 pb-24">
         <div className="grid grid-cols-1 items-center gap-8 rounded-[14px] bg-sand p-8 ring-1 ring-ink/5 md:grid-cols-12 md:p-12">
           <div className="md:col-span-5">
             <h2 className="max-w-[18ch] font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-tight font-medium text-balance">
-              Tell us what you're planning.
+              Small groups, limited spots.
             </h2>
             <p className="mt-4 max-w-[42ch] text-[14px] leading-relaxed text-pretty text-ink/70">
-              We don't take online bookings — every trip is quoted by hand. Send a note and a trip
-              designer replies within one working day.
+              Each departure has a limited number of spots. Message us on WhatsApp, email or Instagram to pre-book your place or ask anything about our
+              retreats — one of us will reply within one working day.
             </p>
-            <div className="mt-8 border-t border-ink/10 pt-6">
-              <p className="text-[11px] tracking-[0.3em] text-clay uppercase">Or contact us directly</p>
-              <ul className="mt-4 space-y-3">
-                {contactLinks.map((link) => {
-                  const ContactIcon = contactIcons[link.id];
-                  return (
-                    <li key={link.id}>
-                      <a
-                        href={link.href}
-                        target={link.id === "email" ? undefined : "_blank"}
-                        rel={link.id === "email" ? undefined : "noreferrer"}
-                        className="group inline-flex items-center gap-3 text-[14px] text-ink transition-colors hover:text-clay"
-                      >
-                        <span className="flex size-9 items-center justify-center rounded-full bg-cream/70 ring-1 ring-ink/5 transition-colors group-hover:bg-clay group-hover:text-cream">
-                          <ContactIcon aria-hidden="true" className="size-4" strokeWidth={1.75} />
-                        </span>
-                        <span>
-                          <span className="sr-only">{link.label}: </span>
-                          {link.value}
-                        </span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
           </div>
-          {sent ? (
-            <div className="md:col-span-7">
-              <div className="rounded-[14px] bg-cream/70 p-8 ring-1 ring-ink/5">
-                <p className="font-display text-[1.5rem] font-medium">Request received.</p>
-                <p className="mt-2 max-w-[40ch] text-[14px] leading-relaxed text-ink/70">
-                  Thank you — a trip designer will reply within one working day with a tailored
-                  proposal.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <form
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:col-span-7"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                setSending(true);
-                setError(null);
-                const { error: err } = await supabase.from("enquiries").insert({
-                  full_name: String(fd.get("full_name") ?? "").trim().slice(0, 120),
-                  email: String(fd.get("email") ?? "").trim().slice(0, 255),
-                  discipline: String(fd.get("discipline") ?? ""),
-                  message: String(fd.get("message") ?? "").trim().slice(0, 2000) || null,
-                });
-                setSending(false);
-                if (err) setError("Something went wrong — please try again.");
-                else setSent(true);
-              }}
-            >
-              <input
-                name="full_name"
-                type="text"
-                required
-                maxLength={120}
-                placeholder="Full name"
-                className="rounded-full bg-cream/70 px-5 py-3 text-[14px] ring-1 ring-ink/5 transition-shadow outline-none placeholder:text-ink/40 focus:ring-clay/50"
-              />
-              <input
-                name="email"
-                type="email"
-                required
-                maxLength={255}
-                placeholder="Email"
-                className="rounded-full bg-cream/70 px-5 py-3 text-[14px] ring-1 ring-ink/5 transition-shadow outline-none placeholder:text-ink/40 focus:ring-clay/50"
-              />
-              <select
-                name="discipline"
-                required
-                defaultValue=""
-                className="rounded-full bg-cream/70 px-5 py-3 text-[14px] text-ink/70 ring-1 ring-ink/5 transition-shadow outline-none focus:ring-clay/50 sm:col-span-2"
-              >
-                <option value="" disabled>
-                  Which discipline?
-                </option>
-                <option>Kitesurf</option>
-                <option>Surf</option>
-                <option>Golf</option>
-                <option>Ski</option>
-                <option>Wellness</option>
-                <option>Bali retreat</option>
-                <option>Mixed / custom</option>
-              </select>
-              <textarea
-                name="message"
-                maxLength={2000}
-                placeholder="Dates, group size, anything you'd like us to know"
-                rows={3}
-                className="rounded-[14px] bg-cream/70 px-5 py-3 text-[14px] ring-1 ring-ink/5 transition-shadow outline-none placeholder:text-ink/40 focus:ring-clay/50 sm:col-span-2"
-              />
-              {error && <p className="text-[13px] text-clay sm:col-span-2">{error}</p>}
-              <button
-                type="submit"
-                disabled={sending}
-                className="justify-self-start rounded-full bg-ink px-7 py-3.5 text-[13px] uppercase tracking-[0.14em] text-cream transition-colors hover:bg-clay disabled:opacity-60 sm:col-span-2"
-              >
-                {sending ? "Sending…" : "Send request"}
-              </button>
-            </form>
-          )}
+          <ul className="grid grid-cols-1 gap-3 md:col-span-7">
+            {contactLinks.map((link) => {
+              const ContactIcon = contactIcons[link.id];
+              return (
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    target={link.id === "email" ? undefined : "_blank"}
+                    rel={link.id === "email" ? undefined : "noreferrer"}
+                    className="group flex items-center gap-4 rounded-full bg-cream/70 py-3 pr-6 pl-3 ring-1 ring-ink/5 transition-colors hover:bg-ink hover:text-cream"
+                  >
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-clay text-cream">
+                      <ContactIcon aria-hidden="true" className="size-5" strokeWidth={1.75} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[11px] tracking-[0.2em] text-clay uppercase group-hover:text-cream/70">
+                        {link.label}
+                      </span>
+                      <span className="block truncate text-[15px]">{link.value}</span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="border-t border-ink/10">
         <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-4 px-6 py-10 text-[12px] uppercase tracking-[0.14em] text-ink/50 sm:flex-row">
