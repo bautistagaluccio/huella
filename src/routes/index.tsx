@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Instagram, Mail, Menu, MessageCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +10,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { getDeparturesByDate } from "@/lib/departures";
 import { CommunitySection } from "@/components/community";
+import { FoundersLine, FoundersSection } from "@/components/founders";
+import { contactLinks } from "@/lib/contact";
 
 import kitesurfImg from "@/assets/kitesurf.jpg";
 import surfImg from "@/assets/surf.jpg";
@@ -61,8 +63,11 @@ const homeSections = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#departures", label: "Departures" },
   { href: "#community", label: "Community" },
+  { href: "#founders", label: "Who we are" },
   { href: "#enquire", label: "Request info" },
 ];
+
+const contactIcons = { whatsapp: MessageCircle, email: Mail, instagram: Instagram };
 
 const departureImages = {
   ski: skiGudauriImg,
@@ -144,6 +149,9 @@ function Index() {
           >
             Request the programme
           </a>
+        </div>
+        <div className="animate-rise" style={{ animationDelay: "0.3s" }}>
+          <FoundersLine />
         </div>
       </section>
 
@@ -373,6 +381,9 @@ function Index() {
         }
       />
 
+      {/* Who we are */}
+      <FoundersSection />
+
       {/* Enquiry */}
       <section id="enquire" className="mx-auto max-w-[1360px] scroll-mt-8 px-6 pt-20 pb-24">
         <div className="grid grid-cols-1 items-center gap-8 rounded-[14px] bg-sand p-8 ring-1 ring-ink/5 md:grid-cols-12 md:p-12">
@@ -384,6 +395,32 @@ function Index() {
               We don't take online bookings — every trip is quoted by hand. Send a note and a trip
               designer replies within one working day.
             </p>
+            <div className="mt-8 border-t border-ink/10 pt-6">
+              <p className="text-[11px] tracking-[0.3em] text-clay uppercase">Or contact us directly</p>
+              <ul className="mt-4 space-y-3">
+                {contactLinks.map((link) => {
+                  const ContactIcon = contactIcons[link.id];
+                  return (
+                    <li key={link.id}>
+                      <a
+                        href={link.href}
+                        target={link.id === "email" ? undefined : "_blank"}
+                        rel={link.id === "email" ? undefined : "noreferrer"}
+                        className="group inline-flex items-center gap-3 text-[14px] text-ink transition-colors hover:text-clay"
+                      >
+                        <span className="flex size-9 items-center justify-center rounded-full bg-cream/70 ring-1 ring-ink/5 transition-colors group-hover:bg-clay group-hover:text-cream">
+                          <ContactIcon aria-hidden="true" className="size-4" strokeWidth={1.75} />
+                        </span>
+                        <span>
+                          <span className="sr-only">{link.label}: </span>
+                          {link.value}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
           {sent ? (
             <div className="md:col-span-7">
