@@ -124,7 +124,7 @@ export function SkiTripPage({ days = "17–21" }: { days?: string }) {
       ),
     },
     { label: "Flights", value: <>Included</> },
-    { label: "Price", value: <>From AED 10,000</> },
+    { label: "Price", value: <>On request</> },
   ];
 
   return (

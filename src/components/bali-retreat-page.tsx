@@ -23,12 +23,12 @@ export function baliRetreatHead({ month, days }: BaliDates) {
       { title: `Bali Body & Breath — ${shortDates} · Huella` },
       {
         name: "description",
-        content: `A wellness retreat at Uluwatu Villa, Bali, ${month} ${days} — stretching, pilates, yoga, breathing and sound healing. From AED 15,000.`,
+        content: `A wellness retreat at Uluwatu Villa, Bali, ${month} ${days} — stretching, pilates, yoga, breathing and sound healing.`,
       },
       { property: "og:title", content: `Bali Body & Breath — ${shortDates} · Huella` },
       {
         property: "og:description",
-        content: `Stretching, pilates, yoga, breathing and sound healing at Uluwatu Villa. ${month} ${days}, from AED 15,000.`,
+        content: `Stretching, pilates, yoga, breathing and sound healing at Uluwatu Villa. ${month} ${days}.`,
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -128,7 +128,7 @@ export function BaliRetreatPage({ month, days }: BaliDates) {
     },
     { label: "Availability", value: "8 rooms" },
     { label: "Max capacity", value: "16 people" },
-    { label: "Base price", value: "From AED 15,000" },
+    { label: "Price", value: "On request" },
   ];
 
   return (

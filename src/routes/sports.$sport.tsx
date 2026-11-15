@@ -173,7 +173,7 @@ function SportExperiences() {
                     Yoga, breathwork, meditation and pilates for a maximum of 16 guests.
                   </p>
                   <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5">
-                    <span className="text-[13px] uppercase tracking-[0.14em] text-ink/60">From AED 15,000</span>
+                    <span className="text-[13px] uppercase tracking-[0.14em] text-ink/60">Price on request</span>
                     <span className="text-[12px] uppercase tracking-[0.16em] text-clay">View experience →</span>
                   </div>
                 </div>
@@ -205,7 +205,7 @@ function SportExperiences() {
                   </p>
                   <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5">
                     <span className="text-[13px] uppercase tracking-[0.14em] text-ink/60">
-                      From AED 10,000
+                      Price on request
                     </span>
                     <span className="text-[12px] uppercase tracking-[0.16em] text-clay">
                       View experience →

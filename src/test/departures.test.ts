@@ -10,7 +10,7 @@ describe("Departure calendar", () => {
   });
   it("preserves the original February 17–21 trip", () => {
     expect(departures.find(({ id }) => id === "ski-gudauri")).toMatchObject({
-      month: 2, days: "17–21", to: "/trips/ski-gudauri", detail: "From AED 10,000",
+      month: 2, days: "17–21", to: "/trips/ski-gudauri", detail: "Price on request",
     });
   });
 });
