@@ -131,6 +131,23 @@ async function addSheetRow(details: GuestDetails, url: string, secret: string) {
     throw new Error(`Sheet ${response.status}: ${result?.error ?? "no reply"}`);
 }
 
+export type SubmitFailure = "invalid" | "not_configured" | "delivery_failed";
+
+export class GuestDetailsError extends Error {
+  constructor(readonly reason: Exclude<SubmitFailure, "invalid">) {
+    super(
+      reason === "not_configured"
+        ? "Neither RESEND_API_KEY nor GUEST_SHEET_URL is set"
+        : "Guest details were not saved",
+    );
+  }
+}
+
+const fieldLabels: Record<string, string> = {
+  ...Object.fromEntries(rows),
+  paymentProof: "Payment proof",
+};
+
 /** Sends one response to every configured place; throws only if none of them took it. */
 export async function deliverGuestDetails(
   data: GuestDetails,
@@ -143,7 +160,7 @@ export async function deliverGuestDetails(
       "sheet",
       addSheetRow(data, env["GUEST_SHEET_URL"], env["GUEST_SHEET_SECRET"]),
     ]);
-  if (deliveries.length === 0) throw new Error("Neither RESEND_API_KEY nor GUEST_SHEET_URL is set");
+  if (deliveries.length === 0) throw new GuestDetailsError("not_configured");
 
   const results = await Promise.allSettled(deliveries.map(([, delivery]) => delivery));
   results.forEach((result, index) => {
@@ -151,12 +168,28 @@ export async function deliverGuestDetails(
       console.error(`Guest details ${deliveries[index]![0]} failed`, result.reason);
   });
   if (results.every((result) => result.status === "rejected"))
-    throw new Error("Guest details were not saved");
+    throw new GuestDetailsError("delivery_failed");
 }
 
+// Returns a reason instead of throwing, so the form can tell the guest what went wrong.
 export const submitGuestDetails = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => guestDetailsSchema.parse(input))
-  .handler(async ({ data }) => {
-    await deliverGuestDetails(data, process.env);
-    return { ok: true };
-  });
+  .inputValidator((input: unknown) => input)
+  .handler(
+    async ({
+      data,
+    }): Promise<{ ok: true } | { ok: false; reason: SubmitFailure; fields?: string[] }> => {
+      const parsed = guestDetailsSchema.safeParse(data);
+      if (!parsed.success) {
+        const keys = [...new Set(parsed.error.issues.map((issue) => String(issue.path[0])))];
+        return { ok: false, reason: "invalid", fields: keys.map((key) => fieldLabels[key] ?? key) };
+      }
+      try {
+        await deliverGuestDetails(parsed.data, process.env);
+        return { ok: true };
+      } catch (error) {
+        console.error(error);
+        const reason = error instanceof GuestDetailsError ? error.reason : "delivery_failed";
+        return { ok: false, reason };
+      }
+    },
+  );

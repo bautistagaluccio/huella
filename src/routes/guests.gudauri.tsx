@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eyebrow } from "@/components/trip-layout";
 import { contactLinks } from "@/lib/contact";
 import {
@@ -8,7 +8,7 @@ import {
   submitGuestDetails,
   skiLevels,
 } from "@/lib/guest-details";
-import type { PaymentProof } from "@/lib/guest-details";
+import type { PaymentProof, SubmitFailure } from "@/lib/guest-details";
 
 const TRIP = "Caucasus Powder Days · Gudauri, February 17–21";
 
@@ -91,7 +91,12 @@ function readAsBase64(file: File) {
 
 function GuestDetailsPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  // Until the page's script has loaded, a click would make the browser send the form itself,
+  // putting passport details in the address bar. Keep the button off until then.
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   const [proofError, setProofError] = useState<string | null>(null);
+  const [failure, setFailure] = useState<{ reason: SubmitFailure; fields?: string[] } | null>(null);
   const whatsapp = contactLinks.find((link) => link.id === "whatsapp")!;
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -104,11 +109,18 @@ function GuestDetailsPage() {
       if (file instanceof File && file.size > 0) {
         paymentProof = { name: file.name, type: fileType(file), data: await readAsBase64(file) };
       }
-      await submitGuestDetails({ data: { ...values, paymentProof, trip: TRIP } as never });
+      const result = await submitGuestDetails({ data: { ...values, paymentProof, trip: TRIP } });
+      if (!result.ok) {
+        setFailure(result);
+        setStatus("error");
+        return;
+      }
       setStatus("sent");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
+      // The request never got an answer: offline, or the upload was too large to send.
       console.error(error);
+      setFailure({ reason: "delivery_failed" });
       setStatus("error");
     }
   }
@@ -146,7 +158,7 @@ function GuestDetailsPage() {
               around you. It takes about three minutes.
             </p>
 
-            <form onSubmit={onSubmit} className="mt-10 space-y-10">
+            <form method="post" onSubmit={onSubmit} className="mt-10 space-y-10">
               <Group title="You" intro="So we know who's who and how to reach you.">
                 <div className="sm:col-span-2">
                   <Field label="Full name" hint="Exactly as it appears on your passport.">
@@ -324,15 +336,35 @@ function GuestDetailsPage() {
               </Group>
 
               <div className="border-t border-ink/10 pt-8">
-                {status === "error" && (
-                  <p role="alert" className="mb-4 text-[14px] text-red-800">
-                    Something went wrong and your details weren't sent. Please try again, or message
-                    us on WhatsApp at {whatsapp.value}.
-                  </p>
+                {status === "error" && failure && (
+                  <div role="alert" className="mb-4 text-[14px] leading-relaxed text-red-800">
+                    {failure.reason === "invalid" ? (
+                      <p>
+                        Your details weren't sent. Please check{" "}
+                        {failure.fields?.length ? (
+                          <b>{failure.fields.join(", ")}</b>
+                        ) : (
+                          "the fields above"
+                        )}{" "}
+                        and try again.
+                      </p>
+                    ) : (
+                      <>
+                        <p>
+                          Your details weren't sent. This is a problem on our side, not with what
+                          you filled in. Your answers are still here, so you can try again in a few
+                          minutes, or message us on WhatsApp at {whatsapp.value}.
+                        </p>
+                        <p className="mt-1 text-[12px] text-red-800/70">
+                          Error code: {failure.reason}
+                        </p>
+                      </>
+                    )}
+                  </div>
                 )}
                 <button
                   type="submit"
-                  disabled={status === "sending"}
+                  disabled={!ready || status === "sending"}
                   className="w-full rounded-full bg-ink px-8 py-4 text-[13px] tracking-[0.14em] text-cream uppercase transition-colors hover:bg-clay disabled:opacity-60 sm:w-auto"
                 >
                   {status === "sending" ? "Sending…" : "Send my details"}

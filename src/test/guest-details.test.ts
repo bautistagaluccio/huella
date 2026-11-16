@@ -92,7 +92,7 @@ describe("saving a response", () => {
         GUEST_SHEET_URL: "https://sheet.test/exec",
         GUEST_SHEET_SECRET: "wrong",
       }),
-    ).rejects.toThrow("not saved");
+    ).rejects.toMatchObject({ reason: "delivery_failed" });
   });
 
   it("attaches the payment proof to the email", async () => {
@@ -117,6 +117,8 @@ describe("saving a response", () => {
   });
 
   it("fails when nothing is set up", async () => {
-    await expect(deliverGuestDetails(details, {})).rejects.toThrow("Neither");
+    await expect(deliverGuestDetails(details, {})).rejects.toMatchObject({
+      reason: "not_configured",
+    });
   });
 });
