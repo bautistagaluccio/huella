@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminHuellaRouteImport } from './routes/admin-huella'
+import { Route as GuestsGudauriRouteImport } from './routes/guests.gudauri'
 import { Route as RetreatsBaliRouteImport } from './routes/retreats.bali'
 import { Route as RetreatsBaliMayRouteImport } from './routes/retreats.bali-may'
 import { Route as SportsSportRouteImport } from './routes/sports.$sport'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminHuellaRoute = AdminHuellaRouteImport.update({
   id: '/admin-huella',
   path: '/admin-huella',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuestsGudauriRoute = GuestsGudauriRouteImport.update({
+  id: '/guests/gudauri',
+  path: '/guests/gudauri',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RetreatsBaliRoute = RetreatsBaliRouteImport.update({
@@ -62,6 +68,7 @@ const TripsSkiGudauriFeb10Route = TripsSkiGudauriFeb10RouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
+  '/guests/gudauri': typeof GuestsGudauriRoute
   '/retreats/bali': typeof RetreatsBaliRoute
   '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
+  '/guests/gudauri': typeof GuestsGudauriRoute
   '/retreats/bali': typeof RetreatsBaliRoute
   '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin-huella': typeof AdminHuellaRoute
+  '/guests/gudauri': typeof GuestsGudauriRoute
   '/retreats/bali': typeof RetreatsBaliRoute
   '/retreats/bali-may': typeof RetreatsBaliMayRoute
   '/sports/$sport': typeof SportsSportRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin-huella'
+    | '/guests/gudauri'
     | '/retreats/bali'
     | '/retreats/bali-may'
     | '/sports/$sport'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin-huella'
+    | '/guests/gudauri'
     | '/retreats/bali'
     | '/retreats/bali-may'
     | '/sports/$sport'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin-huella'
+    | '/guests/gudauri'
     | '/retreats/bali'
     | '/retreats/bali-may'
     | '/sports/$sport'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminHuellaRoute: typeof AdminHuellaRoute
+  GuestsGudauriRoute: typeof GuestsGudauriRoute
   RetreatsBaliRoute: typeof RetreatsBaliRoute
   RetreatsBaliMayRoute: typeof RetreatsBaliMayRoute
   SportsSportRoute: typeof SportsSportRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-huella'
       fullPath: '/admin-huella'
       preLoaderRoute: typeof AdminHuellaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guests/gudauri': {
+      id: '/guests/gudauri'
+      path: '/guests/gudauri'
+      fullPath: '/guests/gudauri'
+      preLoaderRoute: typeof GuestsGudauriRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/retreats/bali': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminHuellaRoute: AdminHuellaRoute,
+  GuestsGudauriRoute: GuestsGudauriRoute,
   RetreatsBaliRoute: RetreatsBaliRoute,
   RetreatsBaliMayRoute: RetreatsBaliMayRoute,
   SportsSportRoute: SportsSportRoute,
